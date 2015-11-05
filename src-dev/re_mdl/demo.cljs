@@ -7,7 +7,9 @@
    [re-mdl.components.card :refer [card-demo]]
    [re-mdl.components.grid :refer [grid-demo]]
    [re-mdl.components.layout :refer [demo-layout
-                                     tab-demo]]))
+                                     tab-demo
+                                     mega-footer-demo
+                                     mini-footer-demo]]))
 
 (enable-console-print!)
 
@@ -25,7 +27,9 @@
      [badge-demo]
      [button-demo]
      [card-demo]
-     [tab-demo]]]])
+     [tab-demo]]
+    [mega-footer-demo]
+    [mini-footer-demo]]])
 
 
 (defn ^:export run []

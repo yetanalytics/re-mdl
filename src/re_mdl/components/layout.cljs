@@ -229,13 +229,157 @@
                      )}
           attr)] children))
 
-;; TODO: footers
 
+;; Footers
+
+(defn mega-social-btn []
+  [:div.mdl-mega-footer__social-btn])
+
+
+(defn mega-link-list [& {:keys [children
+                                class attr]
+                         :as   args}]
+  (into [:ul
+         (r/merge-props
+          {:class (cond-> "mdl-mega-footer__link-list"
+                    class (str " " class))}
+          attr)]
+        (for [child children]
+          [:li child])))
+
+(defn mega-drop-down [& {:keys [heading
+                                children
+                                class attr]
+                         :as   args}]
+  [:div
+   (r/merge-props
+    {:class (cond-> "mdl-mega-footer__drop-down-section"
+              class (str " " class))}
+    attr)
+   [:h1.mdl-mega-footer__heading
+    heading]
+   [mega-link-list
+    :children children]])
+
+
+
+(defn mega-footer [& {:keys [loc top left middle right bottom logo
+                             children
+                             class attr]
+                      :or {loc :root}
+                      :as   args}]
+  (cond-> [:div
+           (r/merge-props
+            {:class (cond-> (case loc
+                              :root "mdl-mega-footer"
+                              :top "mdl-mega-footer__top-section"
+                              :left "mdl-mega-footer__left-section"
+                              :middle "mdl-mega-footer__middle-section"
+                              :right "mdl-mega-footer__right-section"
+                              :bottom "mdl-mega-footer__bottom-section")
+                      class (str " " class))}
+            attr)
+           (when (= loc :bottom)
+             [:div.mdl-logo (or logo "")])
+
+           (when top
+             (into [:div.mdl-mega-footer__top-section] top))
+           (when left
+             (into [:div.mdl-mega-footer__left-section] left))
+           (when middle
+             (into [:div.mdl-mega-footer__middle-section] middle))
+           (when right
+             (into [:div.mdl-mega-footer__right-section] right))
+           (when bottom
+             (into [:div.mdl-mega-footer__bottom-section
+                    [:div.mdl-logo (or logo "")]] bottom))]
+    children (into children)))
+
+
+(defn mini-social-btn []
+  [:div.mdl-mega-footer__social-btn])
+
+(defn mini-link-list [& {:keys [children
+                                class attr]
+                         :as   args}]
+  (into [:ul
+         (r/merge-props
+          {:class (cond-> "mdl-mini-footer__link-list"
+                    class (str " " class))}
+          attr)]
+        (for [child children]
+          [:li child])))
+
+(defn mini-footer [& {:keys [loc left right logo
+                             children
+                             class attr]
+                      :or {loc :root}
+                      :as   args}]
+  (cond-> [:div
+           (r/merge-props
+            {:class (cond-> (case loc
+                              :root "mdl-mini-footer"
+                              :left "mdl-mini-footer__left-section"
+                              :right "mdl-mini-footer__right-section")
+                      class (str " " class))}
+            attr)
+           (when left
+             (into [:div.mdl-mini-footer__left-section
+                    [:div.mdl-logo (or logo "")]] left))
+           (when right
+             (into [:div.mdl-mini-footer__right-section] right))]
+    children (into children)))
 
 
 
 
 ;;; DEMO
+
+(defn mega-footer-demo []
+  [mega-footer
+   :logo "Title"
+   :middle
+   [[mega-drop-down
+     :heading "Features"
+     :children
+     [[:a {:href "#"} "About"]
+      [:a {:href "#"} "Terms"]
+      [:a {:href "#"} "Partners"]
+      [:a {:href "#"} "Updates"]]]
+    [mega-drop-down
+     :heading "Details"
+     :children
+     [[:a {:href "#"} "Specs"]
+      [:a {:href "#"} "Tools"]
+      [:a {:href "#"} "Resources"]]]
+    [mega-drop-down
+     :heading "Technology"
+     :children
+     [[:a {:href "#"} "How it works"]
+      [:a {:href "#"} "Patterns"]
+      [:a {:href "#"} "Usage"]
+      [:a {:href "#"} "Products"]
+      [:a {:href "#"} "Contracts"]]]
+    [mega-drop-down
+     :heading "FAQ"
+     :children
+     [[:a {:href "#"} "Questions"]
+      [:a {:href "#"} "Answers"]
+      [:a {:href "#"} "Contact"]]]]
+   :bottom
+   [[mega-link-list
+    :children
+    [[:a {:href "#"} "Help"]
+     [:a {:href "#"} "Privacy & Terms"]]]]])
+
+(defn mini-footer-demo []
+  [mini-footer
+   :logo "Title"
+   :left
+   [[mini-link-list
+     :children
+     [[:a {:href "#"} "Help"]
+      [:a {:href "#"} "Privacy & Terms"]]]]])
 
 (defn tab-demo []
   [tabs
