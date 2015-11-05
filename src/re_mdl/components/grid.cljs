@@ -5,11 +5,12 @@
 (defn grid
   [& {:keys [children
              no-spacing?
-             class attr]
+             id class attr]
       :as   args}]
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-grid"
+          {:id id
+           :class (cond-> "mdl-grid"
                     class (str " " class)
                     no-spacing? (str " mdl-grid--no-spacing"))}
           attr)]
@@ -27,13 +28,14 @@
              col
              desktop tablet phone
              stretch?
-             class attr]
+             id class attr]
       ;; :or {stretch? true}
       :as   args}]
   (when align (assert (valid-align align)))
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-cell"
+          {:id id
+           :class (cond-> "mdl-cell"
                     class (str " " class)
                     stretch? (str " mdl-cell--stretch")
                     align (str " " (align-mdl-class align))

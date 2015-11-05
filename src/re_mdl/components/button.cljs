@@ -5,12 +5,13 @@
 (defn button*
   [& {:keys [el label icon on-click
              disabled? raised? fab? mini-fab? colored? primary? accent? ripple-effect?
-             class attr]
+             id class attr]
       :or   {el :button}
       :as   args}]
   [el
    (r/merge-props
     (cond-> {:on-click on-click
+             :id id
              :class (cond-> "mdl-button mdl-js-button"
                       class (str (str " " class))
                       raised? (str " mdl-button--raised")

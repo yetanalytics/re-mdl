@@ -4,13 +4,14 @@
 (defn title [& {:keys [text subtitle-text header
                        border?
                        expand?
-                       class attr]
+                       id class attr]
                  :or   {header :h1}
                  :as   args}]
 
   [:div
    (r/merge-props
-    {:class (cond-> "mdl-card__title"
+    {:id id
+     :class (cond-> "mdl-card__title"
               class (str " " class)
               border? (str " mdl-card--border")
               expand? (str " mdl-card--expand"))}
@@ -22,12 +23,13 @@
       subtitle-text])])
 
 (defn media [& {:keys [children
-                        border?
-                        class attr]
-                 :as   args}]
+                       border?
+                       id class attr]
+                :as   args}]
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-card__media"
+          {:id id
+           :class (cond-> "mdl-card__media"
                     class (str " " class)
                     border? (str " mdl-card--border"))}
           attr)] children))
@@ -36,11 +38,12 @@
 
 (defn supporting-text [& {:keys [text
                                  border?
-                                 class attr]
+                                 id class attr]
                            :as   args}]
   [:div
    (r/merge-props
-    {:class (cond-> "mdl-card__supporting-text"
+    {:id id
+     :class (cond-> "mdl-card__supporting-text"
               class (str " " class)
               border? (str " mdl-card--border"))}
     attr)
@@ -51,12 +54,13 @@
 
 (defn actions [& {:keys [children
                           border?
-                          class attr]
+                          id class attr]
                    :as   args}]
   (into
    [:div
     (r/merge-props
-     {:class (cond-> "mdl-card__actions"
+     {:id id
+      :class (cond-> "mdl-card__actions"
                class (str " " class)
                border? (str " mdl-card--border"))}
      attr)]
@@ -68,14 +72,15 @@
 
 (defn card
   [& {:keys [children shadow
-             class attr]
+             id class attr]
       :as   args}]
 
   (when shadow (assert (valid-shadows shadow)))
 
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-card"
+          {:id id
+           :class (cond-> "mdl-card"
                     class (str " " class)
                     shadow (str " mdl-shadow--" shadow "dp"))}
           attr)]

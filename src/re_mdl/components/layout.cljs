@@ -3,12 +3,13 @@
             [re-mdl.util :refer [wrap-mdl]]))
 
 (defn layout* [& {:keys [fixed-drawer? fixed-header? fixed-tabs?
-                        children
-                        class attr]
+                         children
+                         id class attr]
                  :as   args}]
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-layout mdl-js-layout"
+          {:id id
+           :class (cond-> "mdl-layout mdl-js-layout"
                     class (str " " class)
                     fixed-drawer? (str " mdl-layout--fixed-drawer")
                     fixed-header? (str " mdl-layout--fixed-header")
@@ -20,11 +21,12 @@
 
 (defn title [& {:keys [large-screen-only? small-screen-only?
                        label
-                       class attr]
+                       id class attr]
                 :as   args}]
   [:span
    (r/merge-props
-    {:class (cond-> "mdl-layout-title"
+    {:id id
+     :class (cond-> "mdl-layout-title"
               class (str " " class)
               large-screen-only? (str " mdl-layout--large-screen-only")
               small-screen-only? (str " mdl-layout--small-screen-only"))}
@@ -32,11 +34,12 @@
    label])
 
 (defn spacer [& {:keys [large-screen-only? small-screen-only?
-                        class attr]
+                        id class attr]
                 :as   args}]
   [:div
    (r/merge-props
-    {:class (cond-> "mdl-layout-spacer"
+    {:id id
+     :class (cond-> "mdl-layout-spacer"
               class (str " " class)
               large-screen-only? (str " mdl-layout--large-screen-only")
               small-screen-only? (str " mdl-layout--small-screen-only"))}
@@ -44,11 +47,12 @@
 
 (defn header [& {:keys [large-screen-only? small-screen-only? waterfall? transparent? seamed?
                         children
-                        class attr]
+                        id class attr]
                  :as   args}]
   (into [:header
          (r/merge-props
-          {:class (cond-> "mdl-layout__header"
+          {:id id
+           :class (cond-> "mdl-layout__header"
                     class (str " " class)
                     large-screen-only? (str " mdl-layout--large-screen-only")
                     small-screen-only? (str " mdl-layout--small-screen-only")
@@ -58,11 +62,12 @@
           attr)] children))
 
 (defn icon [& {:keys [large-screen-only? small-screen-only?
-                       class attr]
+                      id class attr]
                 :as   args}]
   [:img
    (r/merge-props
-    {:class (cond-> "mdl-layout-icon"
+    {:id id
+     :class (cond-> "mdl-layout-icon"
               class (str " " class)
               large-screen-only? (str " mdl-layout--large-screen-only")
               small-screen-only? (str " mdl-layout--small-screen-only"))}
@@ -70,11 +75,12 @@
 
 (defn header-row [& {:keys [large-screen-only? small-screen-only?
                             children
-                            class attr]
+                            id class attr]
                      :as   args}]
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-layout__header-row"
+          {:id id
+           :class (cond-> "mdl-layout__header-row"
                     class (str " " class)
                     large-screen-only? (str " mdl-layout--large-screen-only")
                     small-screen-only? (str " mdl-layout--small-screen-only"))}
@@ -82,11 +88,12 @@
 
 (defn drawer [& {:keys [large-screen-only? small-screen-only?
                         children
-                        class attr]
+                        id class attr]
                  :as   args}]
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-layout__drawer"
+          {:id id
+           :class (cond-> "mdl-layout__drawer"
                     class (str " " class)
                     large-screen-only? (str " mdl-layout--large-screen-only")
                     small-screen-only? (str " mdl-layout--small-screen-only"))}
@@ -94,11 +101,12 @@
 
 (defn content [& {:keys [large-screen-only? small-screen-only?
                         children
-                        class attr]
+                        id class attr]
                  :as   args}]
   [:main
    (r/merge-props
-    {:class (cond-> "mdl-layout__content"
+    {:id id
+     :class (cond-> "mdl-layout__content"
               class (str " " class)
               large-screen-only? (str " mdl-layout--large-screen-only")
               small-screen-only? (str " mdl-layout--small-screen-only"))}
@@ -107,11 +115,12 @@
 
 (defn nav [& {:keys [large-screen-only? small-screen-only?
                      children
-                     class attr]
+                     id class attr]
               :as   args}]
   (into [:nav
          (r/merge-props
-          {:class (cond-> "mdl-navigation"
+          {:id id
+           :class (cond-> "mdl-navigation"
                     class (str " " class)
                     large-screen-only? (str " mdl-layout--large-screen-only")
                     small-screen-only? (str " mdl-layout--small-screen-only"))}
@@ -120,11 +129,12 @@
 
 (defn nav-link [& {:keys [large-screen-only? small-screen-only?
                           href content
-                          class attr]
+                          id class attr]
               :as   args}]
   [:a
    (r/merge-props
-    {:href href
+    {:id id
+     :href href
      :class (cond-> "mdl-navigation__link"
               class (str " " class)
               large-screen-only? (str " mdl-layout--large-screen-only")
@@ -137,11 +147,12 @@
 
 (defn layout-tab-bar [& {:keys [large-screen-only? small-screen-only?
                          children
-                         class attr]
+                         id class attr]
                  :as   args}]
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-layout__tab-bar"
+          {:id id
+           :class (cond-> "mdl-layout__tab-bar"
                     class (str " " class)
                     large-screen-only? (str " mdl-layout--large-screen-only")
                     small-screen-only? (str " mdl-layout--small-screen-only"))}
@@ -149,11 +160,12 @@
 
 (defn layout-tab [& {:keys [large-screen-only? small-screen-only? is-active?
                      href content
-                     class attr]
+                     id class attr]
               :as   args}]
   [:a
    (r/merge-props
-    {:href href
+    {:id id
+     :href href
      :class (cond-> "mdl-layout__tab"
               class (str " " class)
               large-screen-only? (str " mdl-layout--large-screen-only")
@@ -181,21 +193,23 @@
 
 (defn tab-bar [& {:keys [
                          children
-                         class attr]
+                         id class attr]
                   :as   args}]
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-tabs__tab-bar"
+          {:id id
+           :class (cond-> "mdl-tabs__tab-bar"
                     class (str " " class))}
           attr)] children))
 
 (defn tabs* [& {:keys [ripple-effect?
                       children
-                      class attr]
+                      id class attr]
                :as   args}]
   (into [:div
          (r/merge-props
-          {:class (cond-> "mdl-tabs mdl-js-tabs"
+          {:id id
+           :class (cond-> "mdl-tabs mdl-js-tabs"
                     class (str " " class)
                     ripple-effect? (str " mdl-js-ripple-effect"))}
           attr)] children))
@@ -204,11 +218,12 @@
 
 (defn tab [& {:keys [is-active?
                      href content
-                     class attr]
+                     id class attr]
                      :as   args}]
   [:a
    (r/merge-props
-    {:href href
+    {:id id
+     :href href
      :class (cond-> "mdl-tabs__tab"
               class (str " " class)
               is-active? (str " is-active"))}
@@ -237,11 +252,12 @@
 
 
 (defn mega-link-list [& {:keys [children
-                                class attr]
+                                id class attr]
                          :as   args}]
   (into [:ul
          (r/merge-props
-          {:class (cond-> "mdl-mega-footer__link-list"
+          {:id id
+           :class (cond-> "mdl-mega-footer__link-list"
                     class (str " " class))}
           attr)]
         (for [child children]
@@ -249,11 +265,12 @@
 
 (defn mega-drop-down [& {:keys [heading
                                 children
-                                class attr]
+                                id class attr]
                          :as   args}]
   [:div
    (r/merge-props
-    {:class (cond-> "mdl-mega-footer__drop-down-section"
+    {:id id
+     :class (cond-> "mdl-mega-footer__drop-down-section"
               class (str " " class))}
     attr)
    [:h1.mdl-mega-footer__heading
@@ -265,12 +282,13 @@
 
 (defn mega-footer [& {:keys [loc top left middle right bottom logo
                              children
-                             class attr]
+                             id class attr]
                       :or {loc :root}
                       :as   args}]
   (cond-> [:div
            (r/merge-props
-            {:class (cond-> (case loc
+            {:id id
+             :class (cond-> (case loc
                               :root "mdl-mega-footer"
                               :top "mdl-mega-footer__top-section"
                               :left "mdl-mega-footer__left-section"
@@ -300,11 +318,12 @@
   [:div.mdl-mega-footer__social-btn])
 
 (defn mini-link-list [& {:keys [children
-                                class attr]
+                                id class attr]
                          :as   args}]
   (into [:ul
          (r/merge-props
-          {:class (cond-> "mdl-mini-footer__link-list"
+          {:id id
+           :class (cond-> "mdl-mini-footer__link-list"
                     class (str " " class))}
           attr)]
         (for [child children]
@@ -312,12 +331,13 @@
 
 (defn mini-footer [& {:keys [loc left right logo
                              children
-                             class attr]
+                             id class attr]
                       :or {loc :root}
                       :as   args}]
   (cond-> [:div
            (r/merge-props
-            {:class (cond-> (case loc
+            {:id id
+             :class (cond-> (case loc
                               :root "mdl-mini-footer"
                               :left "mdl-mini-footer__left-section"
                               :right "mdl-mini-footer__right-section")

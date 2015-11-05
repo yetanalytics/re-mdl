@@ -2,12 +2,14 @@
   (:require [reagent.core :as r]))
 
 (defn badge
-  [& {:keys [el child badge-label no-background? overlap? icon? class attr]
+  [& {:keys [el child badge-label no-background? overlap? icon?
+             id class attr]
       :or   {el :span}
       :as   args}]
   [el
    (r/merge-props
-    (cond-> {:class (cond-> "mdl-badge"
+    (cond-> {:id id
+             :class (cond-> "mdl-badge"
                       class (str (str " " class))
                       no-background? (str " mdl-badge--no-background")
                       overlap? (str " mdl-badge--overlap")
