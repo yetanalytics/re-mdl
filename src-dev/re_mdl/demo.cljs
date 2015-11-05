@@ -7,7 +7,8 @@
    [re-mdl.components.card :as card]
    [re-mdl.components.grid :as grid]
    [re-mdl.components.layout :as layout]
-   [re-mdl.components.loading :as loading]))
+   [re-mdl.components.loading :as loading]
+   [re-mdl.components.menu :as menu]))
 
 (enable-console-print!)
 
@@ -211,6 +212,22 @@
   [loading/spinner
    :is-active? true])
 
+(defn menu-demo []
+  [:div.menu-demo
+   [button/button
+    :id "menu-speed"
+    :icon "more_vert"]
+   [menu/menu
+    :for "menu-speed"
+    :ripple-effect? true
+    :children
+    [[menu/item
+      :label "Fast"]
+     [menu/item
+      :label "Medium"]
+     [menu/item
+      :label "Slow"]]]])
+
 
 (defn app-view []
   [:div ;; extra wrapper div so mdl doesn't clobber the root
@@ -221,7 +238,8 @@
      [card-demo]
      [tab-demo]
      [loading-progress-demo]
-     [loading-spinner-demo]]
+     [loading-spinner-demo]
+     [menu-demo]]
     [mega-footer-demo]
     [mini-footer-demo]]])
 
