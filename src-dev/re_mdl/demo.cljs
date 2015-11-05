@@ -8,7 +8,8 @@
    [re-mdl.components.grid :as grid]
    [re-mdl.components.layout :as layout]
    [re-mdl.components.loading :as loading]
-   [re-mdl.components.menu :as menu]))
+   [re-mdl.components.menu :as menu]
+   [re-mdl.components.slider :as slider]))
 
 (enable-console-print!)
 
@@ -229,6 +230,17 @@
       :label "Slow"]]]])
 
 
+(defn slider-demo []
+  [:div.slider-demo
+   [:p
+    {:width "300px"}
+    [slider/slider
+     :id "foo"
+     :min 0
+     :max 10
+     :value 4
+     :step 2]]])
+
 (defn app-view []
   [:div ;; extra wrapper div so mdl doesn't clobber the root
    [demo-layout
@@ -239,7 +251,8 @@
      [tab-demo]
      [loading-progress-demo]
      [loading-spinner-demo]
-     [menu-demo]]
+     [menu-demo]
+     [slider-demo]]
     [mega-footer-demo]
     [mini-footer-demo]]])
 
