@@ -195,7 +195,7 @@
        :children kids]]]))
 
 
-(defn loading-demo []
+(defn loading-progress-demo []
   (let [pct-done (r/atom 0)]
     (fn []
       [:div.loading-demo
@@ -209,7 +209,9 @@
        :model @pct-done
        ]])))
 
-
+(defn loading-spinner-demo []
+  [loading/spinner
+   :is-active? true])
 
 
 (defn app-view []
@@ -220,7 +222,8 @@
      [button-demo]
      [card-demo]
      [tab-demo]
-     [loading-demo]]
+     [loading-progress-demo]
+     [loading-spinner-demo]]
     [mega-footer-demo]
     [mini-footer-demo]]])
 
