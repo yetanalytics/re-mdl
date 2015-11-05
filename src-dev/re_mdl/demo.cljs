@@ -171,34 +171,43 @@
 
 (defn demo-layout []
   (let [kids (r/children (r/current-component))]
-    [:div.mdl-wrapper
-     [layout/layout
-      :fixed-header? true
-      :children
-      [[layout/header
-        :children
-        [[layout/header-row
-          :children
-          [[layout/title :label "Material Design Lite"]
-           [layout/spacer]
-           [layout/nav
-            :children
-            [[layout/nav-link :href "/#/" :content "Home"]
-             [layout/nav-link :href "/#/about" :content "About"]]]]]]]
-       [layout/drawer
-        :children
-        [[layout/title :label "Material Design Lite"]
-         [layout/nav
-          :children
-          [[layout/nav-link :href "/#/" :content "Home"]
-           [layout/nav-link :href "/#/about" :content "About"]]]]]
-       [layout/content
-        :children kids]]]]))
+    [layout/layout
+     :fixed-header? true
+     :children
+     [[layout/header
+       :children
+       [[layout/header-row
+         :children
+         [[layout/title :label "Material Design Lite"]
+          [layout/spacer]
+          [layout/nav
+           :children
+           [[layout/nav-link :href "/#/" :content "Home"]
+            [layout/nav-link :href "/#/about" :content "About"]]]]]]]
+      [layout/drawer
+       :children
+       [[layout/title :label "Material Design Lite"]
+        [layout/nav
+         :children
+         [[layout/nav-link :href "/#/" :content "Home"]
+          [layout/nav-link :href "/#/about" :content "About"]]]]]
+      [layout/content
+       :children kids]]]))
 
 
 (defn loading-demo []
-  [loading/progress
-   :indeterminate? true])
+  (let [pct-done (r/atom 0)]
+    (fn []
+      [:div.loading-demo
+       [loading/progress
+        :indeterminate? true]
+       [button/button
+       :mini-fab? true
+       :on-click #(swap! pct-done inc)
+       :label [:i.material-icons "add"]]
+      [loading/progress
+       :model @pct-done
+       ]])))
 
 
 
