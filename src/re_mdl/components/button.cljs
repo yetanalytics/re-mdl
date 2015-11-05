@@ -29,23 +29,3 @@
 
 (def button
   (wrap-mdl button*))
-
-(defn button-demo []
-  [:div.mdl-cell
-   [button
-    :label "Button"]
-   [button
-    :primary? true
-    :label "Primary"]
-   [button
-    :raised? true
-    :label "Raised"]
-   [button
-    :fab? true
-    :label "Fab"]
-   [button
-    :mini-fab? true
-    :label [:i.material-icons "add"]]
-   [button
-    :ripple-effect? true
-    :label "Ripple"]])

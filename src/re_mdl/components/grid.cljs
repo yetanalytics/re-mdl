@@ -49,11 +49,3 @@
                               (:hide? phone) (str " mdl-cell--hide-phone")))}
           attr)]
         children))
-
-(defn grid-demo [& kids]
-  [grid
-   :children
-   (for [kid kids]
-     [cell
-      :children
-      [kid]])])

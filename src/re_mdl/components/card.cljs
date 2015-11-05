@@ -80,23 +80,3 @@
                     shadow (str " mdl-shadow--" shadow "dp"))}
           attr)]
         children))
-
-
-
-;; DEMO
-
-(defn card-demo []
-  [:div.mdl-cell
-   [card
-    :shadow 2
-    :children
-    [[title
-      :expand? true
-      :header :h4
-      :text "Card"]
-     [actions
-      :border? true
-      :children
-      [[:a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect
-        "Action"]
-       ]]]]])
