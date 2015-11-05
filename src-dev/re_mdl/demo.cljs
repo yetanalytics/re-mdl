@@ -236,10 +236,11 @@
     {:width "300px"}
     [slider/slider
      :id "foo"
+     :init-val 4
      :min 0
      :max 10
-     :value 4
-     :step 2]]])
+     :step 2
+     :handler-fn #(print "slider: " %)]]])
 
 (defn app-view []
   [:div ;; extra wrapper div so mdl doesn't clobber the root

@@ -1,22 +1,33 @@
 (ns re-mdl.components.slider
   (:require [reagent.core :as r]
-            [re-mdl.util :refer [wrap-mdl]]))
+            [re-mdl.util :refer [mdl-init!]]))
 
-(defn slider* [& {:keys [min max value step
-                         id class attr]
-                  :as   args}]
-  [:input
-   (r/merge-props
-    {:type "range"
-     :id id
+(defn slider [& {:keys [init-val]
+                 }]
+  (r/create-class
+   {:component-did-mount
+    (fn [this]
+      (let [node (r/dom-node this)]
+        (doto node
+          mdl-init!
+          (-> .-MaterialSlider (.change init-val)))))
+    :reagent-render
+    (fn [& {:keys [min max step
+                  handler-fn
+                  id class attr]
+           :as   args}]
+      [:input
+       (r/merge-props
+        {:type "range"
+         :id id
 
-     :min (str min)
-     :max (str max)
-     ;; :value (str value)
-     :step (str step)
+         :min min
+         :max max
+         :step step
 
-     :class (cond-> "mdl-slider mdl-js-slider"
-              class (str " " class))}
-    attr)])
+         :on-change
+         (fn [e] (handler-fn (.-value (.-target e))))
 
-(def slider (wrap-mdl slider*))
+         :class (cond-> "mdl-slider mdl-js-slider"
+                  class (str " " class))}
+        attr)])}))
