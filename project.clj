@@ -7,7 +7,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.122"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
-                 [cljsjs/material "1.0.4-0"]
+                 ;; [cljsjs/material "1.0.4-0"]
                  [reagent "0.5.1"]]
 
   :plugins [[lein-cljsbuild "1.1.1-SNAPSHOT"]
@@ -24,6 +24,8 @@
               :figwheel { :on-jsload "re-mdl.demo/on-js-reload" }
 
               :compiler {:main re-mdl.demo
+                         :foreign-libs [{:file "resources/vendor/mdl/material.js"
+                                         :provides ["re-mdl.material"]}]
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/re_mdl.js"
                          :output-dir "resources/public/js/compiled/out"
@@ -32,6 +34,9 @@
               :source-paths ["src"]
               :compiler {:output-to "resources/public/js/compiled/re_mdl.js"
                          :main re-mdl.core
+                         :externs ["resources/externs/material.ext.js"]
+                         :foreign-libs [{:file "resources/vendor/mdl/material.js"
+                                         :provides ["material"]}]
                          :optimizations :advanced
                          :pretty-print false}}]}
 
