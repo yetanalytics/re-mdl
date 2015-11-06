@@ -288,7 +288,7 @@
                              id class attr]
                       :or {loc :root}
                       :as   args}]
-  (cond-> [:div
+  (cond-> [:footer
            (merge
             {:id id
              :class (cond-> (case loc
@@ -337,7 +337,7 @@
                              id class attr]
                       :or {loc :root}
                       :as   args}]
-  (cond-> [:div
+  (cond-> [:footer
            (merge
             {:id id
              :class (cond-> (case loc
