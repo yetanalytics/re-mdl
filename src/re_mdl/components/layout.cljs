@@ -7,7 +7,7 @@
                          id class attr]
                  :as   args}]
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-layout mdl-js-layout"
                     class (str " " class)
@@ -24,7 +24,7 @@
                        id class attr]
                 :as   args}]
   [:span
-   (r/merge-props
+   (merge
     {:id id
      :class (cond-> "mdl-layout-title"
               class (str " " class)
@@ -37,7 +37,7 @@
                         id class attr]
                 :as   args}]
   [:div
-   (r/merge-props
+   (merge
     {:id id
      :class (cond-> "mdl-layout-spacer"
               class (str " " class)
@@ -50,7 +50,7 @@
                         id class attr]
                  :as   args}]
   (into [:header
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-layout__header"
                     class (str " " class)
@@ -65,7 +65,7 @@
                       id class attr]
                 :as   args}]
   [:img
-   (r/merge-props
+   (merge
     {:id id
      :class (cond-> "mdl-layout-icon"
               class (str " " class)
@@ -78,7 +78,7 @@
                             id class attr]
                      :as   args}]
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-layout__header-row"
                     class (str " " class)
@@ -91,7 +91,7 @@
                         id class attr]
                  :as   args}]
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-layout__drawer"
                     class (str " " class)
@@ -104,7 +104,7 @@
                         id class attr]
                  :as   args}]
   [:main
-   (r/merge-props
+   (merge
     {:id id
      :class (cond-> "mdl-layout__content"
               class (str " " class)
@@ -118,7 +118,7 @@
                      id class attr]
               :as   args}]
   (into [:nav
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-navigation"
                     class (str " " class)
@@ -132,7 +132,7 @@
                           id class attr]
               :as   args}]
   [:a
-   (r/merge-props
+   (merge
     (cond->
         {:id id
          :href href
@@ -152,7 +152,7 @@
                          id class attr]
                  :as   args}]
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-layout__tab-bar"
                     class (str " " class)
@@ -165,7 +165,7 @@
                      id class attr]
               :as   args}]
   [:a
-   (r/merge-props
+   (merge
     {:id id
      :href href
      :class (cond-> "mdl-layout__tab"
@@ -181,7 +181,7 @@
                            id class attr]
                     :as   args}]
   (into [:section
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-layout__tab-panel"
                     class (str " " class)
@@ -198,7 +198,7 @@
                          id class attr]
                   :as   args}]
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-tabs__tab-bar"
                     class (str " " class))}
@@ -209,7 +209,7 @@
                       id class attr]
                :as   args}]
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-tabs mdl-js-tabs"
                     class (str " " class)
@@ -223,7 +223,7 @@
                      id class attr]
                      :as   args}]
   [:a
-   (r/merge-props
+   (merge
     {:id id
      :href href
      :class (cond-> "mdl-tabs__tab"
@@ -238,7 +238,7 @@
                      :or {el :div}
                      :as   args}]
   (into [el
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-tabs__panel"
                     class (str " " class)
@@ -257,7 +257,7 @@
                                 id class attr]
                          :as   args}]
   (into [:ul
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-mega-footer__link-list"
                     class (str " " class))}
@@ -270,7 +270,7 @@
                                 id class attr]
                          :as   args}]
   [:div
-   (r/merge-props
+   (merge
     {:id id
      :class (cond-> "mdl-mega-footer__drop-down-section"
               class (str " " class))}
@@ -288,7 +288,7 @@
                       :or {loc :root}
                       :as   args}]
   (cond-> [:div
-           (r/merge-props
+           (merge
             {:id id
              :class (cond-> (case loc
                               :root "mdl-mega-footer"
@@ -323,7 +323,7 @@
                                 id class attr]
                          :as   args}]
   (into [:ul
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-mini-footer__link-list"
                     class (str " " class))}
@@ -337,7 +337,7 @@
                       :or {loc :root}
                       :as   args}]
   (cond-> [:div
-           (r/merge-props
+           (merge
             {:id id
              :class (cond-> (case loc
                               :root "mdl-mini-footer"

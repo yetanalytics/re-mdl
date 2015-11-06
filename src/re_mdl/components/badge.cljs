@@ -7,7 +7,7 @@
       :or   {el :span}
       :as   args}]
   [el
-   (r/merge-props
+   (merge
     (cond-> {:id id
              :class (cond-> "mdl-badge"
                       class (str (str " " class))

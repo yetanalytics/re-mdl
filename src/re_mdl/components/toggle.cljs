@@ -23,7 +23,7 @@
                                             .-checked))))}
            :as   args}]
       [:label
-       (r/merge-props
+       (merge
         {:for id
 
          :class (cond-> "mdl-checkbox mdl-js-checkbox"
@@ -31,7 +31,7 @@
                   ripple-effect? (str " mdl-js-ripple-effect"))}
         attr)
        [:input.mdl-checkbox__input
-       (r/merge-props
+       (merge
         (cond->
             {:type "checkbox"
              :id id
@@ -64,7 +64,7 @@
                                             .-value))))}
            :as   args}]
       [:label
-       (r/merge-props
+       (merge
         {:for id
          :class (cond-> "mdl-radio mdl-js-radio"
                   class (str " " class)
@@ -91,7 +91,7 @@
                  :as   args}]
   (into
    [:div
-    (r/merge-props
+    (merge
      {:for id
       :class (cond-> "re-mdl-radio"
                class (str " " class))}
@@ -133,7 +133,7 @@
                                               .-checked))))}
              :as   args}]
         [:label
-         (r/merge-props
+         (merge
           {:for id
 
            :class (cond-> "mdl-icon-toggle mdl-js-icon-toggle"
@@ -141,7 +141,7 @@
                     ripple-effect? (str " mdl-js-ripple-effect"))}
           attr)
          [:input.mdl-icon-toggle__input
-          (r/merge-props
+          (merge
            (cond->
                {:type "checkbox"
                 :id id
@@ -178,7 +178,7 @@
                                             .-checked))))}
            :as   args}]
       [:label
-       (r/merge-props
+       (merge
         {:for id
 
          :class (cond-> "mdl-switch mdl-js-switch"
@@ -186,7 +186,7 @@
                   ripple-effect? (str " mdl-js-ripple-effect"))}
         attr)
        [:input.mdl-switch__input
-       (r/merge-props
+       (merge
         (cond->
             {:type "checkbox"
              :id id

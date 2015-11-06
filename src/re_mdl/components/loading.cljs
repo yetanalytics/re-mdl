@@ -10,7 +10,7 @@
                    :or {width "250px"}
                    :as   args}]
   [:div
-   (r/merge-props
+   (merge
     {:id id
      :style {:width width}
      :class (cond-> "mdl-progress mdl-js-progress"
@@ -42,7 +42,7 @@
                    :or {el :div}
                    :as   args}]
   [el
-   (r/merge-props
+   (merge
     {:id id
      :class (cond-> "mdl-spinner mdl-js-spinner"
               class (str " " class)

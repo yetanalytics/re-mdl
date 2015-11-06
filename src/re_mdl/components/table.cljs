@@ -22,7 +22,7 @@
         header-labels (map first headers)]
     (into
     [:table
-     (r/merge-props
+     (merge
       {:id id
        :class (cond-> "mdl-data-table mdl-js-data-table"
                 class (str " " class)

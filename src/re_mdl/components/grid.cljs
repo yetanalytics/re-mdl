@@ -8,7 +8,7 @@
              id class attr]
       :as   args}]
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-grid"
                     class (str " " class)
@@ -33,7 +33,7 @@
       :as   args}]
   (when align (assert (valid-align align)))
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-cell"
                     class (str " " class)

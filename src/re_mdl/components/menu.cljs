@@ -7,7 +7,7 @@
                       id class attr]
                :as   args}]
   [:li
-   (r/merge-props
+   (merge
     (cond-> {:id id
              :class (cond-> "mdl-menu__item"
                       class (str " " class)
@@ -24,7 +24,7 @@
                 :as   args}]
   (into
    [:ul
-    (r/merge-props
+    (merge
      {:id id
       :for for
       :class (cond-> "mdl-menu mdl-js-menu"

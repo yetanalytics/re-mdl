@@ -62,7 +62,7 @@
                     error-el])]
         (into
          [:div
-          (r/merge-props
+          (merge
            {:class (cond-> "mdl-textfield mdl-js-textfield"
                      class (str " " class)
                      floating-label? (str " mdl-textfield--floating-label")

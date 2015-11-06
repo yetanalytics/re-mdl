@@ -9,7 +9,7 @@
                  :as   args}]
 
   [:div
-   (r/merge-props
+   (merge
     {:id id
      :class (cond-> "mdl-card__title"
               class (str " " class)
@@ -27,7 +27,7 @@
                        id class attr]
                 :as   args}]
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-card__media"
                     class (str " " class)
@@ -41,7 +41,7 @@
                                  id class attr]
                            :as   args}]
   [:div
-   (r/merge-props
+   (merge
     {:id id
      :class (cond-> "mdl-card__supporting-text"
               class (str " " class)
@@ -58,7 +58,7 @@
                    :as   args}]
   (into
    [:div
-    (r/merge-props
+    (merge
      {:id id
       :class (cond-> "mdl-card__actions"
                class (str " " class)
@@ -78,7 +78,7 @@
   (when shadow (assert (valid-shadows shadow)))
 
   (into [:div
-         (r/merge-props
+         (merge
           {:id id
            :class (cond-> "mdl-card"
                     class (str " " class)

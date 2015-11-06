@@ -8,7 +8,7 @@
                           id class attr]}]
   (into
    [:span
-    (r/merge-props
+    (merge
      {:id id
       :for for
       :class (cond-> "mdl-tooltip"

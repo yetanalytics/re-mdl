@@ -17,7 +17,7 @@
                   id class attr]
            :as   args}]
       [:input
-       (r/merge-props
+       (merge
         {:type "range"
          :id id
 

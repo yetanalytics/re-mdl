@@ -9,7 +9,7 @@
       :or   {el :button}
       :as   args}]
   [el
-   (r/merge-props
+   (merge
     (cond-> {:on-click on-click
              :id id
              :class (cond-> "mdl-button mdl-js-button"
