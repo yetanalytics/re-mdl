@@ -2,6 +2,8 @@
 
 Yet another library of reusable UI components for Reagent
 
+[![Clojars Project](http://clojars.org/com.yetanalytics/re-mdl/latest-version.svg)](http://clojars.org/com.yetanalytics/re-mdl)
+
 ## Overview
 
 Re-mdl gives you reusable components for use with Google's [Material Design Lite](http://www.getmdl.io/) in the style of [re-com](https://github.com/Day8/re-com). Re-mdl is in active development, and is not ready for use!!!
