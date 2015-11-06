@@ -111,3 +111,49 @@
         :checked? (= val checked)
         :ripple-effect? ripple-effect?])
      choices))))
+
+
+(defn icon-toggle [& {:keys [checked? labels]}]
+  (let [toggle-state (r/atom checked?)
+        [checked-label unchecked-label] labels]
+    (r/create-class
+     {:component-did-mount
+      (fn [this]
+        (let [node (r/dom-node this)]
+          (mdl-init! node)
+          (when checked?
+            (-> node .-MaterialIconToggle .check))))
+      :reagent-render
+      (fn [& {:keys [handler-fn disabled? ripple-effect?
+                    id class attr]
+             :or {handler-fn (fn [e] (.log
+                                     js/console
+                                     (str "Unhandled icon-toggle: "
+                                          (-> e
+                                              .-target
+                                              .-checked))))}
+             :as   args}]
+        [:label
+         (r/merge-props
+          {:for id
+
+           :class (cond-> "mdl-icon-toggle mdl-js-icon-toggle"
+                    class (str " " class)
+                    ripple-effect? (str " mdl-js-ripple-effect"))}
+          attr)
+         [:input.mdl-icon-toggle__input
+          (r/merge-props
+           (cond->
+               {:type "checkbox"
+                :id id
+                :on-change (fn [e]
+                             (let [val (-> e
+                                           .-target
+                                           .-checked)]
+                               (reset! toggle-state val)
+                               (handler-fn val)))}
+             disabled? (assoc :disabled true))
+           attr)]
+         [:i.mdl-icon-toggle__label.material-icons (if @toggle-state
+                                                     checked-label
+                                                     unchecked-label)]])})))

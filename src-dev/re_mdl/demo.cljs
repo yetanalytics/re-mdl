@@ -243,19 +243,23 @@
      :step 2
      :handler-fn #(print "slider: " %)]]])
 
-(defn checkbox-demo []
-  [toggle/checkbox
-   :id "some-id"
-   :checked? true
-   :handler-fn #(print "checkbox: " %)])
 
-(defn radio-demo []
-  [toggle/radios
-   :name "quxx"
-   :handler-fn #(print %)
-   :choices
-   [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]])
-
+(defn toggles-demo []
+  [:div.toggles-demo
+   [toggle/checkbox
+    :id "some-id"
+    :checked? true
+    :handler-fn #(print "checkbox: " %)]
+   [toggle/radios
+    :name "quxx"
+    :handler-fn #(print "radio: " %)
+    :choices
+    [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]]
+   [toggle/icon-toggle
+    :id "wat"
+    :labels ["format_bold" "format_italic"]
+    :ripple-effect? true
+    :handler-fn #(print (str "icon-toggle: " %))]])
 
 (defn app-view []
   [:div ;; extra wrapper div so mdl doesn't clobber the root
@@ -269,8 +273,7 @@
      [loading-spinner-demo]
      [menu-demo]
      [slider-demo]
-     [checkbox-demo]
-     [radio-demo]
+     [toggles-demo]
      ]
     [mega-footer-demo]
     [mini-footer-demo]]])
