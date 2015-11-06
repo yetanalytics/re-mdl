@@ -11,7 +11,8 @@
    [re-mdl.components.menu :as menu]
    [re-mdl.components.slider :as slider]
    [re-mdl.components.toggle :as toggle]
-   [re-mdl.components.table :as table]))
+   [re-mdl.components.table :as table]
+   [re-mdl.components.textfield :as textfield]))
 
 (enable-console-print!)
 
@@ -290,6 +291,49 @@
      [0 12 "hey"]]]])
 
 
+(defn text-field-demo []
+  [:div.text-field-demo
+   [grid-demo
+    [textfield/textfield
+    :label "Basic Text Field"
+    :id "text-field-demo-basic"
+    :handler-fn #(print "basic text field: " %)]
+   [textfield/textfield
+    :label "With Init Val"
+    :id "text-field-demo-init-val"
+    :handler-fn #(print "init-val text field: " %)
+    :init-val "Foo"]
+   [textfield/textfield
+    :label "Basic Text Area"
+    :id "text-field-demo-basic-textarea"
+    :type :textarea
+    :rows 2
+    :handler-fn #(print "basic text area: " %)]
+   [textfield/textfield
+    :id "text-field-demo-numeric"
+    :label "Numeric validation"
+    :pattern "-?[0-9]*(\\.[0-9]+)?"
+    :invalid-message "Must be a number, yo."
+    :handler-fn #(print "numeric text field: " %)]
+   [textfield/textfield
+    :label "Floating Label"
+    :id "text-field-demo-float"
+    :handler-fn #(print "floating field: " %)
+    :floating-label? true]
+   [textfield/textfield
+    :label "Expandable"
+    :id "text-field-demo-expandable"
+    :handler-fn #(print "expandable: " %)
+    :expandable? true
+    :expand-icon "search"]
+   [textfield/textfield
+    :label "Floating Multiline Textarea"
+    :id "text-field-demo-multiline-textarea"
+    :type :textarea
+    :handler-fn #(print "multiline textarea: " %)
+    :rows 2
+    :maxrows 8]]])
+
 (def demo-map
   (sorted-map
    :badge badge-demo
@@ -301,7 +345,9 @@
    :menu menu-demo
    :slider slider-demo
    :toggles toggles-demo
-   :table table-demo))
+   :table table-demo
+   :text-field text-field-demo
+   ))
 
 (defn app-view []
   (let [current-demo (r/atom :badge)]

@@ -4,7 +4,7 @@
 
 (defn button*
   [& {:keys [el label icon on-click
-             disabled? raised? fab? mini-fab? colored? primary? accent? ripple-effect?
+             disabled? raised? fab? mini-fab? colored? primary? accent? ripple-effect? for
              id class attr]
       :or   {el :button}
       :as   args}]
@@ -22,7 +22,8 @@
                       primary? (str " mdl-button--primary")
                       accent? (str " mdl-button--accent")
                       ripple-effect? (str " mdl-js-ripple-effect"))}
-      disabled? (assoc :disabled true))
+      disabled? (assoc :disabled true)
+      for (assoc :for for))
     attr)
    (if icon
      [:i.material-icons icon]
