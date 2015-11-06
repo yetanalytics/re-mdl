@@ -12,7 +12,8 @@
    [re-mdl.components.slider :as slider]
    [re-mdl.components.toggle :as toggle]
    [re-mdl.components.table :as table]
-   [re-mdl.components.textfield :as textfield]))
+   [re-mdl.components.textfield :as textfield]
+   [re-mdl.components.tooltip :as tooltip]))
 
 (enable-console-print!)
 
@@ -334,6 +335,32 @@
     :rows 2
     :maxrows 8]]])
 
+(defn tooltip-demo []
+  [:div.tooltip-demo
+   [grid-demo
+    [:div
+     {:id "tooltip-demo-div"}
+     "A Div"]
+    [tooltip/tooltip
+     :for "tooltip-demo-div"
+     :children ["Can have tooltips"]]
+
+    [:p
+     {:id "tooltip-demo-p"}
+     "A p"]
+
+    [tooltip/tooltip
+     :for "tooltip-demo-p"
+     :children ["Can also have tooltips"]]
+
+    [:span
+     {:id "tooltip-demo-span"}
+     "A span"]
+    [tooltip/tooltip
+     :for "tooltip-demo-span"
+     :large? true
+     :children ["Giant tooltip!"]]]])
+
 (def demo-map
   (sorted-map
    :badge badge-demo
@@ -347,6 +374,7 @@
    :toggles toggles-demo
    :table table-demo
    :text-field text-field-demo
+   :tooltip tooltip-demo
    ))
 
 (defn app-view []
