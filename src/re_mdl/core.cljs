@@ -12,7 +12,8 @@
    [re-mdl.components.toggle :as toggle]
    [re-mdl.components.table :as table]
    [re-mdl.components.textfield :as textfield]
-   [re-mdl.components.tooltip :as tooltip]))
+   [re-mdl.components.tooltip :as tooltip]
+   [re-mdl.components.snackbar :as snackbar]))
 
 
 (def badge badge/badge)
@@ -139,3 +140,8 @@
 ;; tooltip
 
 (def tooltip tooltip/tooltip)
+
+
+;; snackbar
+
+(def snackbar snackbar/snackbar)
