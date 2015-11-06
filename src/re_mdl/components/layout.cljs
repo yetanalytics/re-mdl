@@ -128,17 +128,19 @@
         children))
 
 (defn nav-link [& {:keys [large-screen-only? small-screen-only?
-                          href content
+                          href content on-click
                           id class attr]
               :as   args}]
   [:a
    (r/merge-props
-    {:id id
-     :href href
-     :class (cond-> "mdl-navigation__link"
-              class (str " " class)
-              large-screen-only? (str " mdl-layout--large-screen-only")
-              small-screen-only? (str " mdl-layout--small-screen-only"))}
+    (cond->
+        {:id id
+         :href href
+         :class (cond-> "mdl-navigation__link"
+                  class (str " " class)
+                  large-screen-only? (str " mdl-layout--large-screen-only")
+                  small-screen-only? (str " mdl-layout--small-screen-only"))}
+      on-click (assoc :on-click on-click))
     attr)
    content])
 

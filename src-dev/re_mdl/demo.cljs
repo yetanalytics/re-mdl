@@ -10,7 +10,8 @@
    [re-mdl.components.loading :as loading]
    [re-mdl.components.menu :as menu]
    [re-mdl.components.slider :as slider]
-   [re-mdl.components.toggle :as toggle]))
+   [re-mdl.components.toggle :as toggle]
+   [re-mdl.components.table :as table]))
 
 (enable-console-print!)
 
@@ -170,30 +171,34 @@
        [:li "Viserys"]
        [:li "Danerys"]]]]]])
 
-(defn demo-layout []
-  (let [kids (r/children (r/current-component))]
-    [layout/layout
-     :fixed-header? true
+(defn demo-layout [& {:keys [demo-map current-demo-ra children]}]
+  [layout/layout
+   :fixed-header? true
+   :children
+   [[layout/header
      :children
-     [[layout/header
-       :children
-       [[layout/header-row
-         :children
-         [[layout/title :label "Material Design Lite"]
-          [layout/spacer]
-          [layout/nav
-           :children
-           [[layout/nav-link :href "/#/" :content "Home"]
-            [layout/nav-link :href "/#/about" :content "About"]]]]]]]
-      [layout/drawer
+     [[layout/header-row
        :children
        [[layout/title :label "Material Design Lite"]
+        [layout/spacer]
         [layout/nav
          :children
          [[layout/nav-link :href "/#/" :content "Home"]
-          [layout/nav-link :href "/#/about" :content "About"]]]]]
-      [layout/content
-       :children kids]]]))
+          [layout/nav-link :href "/#/about" :content "About"]]]]]]]
+    [layout/drawer
+     :children
+     [[layout/title :label "Material Design Lite"]
+      [layout/nav
+       :children
+       (into []
+             (for [demo (keys demo-map)]
+               [layout/nav-link
+                :href "#"
+                :content (name demo)
+                :on-click (fn [e]
+                            (reset! current-demo-ra demo))]))]]]
+    [layout/content
+     :children children]]])
 
 
 (defn loading-progress-demo []
@@ -267,22 +272,37 @@
     :ripple-effect? true
     :handler-fn #(print (str "switch: " %))]])
 
+(defn table-demo []
+  [:div.table-demo
+   [table/table-stub]])
+
+
+(def demo-map
+  (sorted-map
+   :badge badge-demo
+   :button button-demo
+   :card card-demo
+   :tab tab-demo
+   :loading-progress loading-progress-demo
+   :loading-spinner loading-spinner-demo
+   :menu menu-demo
+   :slider slider-demo
+   :toggles toggles-demo
+   :table table-demo))
+
 (defn app-view []
-  [:div ;; extra wrapper div so mdl doesn't clobber the root
-   [demo-layout
-    [grid-demo
-     [badge-demo]
-     [button-demo]
-     [card-demo]
-     [tab-demo]
-     [loading-progress-demo]
-     [loading-spinner-demo]
-     [menu-demo]
-     [slider-demo]
-     [toggles-demo]
-     ]
-    [mega-footer-demo]
-    [mini-footer-demo]]])
+  (let [current-demo (r/atom :badge)]
+    (fn []
+     [:div ;; extra wrapper div so mdl doesn't clobber the root
+      [demo-layout
+       :demo-map demo-map
+       :current-demo-ra current-demo
+       :children
+       [[grid-demo
+         [(@current-demo demo-map)]
+        ]
+       [mega-footer-demo]
+       [mini-footer-demo]]]])))
 
 
 (defn ^:export run []
