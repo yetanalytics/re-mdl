@@ -103,15 +103,16 @@
                         children
                         id class attr]
                  :as   args}]
-  [:main
-   (merge
-    {:id id
-     :class (cond-> "mdl-layout__content"
-              class (str " " class)
-              large-screen-only? (str " mdl-layout--large-screen-only")
-              small-screen-only? (str " mdl-layout--small-screen-only"))}
-    attr)
-   (into [:div.page-content] children)])
+  (into
+   [:main
+    (merge
+     {:id id
+      :class (cond-> "mdl-layout__content"
+               class (str " " class)
+               large-screen-only? (str " mdl-layout--large-screen-only")
+               small-screen-only? (str " mdl-layout--small-screen-only"))}
+     attr)]
+   children))
 
 (defn nav [& {:keys [large-screen-only? small-screen-only?
                      children
