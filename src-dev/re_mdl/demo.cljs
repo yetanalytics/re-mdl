@@ -247,19 +247,25 @@
 (defn toggles-demo []
   [:div.toggles-demo
    [toggle/checkbox
-    :id "some-id"
+    :id "checkbox-demo"
     :checked? true
+    :label "Checkbox"
     :handler-fn #(print "checkbox: " %)]
    [toggle/radios
-    :name "quxx"
+    :name "radio-demo"
     :handler-fn #(print "radio: " %)
     :choices
     [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]]
    [toggle/icon-toggle
-    :id "wat"
+    :id "icon-toggle-demo"
     :labels ["format_bold" "format_italic"]
     :ripple-effect? true
-    :handler-fn #(print (str "icon-toggle: " %))]])
+    :handler-fn #(print (str "icon-toggle: " %))]
+   [toggle/switch
+    :id "switch-demo"
+    :label "On/Off"
+    :ripple-effect? true
+    :handler-fn #(print (str "switch: " %))]])
 
 (defn app-view []
   [:div ;; extra wrapper div so mdl doesn't clobber the root

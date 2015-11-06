@@ -35,11 +35,10 @@
         (cond->
             {:type "checkbox"
              :id id
-             :on-change (when handler-fn
-                          (fn [e] (-> e
-                                    .-target
-                                    .-checked
-                                    handler-fn)))}
+             :on-change (fn [e] (-> e
+                                   .-target
+                                   .-checked
+                                   handler-fn))}
           disabled? (assoc :disabled true))
         attr)]
        (when label
@@ -157,3 +156,45 @@
          [:i.mdl-icon-toggle__label.material-icons (if @toggle-state
                                                      checked-label
                                                      unchecked-label)]])})))
+
+
+(defn switch [& {:keys [checked?]}]
+  (r/create-class
+   {:component-did-mount
+    (fn [this]
+      (let [node (r/dom-node this)]
+        (mdl-init! node)
+        (when checked?
+          (-> node .-MaterialSwitch .check))))
+    :reagent-render
+    (fn [& {:keys [handler-fn disabled? ripple-effect?
+                  label
+                  id class attr]
+           :or {handler-fn (fn [e] (.log
+                                   js/console
+                                   (str "Unhandled switch: "
+                                        (-> e
+                                            .-target
+                                            .-checked))))}
+           :as   args}]
+      [:label
+       (r/merge-props
+        {:for id
+
+         :class (cond-> "mdl-switch mdl-js-switch"
+                  class (str " " class)
+                  ripple-effect? (str " mdl-js-ripple-effect"))}
+        attr)
+       [:input.mdl-switch__input
+       (r/merge-props
+        (cond->
+            {:type "checkbox"
+             :id id
+             :on-change (fn [e] (-> e
+                                   .-target
+                                   .-checked
+                                   handler-fn))}
+          disabled? (assoc :disabled true))
+        attr)]
+       (when label
+         [:span.mdl-switch__label label])])}))
