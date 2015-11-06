@@ -183,8 +183,13 @@
         [layout/spacer]
         [layout/nav
          :children
-         [[layout/nav-link :href "/#/" :content "Home"]
-          [layout/nav-link :href "/#/about" :content "About"]]]]]]]
+         (into []
+               (for [demo (keys demo-map)]
+                 [layout/nav-link
+                  :href "#"
+                  :content (name demo)
+                  :on-click (fn [e]
+                              (reset! current-demo-ra demo))]))]]]]]
     [layout/drawer
      :children
      [[layout/title :label "Material Design Lite"]
@@ -274,7 +279,15 @@
 
 (defn table-demo []
   [:div.table-demo
-   [table/table-stub]])
+   [table/table
+    :id "table-demo"
+    :selectable? true
+    :headers
+    [["Foo"] ["Bar"] ["Baz" :non-numeric true]]
+    :rows
+    [[3 6 "wat"]
+     [7 3 "foo"]
+     [0 12 "hey"]]]])
 
 
 (def demo-map
