@@ -9,7 +9,8 @@
    [re-mdl.components.layout :as layout]
    [re-mdl.components.loading :as loading]
    [re-mdl.components.menu :as menu]
-   [re-mdl.components.slider :as slider]))
+   [re-mdl.components.slider :as slider]
+   [re-mdl.components.toggle :as toggle]))
 
 (enable-console-print!)
 
@@ -242,6 +243,20 @@
      :step 2
      :handler-fn #(print "slider: " %)]]])
 
+(defn checkbox-demo []
+  [toggle/checkbox
+   :id "some-id"
+   :checked? true
+   :handler-fn #(print "checkbox: " %)])
+
+(defn radio-demo []
+  [toggle/radios
+   :name "quxx"
+   :handler-fn #(print %)
+   :choices
+   [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]])
+
+
 (defn app-view []
   [:div ;; extra wrapper div so mdl doesn't clobber the root
    [demo-layout
@@ -253,7 +268,10 @@
      [loading-progress-demo]
      [loading-spinner-demo]
      [menu-demo]
-     [slider-demo]]
+     [slider-demo]
+     [checkbox-demo]
+     [radio-demo]
+     ]
     [mega-footer-demo]
     [mini-footer-demo]]])
 
