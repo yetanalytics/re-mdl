@@ -354,7 +354,7 @@
    [mdl/button
     :label "toast!"
     :on-click #(mdl/toast! :message
-                           "hey there dood"
+                           "hey there!"
                            :timeout
                            6000)]])
 
