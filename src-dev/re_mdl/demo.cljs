@@ -349,6 +349,15 @@
      :large? true
      :children ["Giant tooltip!"]]]])
 
+(defn snackbar-demo []
+  [:div.snackbar-demo
+   [mdl/button
+    :label "toast!"
+    :on-click #(mdl/toast! :message
+                           "hey there dood"
+                           :timeout
+                           6000)]])
+
 (def demo-map
   (sorted-map
    :badge badge-demo
@@ -363,6 +372,7 @@
    :table table-demo
    :text-field text-field-demo
    :tooltip tooltip-demo
+   :snackbar snackbar-demo
    ))
 
 (defn app-view []

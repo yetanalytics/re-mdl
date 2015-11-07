@@ -145,3 +145,4 @@
 ;; snackbar
 
 (def snackbar snackbar/snackbar)
+(def toast! snackbar/toast!)
