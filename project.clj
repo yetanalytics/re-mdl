@@ -19,7 +19,7 @@
 
   :cljsbuild {
     :builds [{:id "dev"
-              :source-paths ["src/cljs" "src-dev"]
+              :source-paths ["src/cljs" "src/cljc" "src-dev"]
 
               :figwheel { :on-jsload "re-mdl.demo/on-js-reload" }
 
@@ -32,7 +32,7 @@
                          :output-dir "resources/public/js/compiled/out"
                          :source-map-timestamp true }}
              {:id "min"
-              :source-paths ["src/cljs"]
+              :source-paths ["src/cljs" "src/cljc"]
               :compiler {:output-to "resources/public/js/compiled/re_mdl.js"
                          :main re-mdl.core
                          :externs ["material/material.ext.js"]
