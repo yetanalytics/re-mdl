@@ -1,6 +1,5 @@
 (ns re-mdl.components.layout
-  (:require [reagent.core :as r]
-            [re-mdl.util :refer [wrap-mdl]]))
+  (:require [re-mdl.util :refer [wrap-mdl]]))
 
 (defn layout* [& {:keys [fixed-drawer? fixed-header? fixed-tabs?
                          children

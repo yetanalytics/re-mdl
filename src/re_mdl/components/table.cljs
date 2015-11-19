@@ -1,6 +1,5 @@
 (ns re-mdl.components.table
-  (:require [reagent.core :as r]
-            [re-mdl.util :refer [wrap-mdl]]))
+  (:require [re-mdl.util :refer [wrap-mdl]]))
 
 
 (def valid-shadows #{2 3 4 6 8 16})

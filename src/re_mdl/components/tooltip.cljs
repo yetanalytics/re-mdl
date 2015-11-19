@@ -1,6 +1,5 @@
 (ns re-mdl.components.tooltip
-  (:require [reagent.core :as r]
-            [re-mdl.util :refer [wrap-mdl]]))
+  (:require [re-mdl.util :refer [wrap-mdl]]))
 
 
 (defn tooltip* [& {:keys [for large?

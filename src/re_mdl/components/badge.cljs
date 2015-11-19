@@ -1,5 +1,4 @@
-(ns re-mdl.components.badge
-  (:require [reagent.core :as r]))
+(ns re-mdl.components.badge)
 
 (defn badge
   [& {:keys [el child badge-label no-background? overlap? icon?

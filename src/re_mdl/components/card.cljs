@@ -1,5 +1,4 @@
-(ns re-mdl.components.card
-  (:require [reagent.core :as r]))
+(ns re-mdl.components.card)
 
 (defn title [& {:keys [text subtitle-text header
                        border?

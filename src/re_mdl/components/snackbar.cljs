@@ -1,6 +1,4 @@
-(ns re-mdl.components.snackbar
-  (:require [reagent.core :as r]
-            [re-mdl.util :refer [wrap-mdl]]))
+(ns re-mdl.components.snackbar)
 
 (defn toast! [& {:keys [message action-handler action-text timeout] :as args}]
   (-> (.querySelector js/document ".mdl-js-snackbar")

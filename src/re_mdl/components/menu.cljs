@@ -1,6 +1,5 @@
 (ns re-mdl.components.menu
-  (:require [reagent.core :as r]
-            [re-mdl.util :refer [wrap-mdl]]))
+  (:require [re-mdl.util :refer [wrap-mdl]]))
 
 
 (defn item [& {:keys [label disabled? top-left? top-right? bottom-right?

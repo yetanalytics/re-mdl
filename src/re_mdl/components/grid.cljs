@@ -1,5 +1,4 @@
-(ns re-mdl.components.grid
-  (:require [reagent.core :as r]))
+(ns re-mdl.components.grid)
 
 
 (defn grid

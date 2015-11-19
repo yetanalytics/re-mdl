@@ -1,6 +1,5 @@
 (ns re-mdl.components.button
-  (:require [reagent.core :as r]
-            [re-mdl.util :refer [wrap-mdl]]))
+  (:require [re-mdl.util :refer [wrap-mdl]]))
 
 (defn button*
   [& {:keys [el label icon on-click
