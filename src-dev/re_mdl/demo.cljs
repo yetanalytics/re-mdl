@@ -258,7 +258,7 @@
     [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]]
    [mdl/toggle-icon-toggle
     :id "icon-toggle-demo"
-    :labels ["format_bold" "format_italic"]
+    :icon "format_bold"
     :ripple-effect? true
     :handler-fn #(print (str "icon-toggle: " %))]
    [mdl/toggle-switch

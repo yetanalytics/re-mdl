@@ -1,22 +1,14 @@
 (ns re-mdl.components.textfield
-  (:require [reagent.core :as r]
+  (:require #?(:cljs [reagent.core :as r])
             [re-mdl.util :refer [mdl-init!]]
             [re-mdl.components.button :refer [button]]))
 
-(defn textfield [& {:keys [init-val]}]
-  (r/create-class
-   {:component-did-mount
-    (fn [this]
-      (let [node (r/dom-node this)]
-        (doto node
-          mdl-init!
-          (-> .-MaterialTextfield (.change init-val)))))
-    :reagent-render
-    (fn [& {:keys [type rows maxrows floating-label? expandable? expand-icon
-                  label pattern invalid-message handler-fn
-                  id class attr]
-           :or {type :text}
-           :as args}]
+(defn textfield*
+  [& {:keys [type rows maxrows floating-label? expandable? expand-icon
+             label pattern invalid-message handler-fn
+             id class attr]
+      :or {type :text}
+      :as args}]
       (when type
         (assert
          (#{:text :textarea} type) "Invalid type, must be :text or :textarea"))
@@ -34,11 +26,12 @@
                           {:class "mdl-textfield__input"
                            :type "text"
                            :id id
-                           :on-change (fn [e]
-                                        (-> e
-                                            .-target
-                                            .-value
-                                            handler-fn))}
+                           #?@(:cljs
+                               [:on-change (fn [e]
+                                             (-> e
+                                                 .-target
+                                                 .-value
+                                                 handler-fn))])}
                         (= type :textarea) (assoc :rows rows)
                         pattern (assoc :pattern pattern)
                         maxrows (assoc :maxrows maxrows))]
@@ -69,4 +62,18 @@
                      expandable? (str " mdl-textfield--expandable"))}
            attr)
           ]
-         body)))}))
+         body)))
+
+(defn textfield [& {:keys [init-val]
+                    :as args}]
+  #?(:cljs
+     (r/create-class
+      {:component-did-mount
+       (fn [this]
+         (let [node (r/dom-node this)]
+           (doto node
+             mdl-init!
+             (-> .-MaterialTextfield (.change init-val)))))
+       :reagent-render
+       textfield*})
+     :clj (apply textfield* (flatten args))))

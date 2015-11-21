@@ -1,6 +1,6 @@
 (ns re-mdl.core
   (:require
-   [material]
+   #?(:cljs [material])
    [re-mdl.components.badge :as badge]
    [re-mdl.components.button :as button]
    [re-mdl.components.card :as card]

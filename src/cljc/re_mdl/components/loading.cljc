@@ -1,6 +1,6 @@
 (ns re-mdl.components.loading
   (:require
-   [reagent.core :as r]
+   #?(:cljs [reagent.core :as r])
    [re-mdl.util :refer [wrap-mdl
                         mdl-init-mount]]))
 
@@ -15,7 +15,9 @@
      :style {:width width}
      :class (cond-> "mdl-progress mdl-js-progress"
               class (str " " class)
-              indeterminate? (str " mdl-progress__indeterminate"))}
+              #?(:cljs indeterminate?
+                 :clj true) ;; always indeterminate for clj
+              (str " mdl-progress__indeterminate"))}
     attr)])
 
 (defn get-progress [& {:keys [model]
@@ -23,18 +25,20 @@
   model)
 
 (def progress
-  (r/create-class
-   {:reagent-render progress*
-    :component-did-mount
-    (fn [this]
-      (mdl-init-mount this))
-    :component-did-update
-    (fn [this new-argv]
-      (let [node (r/dom-node this)
-            pct-done (apply get-progress (rest new-argv))]
-        (-> node
-            .-MaterialProgress
-            (.setProgress pct-done))))}))
+  #?(:cljs
+     (r/create-class
+      {:reagent-render progress*
+       :component-did-mount
+       (fn [this]
+         (mdl-init-mount this))
+       :component-did-update
+       (fn [this new-argv]
+         (let [node (r/dom-node this)
+               pct-done (apply get-progress (rest new-argv))]
+           (-> node
+               .-MaterialProgress
+               (.setProgress pct-done))))})
+     :clj progress*))
 
 
 (defn spinner* [& {:keys [el is-active? single-color?
