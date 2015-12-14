@@ -8,10 +8,14 @@
                  [org.clojure/clojurescript "1.7.122"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  ;; [cljsjs/material "1.0.4-0"]
-                 [reagent "0.5.1"]]
+                 [reagent "0.5.1" :exclusions [cljsjs/react]]
+                 [cljsjs/react-with-addons "0.13.3-0"]
+                 [cljs-react-test "0.1.3-SNAPSHOT"]
+                 [prismatic/dommy "1.1.0"]]
 
   :plugins [[lein-cljsbuild "1.1.1-SNAPSHOT"]
-            [lein-figwheel "0.4.1"]]
+            [lein-figwheel "0.4.1"]
+            [lein-doo "0.1.6"]]
 
   :source-paths ["src/cljs" "src/cljc"]
 
@@ -20,9 +24,7 @@
   :cljsbuild {
     :builds [{:id "dev"
               :source-paths ["src/cljs" "src/cljc" "src-dev"]
-
               :figwheel { :on-jsload "re-mdl.demo/on-js-reload" }
-
               :compiler {:main re-mdl.demo
                          :foreign-libs [{:file "material/material.js"
                                          :file-min "material/material.min.js"
@@ -31,6 +33,7 @@
                          :output-to "resources/public/js/compiled/re_mdl.js"
                          :output-dir "resources/public/js/compiled/out"
                          :source-map-timestamp true }}
+
              {:id "min"
               :source-paths ["src/cljs" "src/cljc"]
               :compiler {:output-to "resources/public/js/compiled/re_mdl.js"
@@ -40,7 +43,13 @@
                                          :file-min "material/material.min.js"
                                          :provides ["material"]}]
                          :optimizations :advanced
-                         :pretty-print false}}]}
+                         :pretty-print false}}
+
+             {:id "test"
+              :source-paths ["src/cljs" "src/cljc" "src-dev" "test/cljs"]
+              :compiler {:output-to "resources/public/js/compiled/test.js"
+                         :main re-mdl.runner
+                         :optimizations :none}}]}
 
   :figwheel {
              ;; :http-server-root "public" ;; default and assumes "resources"
