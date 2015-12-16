@@ -40,7 +40,8 @@
   (is (= disabled? (.getAttribute comp "disabled"))))
 
 (defn check-for [comp for]
-  (is (= for (.getAttribute comp for))))
+  (is (= for (.getAttribute comp "for"))))
+
 
 (defn check-component [comp {:keys [id class label for icon disabled? el]
                              :or {el :button
@@ -84,6 +85,16 @@
     (check-component button {:icon "add"
                              :class "mdl-button mdl-js-button mdl-button--icon"})))
 
+(deftest on-click
+  (let [some-state (atom "foo")
+        some-fn (fn [_] (reset! some-state "bar"))
+        button [button/button
+                :on-click some-fn]]
+    (r/render button c)
+    (let [node (sel1 c [:button])]
+      (sim/click node nil))
+    (is (= @some-state "bar"))))
+
 (deftest disabled?
   (let [button [button/button
                 :disabled true]]
@@ -92,7 +103,8 @@
 (deftest for*
   (let [button [button/button
                 :for "some_id"]]
-    (check-component button {:class "mdl-button mdl-js-button"})))
+    (check-component button {:for "some_id"
+                             :class "mdl-button mdl-js-button"})))
 
 (deftest classes
   (test-mdl-class-args button/button {:raised? "mdl-button--raised"
