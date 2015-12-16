@@ -34,6 +34,14 @@ To create a production build run:
 And open your browser in `resources/public/index.html`. You will not
 get live reloading, nor a REPL.
 
+## Tests
+
+Using [phantomjs](http://phantomjs.org/):
+
+    lein doo phantom test once
+
+Thanks, [gadfly361](https://github.com/gadfly361)!
+
 ## License
 
 Copyright © 2015 Yet Analytics Inc
