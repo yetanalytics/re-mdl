@@ -25,9 +25,6 @@
               :figwheel { :on-jsload "re-mdl.demo/on-js-reload" }
 
               :compiler {:main re-mdl.demo
-                         :foreign-libs [{:file "material/material.js"
-                                         :file-min "material/material.min.js"
-                                         :provides ["material"]}]
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/re_mdl.js"
                          :output-dir "resources/public/js/compiled/out"
@@ -36,10 +33,6 @@
               :source-paths ["src/cljc"]
               :compiler {:output-to "resources/public/js/compiled/re_mdl.js"
                          :main re-mdl.core
-                         :externs ["material/material.ext.js"]
-                         :foreign-libs [{:file "material/material.js"
-                                         :file-min "material/material.min.js"
-                                         :provides ["material"]}]
                          :optimizations :advanced
                          :pretty-print false}}]}
 
