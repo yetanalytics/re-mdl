@@ -6,13 +6,16 @@
 
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
-                 ;; [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [cljsjs/material "1.0.6-0"]
                  [reagent "0.5.1" :exclusions [cljsjs/react]]
-                 [cljsjs/react-with-addons "0.13.3-0"]]
+                 [cljsjs/react-with-addons "0.13.3-0"]
+                 [cljs-react-test "0.1.3-SNAPSHOT"]
+                 [prismatic/dommy "1.1.0"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]
-            [lein-figwheel "0.5.0-2"]]
+            [lein-figwheel "0.5.0-2"]
+            [lein-doo "0.1.6"]]
 
   :source-paths ["src/cljc"]
 
@@ -21,20 +24,25 @@
   :cljsbuild {
     :builds [{:id "dev"
               :source-paths ["src/cljc" "src-dev"]
-
               :figwheel { :on-jsload "re-mdl.demo/on-js-reload" }
-
               :compiler {:main re-mdl.demo
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/re_mdl.js"
                          :output-dir "resources/public/js/compiled/out"
                          :source-map-timestamp true }}
+
              {:id "min"
               :source-paths ["src/cljc"]
               :compiler {:output-to "resources/public/js/compiled/re_mdl.js"
                          :main re-mdl.core
                          :optimizations :advanced
-                         :pretty-print false}}]}
+                         :pretty-print false}}
+
+             {:id "test"
+              :source-paths ["src/cljs" "src/cljc" "src-dev" "test/cljs"]
+              :compiler {:output-to "resources/public/js/compiled/test.js"
+                         :main re-mdl.runner
+                         :optimizations :none}}]}
 
   :figwheel {
              ;; :http-server-root "public" ;; default and assumes "resources"
