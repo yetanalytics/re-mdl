@@ -39,7 +39,7 @@
                          :pretty-print false}}
 
              {:id "test"
-              :source-paths ["src/cljs" "src/cljc" "src-dev" "test/cljs"]
+              :source-paths ["src/cljc" "src-dev" "test/cljs"]
               :compiler {:output-to "resources/public/js/compiled/test.js"
                          :main re-mdl.runner
                          :optimizations :none}}]}
