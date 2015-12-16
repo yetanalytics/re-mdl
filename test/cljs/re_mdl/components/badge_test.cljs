@@ -5,7 +5,10 @@
             [cljs-react-test.utils :as tu]
             [dommy.core :as dommy :refer-macros [sel1]]
             [reagent.core :as r]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [re-mdl.test-helpers :refer [check-class
+                                         check-attribute
+                                         check-inner-html]]))
 
 
 ;; util
@@ -18,14 +21,11 @@
             (test-fn)
             (tu/unmount! c))))
 
-(defn check-class [comp class]
-  (is (= class (.-className comp))))
-
 (defn check-label [comp label]
-  (is (= label (.getAttribute comp "data-badge"))))
+  (check-attribute comp "data-badge" label))
 
-(defn check-text [comp text]
-  (is (= text (.-innerHTML comp))))
+(def check-text check-inner-html)
+
 
 (defn check-component [comp {:keys [class label text el]
                              :or {el :span}}]

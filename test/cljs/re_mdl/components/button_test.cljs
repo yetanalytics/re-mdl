@@ -6,7 +6,11 @@
             [cljs-react-test.utils :as tu]
             [dommy.core :as dommy :refer-macros [sel1]]
             [reagent.core :as r]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [re-mdl.test-helpers :refer [check-id
+                                         check-class
+                                         check-attribute
+                                         check-inner-html]]))
 
 
 ;; util
@@ -19,14 +23,8 @@
             (test-fn)
             (tu/unmount! c))))
 
-(defn check-class [comp class]
-  (is (= class (.-className comp))))
-
-(defn check-id [comp id]
-  (is (= id (.-id comp))))
-
 (defn check-mdl-upgraded [comp]
-  (is (= ",MaterialButton" (.getAttribute comp "data-upgraded"))))
+  (check-attribute comp "data-upgraded" ",MaterialButton"))
 
 (defn check-label-or-icon [comp label-or-icon]
   (is (or
@@ -37,10 +35,10 @@
           (= (.-innerHTML inner) label-or-icon))))))
 
 (defn check-disabled? [comp disabled?]
-  (is (= disabled? (.getAttribute comp "disabled"))))
+  (check-attribute comp "disabled" disabled?))
 
 (defn check-for [comp for]
-  (is (= for (.getAttribute comp "for"))))
+  (check-attribute comp "for" for))
 
 
 (defn check-component [comp {:keys [id class label for icon disabled? el]
