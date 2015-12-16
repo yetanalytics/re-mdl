@@ -5,21 +5,22 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.122"]
-                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
-                 ;; [cljsjs/material "1.0.4-0"]
-                 [reagent "0.5.1"]]
+                 [org.clojure/clojurescript "1.7.170"]
+                 ;; [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [cljsjs/material "1.0.6-0"]
+                 [reagent "0.5.1" :exclusions [cljsjs/react]]
+                 [cljsjs/react-with-addons "0.13.3-0"]]
 
-  :plugins [[lein-cljsbuild "1.1.1-SNAPSHOT"]
-            [lein-figwheel "0.4.1"]]
+  :plugins [[lein-cljsbuild "1.1.1"]
+            [lein-figwheel "0.5.0-2"]]
 
-  :source-paths ["src/cljs" "src/cljc"]
+  :source-paths ["src/cljc"]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
   :cljsbuild {
     :builds [{:id "dev"
-              :source-paths ["src/cljs" "src/cljc" "src-dev"]
+              :source-paths ["src/cljc" "src-dev"]
 
               :figwheel { :on-jsload "re-mdl.demo/on-js-reload" }
 
@@ -32,7 +33,7 @@
                          :output-dir "resources/public/js/compiled/out"
                          :source-map-timestamp true }}
              {:id "min"
-              :source-paths ["src/cljs" "src/cljc"]
+              :source-paths ["src/cljc"]
               :compiler {:output-to "resources/public/js/compiled/re_mdl.js"
                          :main re-mdl.core
                          :externs ["material/material.ext.js"]
