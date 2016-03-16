@@ -1,6 +1,7 @@
 (ns re-mdl.core
   (:require
-   #?(:cljs [cljsjs.material])
+   #?@(:cljs [cljsjs.material
+              google.dialog-polyfill])
    [re-mdl.components.badge :as badge]
    [re-mdl.components.button :as button]
    [re-mdl.components.card :as card]
@@ -14,7 +15,6 @@
    [re-mdl.components.textfield :as textfield]
    [re-mdl.components.tooltip :as tooltip]
    [re-mdl.components.snackbar :as snackbar]))
-
 
 (def badge badge/badge)
 

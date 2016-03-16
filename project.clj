@@ -18,13 +18,13 @@
 
   :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.0-6"]]}}
 
-  :source-paths ["src/cljc"]
+  :source-paths ["src/cljc" "src/cljs"]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
   :cljsbuild {
     :builds [{:id "dev"
-              :source-paths ["src/cljc" "src-dev"]
+              :source-paths ["src/cljc" "src/cljs" "src-dev"]
               :figwheel { :on-jsload "re-mdl.demo/on-js-reload" }
               :compiler {:main re-mdl.demo
                          :asset-path "js/compiled/out"
@@ -33,14 +33,14 @@
                          :source-map-timestamp true }}
 
              {:id "min"
-              :source-paths ["src/cljc"]
+              :source-paths ["src/cljc" "src/cljs"]
               :compiler {:output-to "resources/public/js/compiled/re_mdl.js"
                          :main re-mdl.core
                          :optimizations :advanced
                          :pretty-print false}}
 
              {:id "test"
-              :source-paths ["src/cljc" "src-dev" "test/cljs"]
+              :source-paths ["src/cljc" "src/cljs" "src-dev" "test/cljs"]
               :compiler {:output-to "resources/public/js/compiled/test.js"
                          :main re-mdl.runner
                          :optimizations :none}}]}
