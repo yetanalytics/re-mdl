@@ -30,11 +30,17 @@
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/re_mdl.js"
                          :output-dir "resources/public/js/compiled/out"
-                         :source-map-timestamp true }}
+                         :source-map-timestamp true}}
+             {:id "demo"
+              :source-paths ["src/cljc" "src/cljs" "src-dev"]
+              :compiler {:main re-mdl.demo
+                         :output-to "resources/public/js/compiled/re_mdl.js"
+                         :optimizations :advanced
+                         :pretty-print false}}
 
              {:id "min"
               :source-paths ["src/cljc" "src/cljs"]
-              :compiler {:output-to "resources/public/js/compiled/re_mdl.js"
+              :compiler {:output-to "target/js/re_mdl.js"
                          :main re-mdl.core
                          :optimizations :advanced
                          :pretty-print false}}
