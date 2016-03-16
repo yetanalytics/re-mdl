@@ -14,7 +14,8 @@
    [re-mdl.components.table :as table]
    [re-mdl.components.textfield :as textfield]
    [re-mdl.components.tooltip :as tooltip]
-   [re-mdl.components.snackbar :as snackbar]))
+   [re-mdl.components.snackbar :as snackbar]
+   [re-mdl.components.dialog :as dialog]))
 
 (def badge badge/badge)
 
@@ -145,3 +146,5 @@
 ;; snackbar
 (def snackbar-target snackbar/snackbar-target)
 (def snackbar! snackbar/snackbar!)
+
+(def dialog dialog/dialog)

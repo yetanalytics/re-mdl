@@ -359,6 +359,27 @@
                               6000)]
    [mdl/snackbar-target]])
 
+(defn dialog-demo []
+  (let [open? (r/atom false)]
+    (fn []
+      [:div.dialog-demo
+       [mdl/button
+        :label "show-dialog"
+        :on-click #(reset! open? true)]
+
+       (when @open?
+         [mdl/dialog
+          :title "A Dialog"
+          :content [[:p "some text"]
+                    [:p "some more text"]]
+          :actions [[mdl/button
+                     :label "OK"
+                     :on-click #(.log js/console "fine")]
+                    [mdl/button
+                     :label "CLOSE"
+                     :on-click #(reset! open? false)
+                     ]]])])))
+
 (def demo-map
   (sorted-map
    :badge badge-demo
@@ -374,7 +395,7 @@
    :text-field text-field-demo
    :tooltip tooltip-demo
    :snackbar snackbar-demo
-   ))
+   :dialog dialog-demo))
 
 (defn app-view []
   (let [current-demo (r/atom :badge)]
