@@ -353,10 +353,11 @@
   [:div.snackbar-demo
    [mdl/button
     :label "toast!"
-    :on-click #(mdl/toast! :message
-                           "hey there!"
-                           :timeout
-                           6000)]])
+    :on-click #(mdl/snackbar! :message
+                              "hey there!"
+                              :timeout
+                              6000)]
+   [mdl/snackbar-target]])
 
 (def demo-map
   (sorted-map

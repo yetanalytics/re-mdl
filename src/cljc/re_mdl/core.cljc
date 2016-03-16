@@ -143,5 +143,5 @@
 
 
 ;; snackbar
-
-(def toast! snackbar/toast!)
+(def snackbar-target snackbar/snackbar-target)
+(def snackbar! snackbar/snackbar!)
