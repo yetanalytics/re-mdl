@@ -380,6 +380,130 @@
                      :on-click #(reset! open? false)
                      ]]])])))
 
+(defn list-demo []
+  [:div.list-demo
+   [:p "Simple list"]
+   [mdl/list-coll
+    :children
+    (into []
+          (for [s ["foo" "bar" "baz"]]
+            [mdl/list-item
+             :children
+             [[mdl/list-item-primary-content
+               :content s]]]))]
+
+
+
+   [:p "Icons"]
+   [mdl/list-coll
+    :children
+    (into []
+          (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
+            [mdl/list-item
+             :children
+             [[mdl/list-item-primary-content
+               :icon i
+               :content s]]]))]
+
+   [:p "Avatars"]
+
+   [mdl/list-coll
+    :children
+    (into []
+          (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
+            [mdl/list-item
+             :children
+             [[mdl/list-item-primary-content
+               :avatar i
+               :content s]]]))]
+
+   [:p "Actions"]
+
+   [mdl/list-coll
+    :children
+    (into []
+          (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
+            [mdl/list-item
+             :children
+             [[mdl/list-item-primary-content
+               :avatar i
+               :content s]
+              [mdl/list-item-secondary-action
+               :href "#"
+               :el :a
+               :icon "star"]]]))]
+
+   [:p "Input Actions"]
+
+   [mdl/list-coll
+    :children
+    (into []
+          (for [[i s c] [["person" "foo" [mdl/toggle-checkbox
+                                          :id "checkbox-list-demo"
+                                          :checked? true
+                                          :label "Checkbox"
+                                          :handler-fn #(print "checkbox: " %)]]
+                         ["people" "bar" [mdl/toggle-radios
+                                          :name "radio-list-demo"
+                                          :handler-fn #(print "radio: " %)
+                                          :choices
+                                          [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]]]
+                         ["star" "baz" [mdl/toggle-switch
+                                        :id "switch-list-demo"
+                                        :label "On/Off"
+                                        :ripple-effect? true
+                                        :handler-fn #(print (str "switch: " %))]]]]
+            [mdl/list-item
+             :children
+             [[mdl/list-item-primary-content
+               :avatar i
+               :content s]
+              [mdl/list-item-secondary-action
+               :el :span
+               :content c]]]))]
+
+   [:p "Two Line"]
+
+   [mdl/list-coll
+    :children
+    (into []
+          (for [[i s subt] [["person" "foo" "subtitle"] ["people" "bar" "subtitle"] ["star" "baz" "subtitle"]]]
+            [mdl/list-item
+             :item-type :two-line
+             :children
+             [[mdl/list-item-primary-content
+               :avatar i
+               :content s
+               :children
+               [[mdl/list-item-sub-title
+                :content subt]]]
+              [mdl/list-item-secondary-action
+               :href "#"
+               :el :a
+               :icon "star"]]]))]
+
+   [:p "Three Line"]
+
+   [mdl/list-coll
+    :children
+    (into []
+          (for [[i s txt] [["person" "foo" "longer text foo bar baz longer text foo bar baz"]
+                           ["people" "bar" "longer text foo bar baz longer text foo bar baz"]
+                           ["star" "baz" "longer text foo bar baz longer text foo bar baz"]]]
+            [mdl/list-item
+             :item-type :three-line
+             :children
+             [[mdl/list-item-primary-content
+               :avatar i
+               :content s
+               :children
+               [[mdl/list-item-text-body
+                 :content txt]]]
+              [mdl/list-item-secondary-action
+               :href "#"
+               :el :a
+               :icon "star"]]]))]])
+
 (def demo-map
   (sorted-map
    :badge badge-demo
@@ -395,7 +519,8 @@
    :text-field text-field-demo
    :tooltip tooltip-demo
    :snackbar snackbar-demo
-   :dialog dialog-demo))
+   :dialog dialog-demo
+   :list list-demo))
 
 (defn app-view []
   (let [current-demo (r/atom :badge)]
