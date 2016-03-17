@@ -43,9 +43,10 @@
                     (or href icon)))
           "href and icon only valid on <a>")
   [el
-   (merge {:id id
-           :class (cond-> "mdl-list__item-secondary-action"
-                    class (str " " class))}
+   (merge (cond-> {:id id
+                   :class (cond-> "mdl-list__item-secondary-action"
+                            class (str " " class))}
+            href (assoc :href href))
           attr)
 
    (or content
