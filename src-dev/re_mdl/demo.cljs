@@ -73,6 +73,7 @@
    (into []
          (for [kid kids]
            [mdl/cell
+            :col 12
             :children
             [kid]]))])
 
@@ -381,131 +382,157 @@
                      ]]])])))
 
 (defn list-demo []
-  [:div.list-demo
-   [:p "Simple list"]
-   [mdl/list-coll
-    :children
-    (into []
-          (for [s ["foo" "bar" "baz"]]
-            [mdl/list-item
-             :children
-             [[mdl/list-item-primary-content
-               :content s]]]))]
+  [mdl/grid
+   :children
+   [[mdl/cell
+     :children
+     [[:p "Simple list"]
+      [mdl/list-coll
+       :children
+       (into []
+             (for [s ["foo" "bar" "baz"]]
+               [mdl/list-item
+                :children
+                [[mdl/list-item-primary-content
+                  :content s]]]))]]]
 
 
 
-   [:p "Icons"]
-   [mdl/list-coll
-    :children
-    (into []
-          (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
-            [mdl/list-item
-             :children
-             [[mdl/list-item-primary-content
-               :icon i
-               :content s]]]))]
+    [mdl/cell
+     :children
+     [[:p "Icons"]
+      [mdl/list-coll
+       :children
+       (into []
+             (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
+               [mdl/list-item
+                :children
+                [[mdl/list-item-primary-content
+                  :icon i
+                  :content s]]]))]]]
 
-   [:p "Avatars"]
+    [mdl/cell
+     :children
+     [[:p "Avatars"]
 
-   [mdl/list-coll
-    :children
-    (into []
-          (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
-            [mdl/list-item
-             :children
-             [[mdl/list-item-primary-content
-               :avatar i
-               :content s]]]))]
+      [mdl/list-coll
+       :children
+       (into []
+             (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
+               [mdl/list-item
+                :children
+                [[mdl/list-item-primary-content
+                  :avatar i
+                  :content s]]]))]]]
 
-   [:p "Actions"]
+    [mdl/cell
+     :children
+     [[:p "Actions"]
 
-   [mdl/list-coll
-    :children
-    (into []
-          (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
-            [mdl/list-item
-             :children
-             [[mdl/list-item-primary-content
-               :avatar i
-               :content s]
-              [mdl/list-item-secondary-action
-               :href "#"
-               :el :a
-               :icon "star"]]]))]
+      [mdl/list-coll
+       :children
+       (into []
+             (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
+               [mdl/list-item
+                :children
+                [[mdl/list-item-primary-content
+                  :avatar i
+                  :content s]
+                 [mdl/list-item-secondary-action
+                  :href "#"
+                  :el :a
+                  :icon "star"]]]))]]]
 
-   [:p "Input Actions"]
+    [mdl/cell
+     :children
+     [[:p "Input Actions"]
 
-   [mdl/list-coll
-    :children
-    (into []
-          (for [[i s c] [["person" "foo" [mdl/toggle-checkbox
-                                          :id "checkbox-list-demo"
-                                          :checked? true
-                                          :label "Checkbox"
-                                          :handler-fn #(print "checkbox: " %)]]
-                         ["people" "bar" [mdl/toggle-radios
-                                          :name "radio-list-demo"
-                                          :handler-fn #(print "radio: " %)
-                                          :choices
-                                          [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]]]
-                         ["star" "baz" [mdl/toggle-switch
-                                        :id "switch-list-demo"
-                                        :label "On/Off"
-                                        :ripple-effect? true
-                                        :handler-fn #(print (str "switch: " %))]]]]
-            [mdl/list-item
-             :children
-             [[mdl/list-item-primary-content
-               :avatar i
-               :content s]
-              [mdl/list-item-secondary-action
-               :el :span
-               :content c]]]))]
+      [mdl/list-coll
+       :children
+       (into []
+             (for [[i s c] [["person" "foo" [mdl/toggle-checkbox
+                                             :id "checkbox-list-demo"
+                                             :checked? true
+                                             :label "Checkbox"
+                                             :handler-fn #(print "checkbox: " %)]]
+                            ["people" "bar" [mdl/toggle-radios
+                                             :name "radio-list-demo"
+                                             :handler-fn #(print "radio: " %)
+                                             :choices
+                                             [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]]]
+                            ["star" "baz" [mdl/toggle-switch
+                                           :id "switch-list-demo"
+                                           :label "On/Off"
+                                           :ripple-effect? true
+                                           :handler-fn #(print (str "switch: " %))]]]]
+               [mdl/list-item
+                :children
+                [[mdl/list-item-primary-content
+                  :avatar i
+                  :content s]
+                 [mdl/list-item-secondary-action
+                  :el :span
+                  :content c]]]))]]]
 
-   [:p "Two Line"]
+    [mdl/cell
+     :children
+     [[:p "Two Line"]
 
-   [mdl/list-coll
-    :children
-    (into []
-          (for [[i s subt] [["person" "foo" "subtitle"] ["people" "bar" "subtitle"] ["star" "baz" "subtitle"]]]
-            [mdl/list-item
-             :item-type :two-line
-             :children
-             [[mdl/list-item-primary-content
-               :avatar i
-               :content s
-               :children
-               [[mdl/list-item-sub-title
-                :content subt]]]
-              [mdl/list-item-secondary-action
-               :href "#"
-               :el :a
-               :icon "star"]]]))]
+      [mdl/list-coll
+       :children
+       (into []
+             (for [[i s subt] [["person" "foo" "subtitle"] ["people" "bar" "subtitle"] ["star" "baz" "subtitle"]]]
+               [mdl/list-item
+                :item-type :two-line
+                :children
+                [[mdl/list-item-primary-content
+                  :avatar i
+                  :content s
+                  :children
+                  [[mdl/list-item-sub-title
+                    :content subt]]]
+                 [mdl/list-item-secondary-action
+                  :href "#"
+                  :el :a
+                  :icon "star"]]]))]]]
 
-   [:p "Three Line"]
+    [mdl/cell
+     :children
+     [[:p "Three Line"]
 
-   [mdl/list-coll
-    :children
-    (into []
-          (for [[i s txt] [["person" "foo" "longer text foo bar baz longer text foo bar baz"]
-                           ["people" "bar" "longer text foo bar baz longer text foo bar baz"]
-                           ["star" "baz" "longer text foo bar baz longer text foo bar baz"]]]
-            [mdl/list-item
-             :item-type :three-line
-             :children
-             [[mdl/list-item-primary-content
-               :avatar i
-               :content s
-               :children
-               [[mdl/list-item-text-body
-                 :content txt]]]
-              [mdl/list-item-secondary-action
-               :href "#"
-               :el :a
-               :icon "star"]]]))]])
+      [mdl/list-coll
+       :children
+       (into []
+             (for [[i s txt] [["person" "foo" "longer text foo bar baz longer text foo bar baz"]
+                              ["people" "bar" "longer text foo bar baz longer text foo bar baz"]
+                              ["star" "baz" "longer text foo bar baz longer text foo bar baz"]]]
+               [mdl/list-item
+                :item-type :three-line
+                :children
+                [[mdl/list-item-primary-content
+                  :avatar i
+                  :content s
+                  :children
+                  [[mdl/list-item-text-body
+                    :content txt]]]
+                 [mdl/list-item-secondary-action
+                  :href "#"
+                  :el :a
+                  :icon "star"]]]))]]]]])
+
+
+(defn grid-spacing-demo []
+  [mdl/grid
+   :children
+   (into []
+         (for [i (range 12)]
+           [mdl/cell
+            :col 1
+            :children ["1"]]))])
 
 (def demo-map
   (sorted-map
+   :grid grid-spacing-demo
    :badge badge-demo
    :button button-demo
    :card card-demo
