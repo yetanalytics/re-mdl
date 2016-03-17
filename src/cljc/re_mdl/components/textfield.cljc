@@ -4,10 +4,11 @@
             [re-mdl.components.button :refer [button]]))
 
 (defn textfield*
-  [& {:keys [type rows maxrows floating-label? expandable? expand-icon
+  [& {:keys [type input-type rows maxrows floating-label? expandable? expand-icon
              label pattern invalid-message handler-fn
-             id class attr]
-      :or {type :text}
+             id class attr input-attr]
+      :or {type :text
+           input-type "text"}
       :as args}]
       (when type
         (assert
@@ -22,19 +23,21 @@
       (let [input-el [(case type
                         :text :input
                         :textarea :textarea)
-                      (cond->
-                          {:class "mdl-textfield__input"
-                           :type "text"
-                           :id id
-                           #?@(:cljs
-                               [:on-change (fn [e]
-                                             (-> e
-                                                 .-target
-                                                 .-value
-                                                 handler-fn))])}
-                        (= type :textarea) (assoc :rows rows)
-                        pattern (assoc :pattern pattern)
-                        maxrows (assoc :maxrows maxrows))]
+                      (merge
+                       (cond->
+                           {:class "mdl-textfield__input"
+                            :type input-type
+                            :id id
+                            #?@(:cljs
+                                [:on-change (fn [e]
+                                              (-> e
+                                                  .-target
+                                                  .-value
+                                                  handler-fn))])}
+                         (= type :textarea) (assoc :rows rows)
+                         pattern (assoc :pattern pattern)
+                         maxrows (assoc :maxrows maxrows))
+                       input-attr)]
             label-el [:label.mdl-textfield__label
                       {:for id}
                       label]
