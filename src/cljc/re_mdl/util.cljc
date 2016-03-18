@@ -16,11 +16,13 @@
 (defn wrap-mdl [component]
   #?(:cljs
      (vary-meta component
-             (fn [meta-m]
-               (merge-with
-                juxt
-                {:component-did-mount
-                 mdl-init-mount})))
+                (fn [meta-m]
+                  (merge-with
+                   juxt
+                   {:component-did-mount
+                    mdl-init-mount
+                    :component-did-update
+                    mdl-init-mount})))
      ;; in clj, a no-op
      :clj component))
 
