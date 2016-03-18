@@ -22,7 +22,7 @@
              (into [:div
                     {:class (cond-> "mdl-dialog__actions"
                               actions-full-width?
-                              (conj " mdl-dialog__actions--full-width"))}]
+                              (str " mdl-dialog__actions--full-width"))}]
                    actions))))
 
 (def dialog (wrap-dialog-polyfill dialog*))
