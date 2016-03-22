@@ -44,7 +44,8 @@
               small-screen-only? (str " mdl-layout--small-screen-only"))}
     attr)])
 
-(defn header [& {:keys [large-screen-only? small-screen-only? waterfall? transparent? seamed?
+(defn header [& {:keys [large-screen-only? small-screen-only? waterfall?
+                        transparent? seamed? scroll?
                         children
                         id class attr]
                  :as   args}]
@@ -57,7 +58,8 @@
                     small-screen-only? (str " mdl-layout--small-screen-only")
                     waterfall? (str " mdl-layout__header--waterfall")
                     transparent? (str " mdl-layout__header--transparent")
-                    seamed? (str " mdl-layout__header--seamed"))}
+                    seamed? (str " mdl-layout__header--seamed")
+                    scroll? (str " mdl-layout__header--scroll"))}
           attr)] children))
 
 (defn icon [& {:keys [large-screen-only? small-screen-only?
