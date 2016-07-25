@@ -22,6 +22,10 @@
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
+  :aliases {"ci" ["do"
+                  ["doo" "phantom" "test" "once"]
+                  ["test"]]}
+
   :cljsbuild {
     :builds [{:id "dev"
               :source-paths ["src/cljc" "src/cljs" "src-dev"]
