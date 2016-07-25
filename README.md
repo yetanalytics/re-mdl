@@ -3,6 +3,7 @@
 Yet another library of reusable UI components for Reagent
 
 [![Clojars Project](http://clojars.org/com.yetanalytics/re-mdl/latest-version.svg)](http://clojars.org/com.yetanalytics/re-mdl)
+[![Build Status](https://travis-ci.org/yetanalytics/re-mdl.svg?branch=master)](https://travis-ci.org/yetanalytics/re-mdl)
 
 ## Overview
 
