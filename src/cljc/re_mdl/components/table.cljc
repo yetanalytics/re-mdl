@@ -34,7 +34,7 @@
              (fn [idx label]
                [:th
                 {:class (when (non-numerics idx)
-                          "mdl-data-table__cell-non-numeric")}
+                          "mdl-data-table__cell--non-numeric")}
                 label])
              header-labels))]
      (into [:tbody]
@@ -44,7 +44,7 @@
                     (fn [idx datum]
                       [:td
                        {:class (when (non-numerics idx)
-                                 "mdl-data-table__cell-non-numeric")}
+                                 "mdl-data-table__cell--non-numeric")}
                        datum])
                     row))))
      ]
