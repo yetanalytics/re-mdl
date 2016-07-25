@@ -5,19 +5,20 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[cljsjs/material "1.1.3-1"]
-                 [reagent "0.5.1" :exclusions [cljsjs/react]]
-                 [cljsjs/react-with-addons "0.13.3-0"]
+                 [reagent "0.6.0-rc" :exclusions [cljsjs/react]]
+                 [cljsjs/react-with-addons "15.2.1-1"]
                  [prismatic/dommy "1.1.0"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-figwheel "0.5.4-7"]
             [lein-doo "0.1.7"]]
 
-  :profiles {:dev {:dependencies [[cljs-react-test "0.1.3-SNAPSHOT"
+  :profiles {:dev {:dependencies [[cljs-react-test "0.1.4-SNAPSHOT"
                                    :exclusions [cljsjs/react-with-addons
                                                 org.clojure/core.async
                                                 org.clojure/tools.analyzer.jvm
                                                 ]]
+                                  [cljsjs/react-dom "15.2.1-1" :exclusions [cljsjs/react]]
                                   [org.clojure/clojure "1.8.0"]
                                   [org.clojure/clojurescript "1.9.93"]
                                   [figwheel-sidecar "0.5.4-7"]]}}
