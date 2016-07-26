@@ -8,7 +8,8 @@
              label pattern invalid-message handler-fn
              id class attr input-attr]
       :or {type :text
-           input-type "text"}
+           input-type "text"
+           handler-fn (constantly nil)}
       :as args}]
       (when type
         (assert
@@ -63,8 +64,7 @@
                      class (str " " class)
                      floating-label? (str " mdl-textfield--floating-label")
                      expandable? (str " mdl-textfield--expandable"))}
-           attr)
-          ]
+           attr)]
          body)))
 
 (defn textfield [& {:keys [init-val]
