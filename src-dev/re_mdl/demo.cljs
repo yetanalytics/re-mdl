@@ -379,7 +379,10 @@
                     [mdl/button
                      :label "CLOSE"
                      :on-click #(reset! open? false)
-                     ]]])])))
+                     ]]
+          :cancel-fn #(do
+                        (.log js/console "Dialog cancelled!")
+                        (reset! open? false))])])))
 
 (defn list-demo []
   [mdl/grid
