@@ -552,16 +552,16 @@
 (defn app-view []
   (let [current-demo (r/atom :badge)]
     (fn []
-     [:div ;; extra wrapper div so mdl doesn't clobber the root
-      [demo-layout
-       :demo-map demo-map
-       :current-demo-ra current-demo
-       :children
-       [[grid-demo
-         [(@current-demo demo-map)]
-        ]
-       [mega-footer-demo]
-       [mini-footer-demo]]]])))
+      [:div ;; extra wrapper div so mdl doesn't clobber the root
+       [demo-layout
+        :demo-map demo-map
+        :current-demo-ra current-demo
+        :children
+        [[grid-demo
+          [(@current-demo demo-map)]
+          ]
+         [mega-footer-demo]
+         [mini-footer-demo]]]])))
 
 
 (defn ^:export run []

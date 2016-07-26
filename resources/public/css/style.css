@@ -1,2 +1,4 @@
 /* some style */
-
+div._dialog_overlay {
+  display: none;
+}
