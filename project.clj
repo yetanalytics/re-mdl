@@ -5,6 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[cljsjs/material "1.1.3-1"]
+                 [cljsjs/dialog-polyfill "0.4.3-0"]
                  [reagent "0.6.0-rc" :exclusions [cljsjs/react]]
                  [cljsjs/react-with-addons "15.2.1-1"]
                  [prismatic/dommy "1.1.0"]]
@@ -23,7 +24,7 @@
                                   [org.clojure/clojurescript "1.9.93"]
                                   [figwheel-sidecar "0.5.4-7"]]}}
 
-  :source-paths ["src/cljc" "src/cljs"]
+  :source-paths ["src/cljc"]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
@@ -33,7 +34,7 @@
 
   :cljsbuild {
     :builds [{:id "dev"
-              :source-paths ["src/cljc" "src/cljs" "src-dev"]
+              :source-paths ["src/cljc" "src-dev"]
               :figwheel { :on-jsload "re-mdl.demo/on-js-reload" }
               :compiler {:main re-mdl.demo
                          :asset-path "js/compiled/out"
@@ -41,21 +42,21 @@
                          :output-dir "resources/public/js/compiled/out"
                          :source-map-timestamp true}}
              {:id "demo"
-              :source-paths ["src/cljc" "src/cljs" "src-dev"]
+              :source-paths ["src/cljc" "src-dev"]
               :compiler {:main re-mdl.demo
                          :output-to "resources/public/js/compiled/re_mdl.js"
                          :optimizations :advanced
                          :pretty-print false}}
 
              {:id "min"
-              :source-paths ["src/cljc" "src/cljs"]
+              :source-paths ["src/cljc"]
               :compiler {:output-to "target/js/re_mdl.js"
                          :main re-mdl.core
                          :optimizations :advanced
                          :pretty-print false}}
 
              {:id "test"
-              :source-paths ["src/cljc" "src/cljs" "src-dev" "test/cljs"]
+              :source-paths ["src/cljc" "src-dev" "test/cljs"]
               :compiler {:output-to "resources/public/js/compiled/test.js"
                          :main re-mdl.runner
                          :optimizations :none}}]}
