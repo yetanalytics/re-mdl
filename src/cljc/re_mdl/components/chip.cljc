@@ -31,14 +31,16 @@
 (defn action
   "Implementation of the MDL chip inner action component."
   [& {:keys [el content on-click
+             button?
              id class attr]
       :or   {el :button}
       :as   args}]
   [el
    (merge
-    {:id    id
-     :class (cond-> "mdl-chip__action"
-              class (str " " class))}
+    (cond-> {:id    id
+             :class (cond-> "mdl-chip__action"
+                      class (str " " class))}
+      button? (assoc :type button?))
     attr)
    content])
 
@@ -54,8 +56,8 @@
           (cond-> {:id    id
                    :class (cond-> "mdl-chip"
                             class      (str " " class)
-                            contact?   " mdl-chip--contact"
-                            deletable? " mdl-chip--deletable")}
+                            contact?   (str " mdl-chip--contact")
+                            deletable? (str " mdl-chip--deletable"))}
             button? (assoc :type button?))
           attr)]
         children))

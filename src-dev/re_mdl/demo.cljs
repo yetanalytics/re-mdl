@@ -68,10 +68,46 @@
       ]]]])
 
 (defn chip-demo []
-  [mdl/chip
-   :children
-   [[mdl/chip-text
-     :content "Chip"]]])
+  [:div.chip-demo
+   [mdl/chip
+    :children
+    [[mdl/chip-text
+      :content "Basic Chip"]]]
+   [mdl/chip
+    :deletable? true
+    :children
+    [[mdl/chip-text
+      :content "Deletable Chip"]
+     [mdl/chip-action
+      :type :button
+      :content [:i.material-icons
+                "cancel"]]]]
+   [mdl/chip
+    :el   :button
+    :type :button
+    :children
+    [[mdl/chip-text
+      :content "Button Chip"]]]
+   [mdl/chip
+    :contact? true
+    :children
+    [[mdl/chip-contact
+      :class "mdl-color--teal mdl-color-text--white"
+      :content "A"]
+     [mdl/chip-text
+      :content "Contact Chip"]]]
+   [mdl/chip
+    :contact? true
+    :children
+    [[mdl/chip-contact
+      :class "mdl-color--teal mdl-color-text--white"
+      :content "B"]
+     [mdl/chip-text
+      :content "Deletable Chip"]
+     [mdl/chip-action
+      :el :a
+      :content [:i.material-icons
+                "cancel"]]]]])
 
 (defn grid-demo [& kids]
   [mdl/grid
