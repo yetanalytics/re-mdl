@@ -37,9 +37,10 @@
       :as   args}]
   [el
    (merge
-    (cond-> {:id    id
-             :class (cond-> "mdl-chip__action"
-                      class (str " " class))}
+    (cond-> {:id       id
+             :on-click on-click
+             :class    (cond-> "mdl-chip__action"
+                         class (str " " class))}
       button? (assoc :type button?))
     attr)
    content])
@@ -53,11 +54,12 @@
       :as   args}]
   (into [el
          (merge
-          (cond-> {:id    id
-                   :class (cond-> "mdl-chip"
-                            class      (str " " class)
-                            contact?   (str " mdl-chip--contact")
-                            deletable? (str " mdl-chip--deletable"))}
+          (cond-> {:id       id
+                   :on-click on-click
+                   :class    (cond-> "mdl-chip"
+                               class      (str " " class)
+                               contact?   (str " mdl-chip--contact")
+                               deletable? (str " mdl-chip--deletable"))}
             button? (assoc :type button?))
           attr)]
         children))

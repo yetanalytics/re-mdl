@@ -79,12 +79,14 @@
     [[mdl/chip-text
       :content "Deletable Chip"]
      [mdl/chip-action
-      :type :button
-      :content [:i.material-icons
-                "cancel"]]]]
+      :type     :button
+      :on-click #(js/alert "Delete this chip!")
+      :content  [:i.material-icons
+                 "cancel"]]]]
    [mdl/chip
-    :el   :button
-    :type :button
+    :el       :button
+    :type     :button
+    :on-click #(js/alert "You Clicked a Chip!")
     :children
     [[mdl/chip-text
       :content "Button Chip"]]]
@@ -106,7 +108,8 @@
      [mdl/chip-text
       :content "Deletable Chip"]
      [mdl/chip-action
-      :el :a
+      :el      :a
+      :attr    {:href "#"}
       :content [:i.material-icons
                 "cancel"]]]]])
 
