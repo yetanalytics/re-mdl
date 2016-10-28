@@ -67,6 +67,12 @@
        "Action"]
       ]]]])
 
+(defn chip-demo []
+  [mdl/chip
+   :children
+   [[mdl/chip-text
+     :content "Chip"]]])
+
 (defn grid-demo [& kids]
   [mdl/grid
    :children
@@ -539,6 +545,7 @@
    :badge badge-demo
    :button button-demo
    :card card-demo
+   :chip chip-demo
    :tab tab-demo
    :loading-progress loading-progress-demo
    :loading-spinner loading-spinner-demo
