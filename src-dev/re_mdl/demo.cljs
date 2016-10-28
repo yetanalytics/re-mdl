@@ -97,7 +97,8 @@
      [mdl/chip-text
       :content "Contact Chip"]]]
    [mdl/chip
-    :contact? true
+    :contact?   true
+    :deletable? true
     :children
     [[mdl/chip-contact
       :class "mdl-color--teal mdl-color-text--white"
