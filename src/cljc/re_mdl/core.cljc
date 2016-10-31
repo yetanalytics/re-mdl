@@ -5,6 +5,7 @@
    [re-mdl.components.badge :as badge]
    [re-mdl.components.button :as button]
    [re-mdl.components.card :as card]
+   [re-mdl.components.chip :as chip]
    [re-mdl.components.grid :as grid]
    [re-mdl.components.layout :as layout]
    [re-mdl.components.loading :as loading]
@@ -32,6 +33,15 @@
 (def card-actions card/actions)
 
 (def card card/card)
+
+;; chip
+(def chip-contact chip/contact)
+
+(def chip-text chip/text)
+
+(def chip-action chip/action)
+
+(def chip chip/chip)
 
 
 ;; grid

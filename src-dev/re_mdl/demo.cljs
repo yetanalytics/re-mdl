@@ -67,6 +67,52 @@
        "Action"]
       ]]]])
 
+(defn chip-demo []
+  [:div.chip-demo
+   [mdl/chip
+    :children
+    [[mdl/chip-text
+      :content "Basic Chip"]]]
+   [mdl/chip
+    :deletable? true
+    :children
+    [[mdl/chip-text
+      :content "Deletable Chip"]
+     [mdl/chip-action
+      :type     :button
+      :on-click #(js/alert "Delete this chip!")
+      :content  [:i.material-icons
+                 "cancel"]]]]
+   [mdl/chip
+    :el       :button
+    :type     :button
+    :on-click #(js/alert "You Clicked a Chip!")
+    :children
+    [[mdl/chip-text
+      :content "Button Chip"]]]
+   [mdl/chip
+    :contact? true
+    :children
+    [[mdl/chip-contact
+      :class "mdl-color--teal mdl-color-text--white"
+      :content "A"]
+     [mdl/chip-text
+      :content "Contact Chip"]]]
+   [mdl/chip
+    :contact?   true
+    :deletable? true
+    :children
+    [[mdl/chip-contact
+      :class "mdl-color--teal mdl-color-text--white"
+      :content "B"]
+     [mdl/chip-text
+      :content "Deletable Chip"]
+     [mdl/chip-action
+      :el      :a
+      :attr    {:href "#"}
+      :content [:i.material-icons
+                "cancel"]]]]])
+
 (defn grid-demo [& kids]
   [mdl/grid
    :children
@@ -539,6 +585,7 @@
    :badge badge-demo
    :button button-demo
    :card card-demo
+   :chip chip-demo
    :tab tab-demo
    :loading-progress loading-progress-demo
    :loading-spinner loading-spinner-demo
