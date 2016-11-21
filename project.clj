@@ -1,10 +1,10 @@
-(defproject com.yetanalytics/re-mdl "0.1.4"
+(defproject com.yetanalytics/re-mdl "0.1.5"
   :description "Yet another library of reusable UI components for Reagent"
   :url "https://github.com/yetanalytics/re-mdl.git"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[cljsjs/material "1.1.3-1"]
+  :dependencies [[cljsjs/material "1.2.1-0"]
                  [cljsjs/dialog-polyfill "0.4.3-0"]
                  [reagent "0.6.0-rc" :exclusions [cljsjs/react]]
                  [cljsjs/react-with-addons "15.2.1-1"]
