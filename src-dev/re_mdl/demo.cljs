@@ -9,6 +9,25 @@
 
 (defonce app-state (r/atom {:text "Hello world!"}))
 
+(defn compose-re-mdl
+  "This function takes a re-mdl component and a data set
+  and uses that to generate a full component."
+  [component data index]
+  (vec (flatten
+        [component (nth data index)])))
+
+(defn compose-doc
+  "This function will take a re-mdl component and a data set
+  and use it to generate a documentation string."
+  [component data index]
+  (let [data* (nth data index)]
+    (if (even? index)
+      (str data* "\n")
+      (-> (cons component data*)
+          (vec)
+          (str "\n\n")
+          (clojure.string/replace #" :" "\n :")))))
+
 (defn intro-demo []
   [mdl/cell
    :children
@@ -24,6 +43,30 @@
       [:a {:href "https://github.com/reagent-project/reagent"} "Reagent"]
       ". This demo is built using re-mdl to demonstrate and document it's use."]]]])
 
+(def badge-demo-data
+  [";; Number badge on icon"
+   [:badge-label "1"
+    :icon?       true
+    :overlap?    true
+    :child       "account_box"]
+   ";; Icon badge on icon"
+   [:badge-label "♥"
+    :icon?       true
+    :overlap?    true
+    :child       "account_box"]
+   ";; Number badge"
+   [:badge-label "4"
+    :child       "Inbox"]
+   ";; Icon badge"
+   [:badge-label "♥"
+    :child       "Mood"]])
+
+(def compose-badge-demo-fn
+  (partial compose-re-mdl mdl/badge badge-demo-data))
+
+(def compose-badge-demo-doc
+  (partial compose-doc 'mdl/badge badge-demo-data))
+
 (defn badge-demo []
   [mdl/cell
    :children
@@ -32,51 +75,20 @@
      [:p "These are small status descriptors on UI elements."]
      [:div.mdl-demo-container
       [:span.mdl-demo
-       [mdl/badge
-        :badge-label "1"
-        :icon?       true
-        :overlap?    true
-        :child       "account_box"]]
-      [:span.mld-demo
-       [mdl/badge
-        :class       "mdl-demo"
-        :badge-label "♥"
-        :icon?       true
-        :overlap?    true
-        :child       "account_box"]]]
+       (compose-badge-demo-fn 1)]
+      [:span.mdl-demo
+       (compose-badge-demo-fn 3)]]
      [:pre
-      ";; Number badge on icon
-[mdl/badge
- :badge-label \"1\"
- :icon?       true
- :overlap?    true
- :child       \"account_box\"]
-
-;; Icon badge on icon
-[mdl/badge
- :badge-label \"♥\"
- :icon?       true
- :overlap?    true
- :child       \"account_box\"]"]
+      (for [x (range 4)]
+        (compose-badge-demo-doc x))]
      [:div.mdl-demo-container
       [:span.mdl-demo
-       [mdl/badge
-        :badge-label "4"
-        :child       "Inbox"]]
+       (compose-badge-demo-fn 5)]
       [:span.mdl-demo
-       [mdl/badge
-        :badge-label "♥"
-        :child       "Mood"]]]
+       (compose-badge-demo-fn 7)]]
      [:pre
-      ";; Number Badge
-[mdl/badge
- :badge-label \"4\"
- :child       \"Inbox\"]
-
-;; Inbox badge
-[mdl/badge
- :badge-label \"♥\"
- :child       \"Mood\"]"]
+      (for [x (range 4 8)]
+        (compose-badge-demo-doc x))]
      [:p "Refer to the MDL "
       [:a {:href "https://getmdl.io/components/index.html#badges-section"}
        "badges"]
