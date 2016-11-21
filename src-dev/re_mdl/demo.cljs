@@ -208,6 +208,14 @@
        [:li "Viserys"]
        [:li "Danerys"]]]]]])
 
+(defn demo-layout-component [{:keys [href demo title]
+                              :or   {href "#"}}]
+  [mdl/layout-nav-link
+   :href     href
+   :content  (clojure.string/capitalize (name title))
+   :on-click (fn [_]
+               (reset! demo title))])
+
 (defn demo-layout [& {:keys [demo-map current-demo-ra children]}]
   [mdl/layout
    :fixed-header? true
@@ -216,29 +224,31 @@
      :children
      [[mdl/layout-header-row
        :children
-       [[mdl/layout-title :label "Material Design Lite"]
+       [[mdl/layout-title
+         :label "Re-mdl"
+         :attr  {:on-click (fn [_]
+                             (reset! current-demo-ra :intro))
+                 :style    {:cursor "pointer"}}]
         [mdl/layout-spacer]
         [mdl/layout-nav
          :children
          (into []
-               (for [demo (keys demo-map)]
-                 [mdl/layout-nav-link
-                  :href "#"
-                  :content (name demo)
-                  :on-click (fn [e]
-                              (reset! current-demo-ra demo))]))]]]]]
+               (for [demo (keys (dissoc demo-map :intro))]
+                 (demo-layout-component {:demo  current-demo-ra
+                                         :title demo})))]]]]]
     [mdl/layout-drawer
      :children
-     [[mdl/layout-title :label "Material Design Lite"]
+     [[mdl/layout-title
+       :label "Re-mdl"
+       :attr  {:on-click (fn [_]
+                           (reset! current-demo-ra :intro))
+               :style    {:cursor "pointer"}}]
       [mdl/layout-nav
        :children
        (into []
-             (for [demo (keys demo-map)]
-               [mdl/layout-nav-link
-                :href "#"
-                :content (name demo)
-                :on-click (fn [e]
-                            (reset! current-demo-ra demo))]))]]]
+             (for [demo (keys (dissoc demo-map :intro))]
+               (demo-layout-component {:demo  current-demo-ra
+                                       :title demo})))]]]
     [mdl/layout-content
      :children children]]])
 
@@ -579,28 +589,45 @@
             :col 1
             :children ["1"]]))])
 
+(defn intro-demo
+  []
+  [mdl/cell
+   :children [[:h6 "RE-MDL"]
+              [:p [:a {:href "https://github.com/yetanalytics/re-mdl"} "Re-mdl"]
+               " gives you reusable components for use with Google's "
+               [:a {:href "https://getmdl.io"} "Material Design Lite"]
+               " in the style of "
+               [:a {:href "https://github.com/Day8/re-com"} "re-com"]
+               ". Re-mdl is a ClojureScript library that sits atop "
+               [:a {:href "https://github.com/reagent-project/reagent"} "Reagent"]
+               ". This demo is built using re-mdl to demonstrate and document it's use."]]])
+
 (def demo-map
   (sorted-map
-   :grid grid-spacing-demo
-   :badge badge-demo
-   :button button-demo
-   :card card-demo
-   :chip chip-demo
-   :tab tab-demo
+   :intro            intro-demo
+   :grid             grid-spacing-demo
+   :badge            badge-demo
+   :button           button-demo
+   :card             card-demo
+   :chip             chip-demo
+   :tab              tab-demo
    :loading-progress loading-progress-demo
-   :loading-spinner loading-spinner-demo
-   :menu menu-demo
-   :slider slider-demo
-   :toggles toggles-demo
-   :table table-demo
-   :text-field text-field-demo
-   :tooltip tooltip-demo
-   :snackbar snackbar-demo
-   :dialog dialog-demo
-   :list list-demo))
+   :loading-spinner  loading-spinner-demo
+   :menu             menu-demo
+   :slider           slider-demo
+   :toggles          toggles-demo
+   :table            table-demo
+   :text-field       text-field-demo
+   :tooltip          tooltip-demo
+   :snackbar         snackbar-demo
+   :dialog           dialog-demo
+   :list             list-demo))
+
+(def demo-intro
+  [:div "Introduction"])
 
 (defn app-view []
-  (let [current-demo (r/atom :badge)]
+  (let [current-demo (r/atom :intro)]
     (fn []
       [:div ;; extra wrapper div so mdl doesn't clobber the root
        [demo-layout
@@ -608,7 +635,7 @@
         :current-demo-ra current-demo
         :children
         [[grid-demo
-          [(@current-demo demo-map)]
+          [(@current-demo demo-map demo-intro)]
           ]
          [mega-footer-demo]
          [mini-footer-demo]]]])))
