@@ -2,3 +2,24 @@
 div._dialog_overlay {
   display: none;
 }
+
+pre {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 8px;
+  background: #dddddd;
+  border: 1px solid #999999;
+  border-radius: 5px;
+}
+
+.mdl-demo-container {
+  text-align: center;
+  background: #eeeeee;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.mdl-demo {
+  margin-left: 40px;
+  margin-right: 40px;
+}

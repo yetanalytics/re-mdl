@@ -9,63 +9,120 @@
 
 (defonce app-state (r/atom {:text "Hello world!"}))
 
+(defn intro-demo []
+  [mdl/cell
+   :children
+   [[:div.intro-demo
+     [:h6 "INTRO"]
+     [:p
+      [:a {:href "https://github.com/yetanalytics/re-mdl"} "Re-mdl"]
+      " gives you reusable components for use with Google's "
+      [:a {:href "https://getmdl.io"} "Material Design Lite"]
+      " in the style of "
+      [:a {:href "https://github.com/Day8/re-com"} "re-com"]
+      ". Re-mdl is a ClojureScript library that sits atop "
+      [:a {:href "https://github.com/reagent-project/reagent"} "Reagent"]
+      ". This demo is built using re-mdl to demonstrate and document it's use."]]]])
 
 (defn badge-demo []
-  [:div.badge-demo
-   [mdl/badge
-    :badge-label "3"
-    :child
-    "Badge"]
-   [mdl/badge
-    :badge-label "3"
-    :no-background? true
-    :child
-    "No Background"]
-   [mdl/badge
-    :badge-label "3"
-    :overlap? true
-    :child
-    "Overlap"]
-   [mdl/badge
-    :badge-label "♥"
-    :icon? true
-    :child
-    "account_box"]])
+  [mdl/cell
+   :children
+   [[:div.badge-demo
+     [:h6 "BADGES"]
+     [:p "These are small status descriptors on UI elements."]
+     [:div.mdl-demo-container
+      [:span.mdl-demo
+       [mdl/badge
+        :badge-label "1"
+        :icon?       true
+        :overlap?    true
+        :child       "account_box"]]
+      [:span.mld-demo
+       [mdl/badge
+        :class       "mdl-demo"
+        :badge-label "♥"
+        :icon?       true
+        :overlap?    true
+        :child       "account_box"]]]
+     [:pre
+      ";; Number badge on icon
+[mdl/badge
+ :badge-label \"1\"
+ :icon?       true
+ :overlap?    true
+ :child       \"account_box\"]
+
+;; Icon badge on icon
+[mdl/badge
+ :badge-label \"♥\"
+ :icon?       true
+ :overlap?    true
+ :child       \"account_box\"]"]
+     [:div.mdl-demo-container
+      [:span.mdl-demo
+       [mdl/badge
+        :badge-label "4"
+        :child       "Inbox"]]
+      [:span.mdl-demo
+       [mdl/badge
+        :badge-label "♥"
+        :child       "Mood"]]]
+     [:pre
+      ";; Number Badge
+[mdl/badge
+ :badge-label \"4\"
+ :child       \"Inbox\"]
+
+;; Inbox badge
+[mdl/badge
+ :badge-label \"♥\"
+ :child       \"Mood\"]"]
+     [:p "Refer to the MDL "
+      [:a {:href "https://getmdl.io/components/index.html#badges-section"}
+       "badges"]
+      " section for more information."]]]])
 
 (defn button-demo []
-  [:div.button-demo
-   [mdl/button
-    :label "Button"]
-   [mdl/button
-    :primary? true
-    :label "Primary"]
-   [mdl/button
-    :raised? true
-    :label "Raised"]
-   [mdl/button
-    :fab? true
-    :label "Fab"]
-   [mdl/button
-    :mini-fab? true
-    :label [:i.material-icons "add"]]
-   [mdl/button
-    :ripple-effect? true
-    :label "Ripple"]])
+  [mdl/cell
+   :children
+   [[:div.button-demo
+     [:h6 "BUTTONS"]
+     [mdl/button
+      :label "Button"]
+     [mdl/button
+      :primary? true
+      :label "Primary"]
+     [mdl/button
+      :raised? true
+      :label "Raised"]
+     [mdl/button
+      :fab? true
+      :label "Fab"]
+     [mdl/button
+      :mini-fab? true
+      :label [:i.material-icons "add"]]
+     [mdl/button
+      :ripple-effect? true
+      :label "Ripple"]]]])
 
 (defn card-demo []
-  [mdl/card
-   :shadow 2
+  [mdl/cell
    :children
-   [[mdl/card-title
-     :expand? true
-     :header :h4
-     :text "Card"]
-    [mdl/card-actions
-     :border? true
-     :children
-     [[:a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect
-       "Action"]
-      ]]]])
+   [[:div.card-demo
+     [:h6 "CARDS"]
+     [mdl/card
+      :shadow 2
+      :children
+      [[mdl/card-title
+        :expand? true
+        :header :h4
+        :text "Card"]
+       [mdl/card-actions
+        :border? true
+        :children
+        [[:a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect
+          "Action"]
+         ]]]]]]])
 
 (defn chip-demo []
   [:div.chip-demo
@@ -589,18 +646,9 @@
             :col 1
             :children ["1"]]))])
 
-(defn intro-demo
+#_(defn intro-demo
   []
-  [mdl/cell
-   :children [[:h6 "RE-MDL"]
-              [:p [:a {:href "https://github.com/yetanalytics/re-mdl"} "Re-mdl"]
-               " gives you reusable components for use with Google's "
-               [:a {:href "https://getmdl.io"} "Material Design Lite"]
-               " in the style of "
-               [:a {:href "https://github.com/Day8/re-com"} "re-com"]
-               ". Re-mdl is a ClojureScript library that sits atop "
-               [:a {:href "https://github.com/reagent-project/reagent"} "Reagent"]
-               ". This demo is built using re-mdl to demonstrate and document it's use."]]])
+    )
 
 (def demo-map
   (sorted-map
