@@ -40,7 +40,20 @@
     [:a {:href "https://github.com/Day8/re-com"} "re-com"]
     ". Re-mdl is a ClojureScript library that sits atop "
     [:a {:href "https://github.com/reagent-project/reagent"} "Reagent"]
-    ". This demo is built using re-mdl to demonstrate and document it's use."]])
+    ". This demo is built using re-mdl to demonstrate and document it's use."]
+   [:h6 "SHARED OPTIONS"]
+   [:p "These are the shared options for all re-mdl components."]
+   [mdl/table
+    :class  "mdl-demo-options"
+    :shadow 3
+    :headers
+    [["Key"      :non-numeric true]
+     ["Effect"   :non-numeric true]
+     ["Comments" :non-numeric true]]
+    :rows
+    [[":id"    "The id for the HTML element"            "Optional; String if used"]
+     [":class" "The class for the HTML element"         "Optional; String if used"]
+     [":attr"  "Any other HTML attributes not provided" "You can also override existing attrs"]]]])
 
 (defn badge-demo-number-icon
   "This badge is an icon that has an overlapped number."
@@ -99,11 +112,11 @@
      ["Effect"   :non-numeric true]
      ["Comments" :non-numeric true]]
     :rows
-    [[":el"             "Container element for badge" "Optional; Defaults to :span"]
-     [":child"          "Content inside the :el" "nil"]
-     [":badge-label"    "String value on badge" "Not a class, but an attribute"]
-     [":no-background?" "Apply open-circle effect to badge" "Optional"]
-     [":overlap?"       "Make the badge overlap on child" "Optional"]
+    [[":el"             "Container element for badge"         "Optional; Defaults to :span"]
+     [":child"          "Content inside the :el"              "nil"]
+     [":badge-label"    "String value on badge"               "Not a class, but an attribute"]
+     [":no-background?" "Apply open-circle effect to badge"   "Optional"]
+     [":overlap?"       "Make the badge overlap on child"     "Optional"]
      [":icon?"          "Make the child content and MDL icon" "Optional"]]]
    [:p "Refer to the MDL "
     [:a {:href "https://getmdl.io/components/index.html#badges-section"}
@@ -173,6 +186,97 @@
    :label     "Button"
    :disabled? true])
 
+(defn button-demo-colored-raised
+  "This is a raised button that is colored."
+  []
+  [mdl/button
+   :raised?  true
+   :colored? true
+   :label    "Button"])
+
+(defn button-demo-accent-colored-raised
+  "This is a raised button that is accent colored."
+  []
+  [mdl/button
+   :raised? true
+   :accent? true
+   :label   "Button"])
+
+(defn button-demo-accent-colored-raised-with-ripple
+  "This is a raised button that is accent colored with a ripple."
+  []
+  [mdl/button
+   :raised?        true
+   :accent?        true
+   :label          "Button"
+   :ripple-effect? true])
+
+(defn button-demo-flat
+  "This is a flat button."
+  []
+  [mdl/button
+   :label "Button"])
+
+(defn button-demo-flat-with-ripple
+  "This is a flat button with a ripple."
+  []
+  [mdl/button
+   :label          "Button"
+   :ripple-effect? true])
+
+(defn button-demo-flat-disabled
+  "This is a flat button that is disabled."
+  []
+  [mdl/button
+   :label     "Button"
+   :disabled? true])
+
+(defn button-demo-primary-colored-flat
+  "This is a flat button that is primary colored."
+  []
+  [mdl/button
+   :label    "Button"
+   :primary? true])
+
+(defn button-demo-accent-colored-flat
+  "This is a flat button that is accent colored."
+  []
+  [mdl/button
+   :label   "Button"
+   :accent? true])
+
+(defn button-demo-icon
+  "This is a button that is an icon."
+  []
+  [mdl/button
+   :icon? true
+   :label [:i.material-icons "mood"]])
+
+(defn button-demo-colored-icon
+  "This is a button that is an icon and colored."
+  []
+  [mdl/button
+   :icon?    true
+   :label    [:i.material-icons "mood"]
+   :colored? true])
+
+(defn button-demo-mini-fab
+  "This is a mini FAB button."
+  []
+  [mdl/button
+   :fab?      true
+   :mini-fab? true
+   :label     [:i.material-icons "add"]])
+
+(defn button-demo-colored-mini-fab
+  "This is a mini FAB button that is colored."
+  []
+  [mdl/button
+   :fab?      true
+   :mini-fab? true
+   :colored?  true
+   :label     [:i.material-icons "add"]])
+
 (defn button-demo []
   [:div.button-demo
    [:h6 "BUTTONS"]
@@ -189,7 +293,66 @@
     [#(cljs.repl/source button-demo-plain-fab)
      #(cljs.repl/source button-demo-plain-fab-with-ripple)
      #(cljs.repl/source button-demo-plain-fab-disabled)]]
+   [demo-doc-component
+    [[button-demo-raised]
+     [button-demo-raised-with-ripple]
+     [button-demo-raised-disabled]]
+    [#(cljs.repl/source button-demo-raised)
+     #(cljs.repl/source button-demo-raised-with-ripple)
+     #(cljs.repl/source button-demo-raised-disabled)]]
+   [demo-doc-component
+    [[button-demo-colored-raised]
+     [button-demo-accent-colored-raised]
+     [button-demo-accent-colored-raised-with-ripple]]
+    [#(cljs.repl/source button-demo-colored-raised)
+     #(cljs.repl/source button-demo-accent-colored-raised)
+     #(cljs.repl/source button-demo-accent-colored-with-ripple)]]
+   [demo-doc-component
+    [[button-demo-flat]
+     [button-demo-flat-with-ripple]
+     [button-demo-flat-disabled]]
+    [#(cljs.repl/source button-demo-flat)
+     #(cljs.repl/source button-demo-flat-with-ripple)
+     #(cljs.repl/source button-demo-flat-disabled)]]
+   [demo-doc-component
+    [[button-demo-primary-colored-flat]
+     [button-demo-accent-colored-flat]]
+    [#(cljs.repl/source button-demo-primary-colored-flat)
+     #(cljs.repl/source button-demo-accent-colored-flat)]]
+   [demo-doc-component
+    [[button-demo-icon]
+     [button-demo-colored-icon]]
+    [#(cljs.repl/source button-demo-icon)
+     #(cljs.repl/source button-demo-colored-icon)]]
+   [demo-doc-component
+    [[button-demo-mini-fab]
+     [button-demo-colored-mini-fab]]
+    [#(cljs.repl/source button-demo-mini-fab)
+     #(cljs.repl/source button-demo-colored-mini-fab)]]
    [:h6 "OPTIONS"]
+   [:p "These are the options that can be applied to adapt the component's
+       appearance."]
+   [mdl/table
+    :class  "mdl-demo-options"
+    :shadow 3
+    :headers
+    [["Key"      :non-numeric true]
+     ["Effect"   :non-numeric true]
+     ["Comments" :non-numeric true]]
+    :rows
+    [[":el"             "Container element for badge"         "Optional; Defaults to :button"]
+     [":label"          "Content inside the :el"              "String or hiccup"]
+     [":on-click"       "Callback to handle event"            "Optional"]
+     [":icon?"          "Apply small circular effect"         "Optional"]
+     [":disabled?"      "Disables action of a button"         "Optional"]
+     [":raised?"        "Applies the raised effect"           "Optional"]
+     [":fab?"           "Applies circular FAB effect"         "Optional"]
+     [":mini-fab?"      "Applies smaller circular FAB effect" "Optional"]
+     [":colored?"       "Applies colored effect"              "Optional"]
+     [":primary?"       "Applies primary colored effect"      "Optional"]
+     [":accent?"        "Applies accent colored effect"       "Optional"]
+     [":ripple-effect?" "Applies ripple click effect"         "Optional"]
+     [":for"            "Applies HTML for attribute"          "Optional; String is used"]]]
    [:p "Refer to the MDL "
     [:a {:href "https://getmdl.io/components/index.html#buttons-section"}
      "buttons"]
