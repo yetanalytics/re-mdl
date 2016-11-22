@@ -2,8 +2,9 @@
   (:require [re-mdl.util :refer [wrap-mdl]]))
 
 (defn button*
-  [& {:keys [el label icon on-click
-             disabled? raised? fab? mini-fab? colored? primary? accent? ripple-effect? for
+  [& {:keys [el label on-click
+             icon? disabled? raised? fab? mini-fab?
+             colored? primary? accent? ripple-effect? for
              id class attr]
       :or   {el :button}
       :as   args}]
@@ -12,21 +13,19 @@
     (cond-> {:on-click on-click
              :id id
              :class (cond-> "mdl-button mdl-js-button"
-                      class (str (str " " class))
-                      raised? (str " mdl-button--raised")
-                      fab? (str " mdl-button--fab")
-                      mini-fab? (str " mdl-button--fab mdl-button--mini-fab")
-                      icon (str " mdl-button--icon")
-                      colored? (str " mdl-button--colored")
-                      primary? (str " mdl-button--primary")
-                      accent? (str " mdl-button--accent")
+                      class           (str (str " " class))
+                      raised?        (str " mdl-button--raised")
+                      fab?           (str " mdl-button--fab")
+                      mini-fab?      (str " mdl-button--fab mdl-button--mini-fab")
+                      icon?          (str " mdl-button--icon")
+                      colored?       (str " mdl-button--colored")
+                      primary?       (str " mdl-button--primary")
+                      accent?        (str " mdl-button--accent")
                       ripple-effect? (str " mdl-js-ripple-effect"))}
       disabled? (assoc :disabled true)
       for (assoc :for for))
     attr)
-   (if icon
-     [:i.material-icons icon]
-     label)])
+   label])
 
 (def button
   (wrap-mdl button*))

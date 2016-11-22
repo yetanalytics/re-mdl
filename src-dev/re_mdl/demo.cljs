@@ -9,20 +9,38 @@
 
 (defonce app-state (r/atom {:text "Hello world!"}))
 
+(defn demo-doc
+  "This function will generate the doc by forcing cljs.repl/source
+  to return a string instead of printing."
+  [doc]
+  (with-redefs [println identity]
+    (doc)))
+
+(defn demo-doc-component
+  "This reagent component generates all of the demo items and then the docs."
+  [demo doc]
+  [:div
+   [:div.mdl-demo-container
+    (for [d demo]
+      ^{:key d} [:span.mdl-demo
+                 d])]
+   [:pre
+    (clojure.string/join
+     "\n\n"
+     (mapv demo-doc doc))]])
+
 (defn intro-demo []
-  [mdl/cell
-   :children
-   [[:div.intro-demo
-     [:h6 "INTRO"]
-     [:p
-      [:a {:href "https://github.com/yetanalytics/re-mdl"} "Re-mdl"]
-      " gives you reusable components for use with Google's "
-      [:a {:href "https://getmdl.io"} "Material Design Lite"]
-      " in the style of "
-      [:a {:href "https://github.com/Day8/re-com"} "re-com"]
-      ". Re-mdl is a ClojureScript library that sits atop "
-      [:a {:href "https://github.com/reagent-project/reagent"} "Reagent"]
-      ". This demo is built using re-mdl to demonstrate and document it's use."]]]])
+  [:div.intro-demo
+   [:h6 "INTRO"]
+   [:p
+    [:a {:href "https://github.com/yetanalytics/re-mdl"} "Re-mdl"]
+    " gives you reusable components for use with Google's "
+    [:a {:href "https://getmdl.io"} "Material Design Lite"]
+    " in the style of "
+    [:a {:href "https://github.com/Day8/re-com"} "re-com"]
+    ". Re-mdl is a ClojureScript library that sits atop "
+    [:a {:href "https://github.com/reagent-project/reagent"} "Reagent"]
+    ". This demo is built using re-mdl to demonstrate and document it's use."]])
 
 (defn badge-demo-number-icon
   "This badge is an icon that has an overlapped number."
@@ -57,98 +75,142 @@
    :child       "Mood"])
 
 (defn badge-demo []
-  [mdl/cell
-   :children
-   [[:div.badge-demo
-     [:h6 "BADGES"]
-     [:p "These are small status descriptors on UI elements."]
-     [:div.mdl-demo-container
-      [:span.mdl-demo
-       [badge-demo-number-icon]]
-      [:span.mdl-demo
-       [badge-demo-icon-icon]]]
-     [:pre
-      (clojure.string/join
-       "\n\n"
-       [(with-redefs [println identity]
-          (cljs.repl/source badge-demo-number-icon))
-        (with-redefs [println identity]
-          (cljs.repl/source badge-demo-icon-icon))])]
-     [:div.mdl-demo-container
-      [:span.mdl-demo
-       [badge-demo-number]]
-      [:span.mdl-demo
-       [badge-demo-icon]]]
-     [:pre
-      (clojure.string/join
-       "\n\n"
-       [(with-redefs [println identity]
-          (cljs.repl/source badge-demo-number))
-        (with-redefs [println identity]
-          (cljs.repl/source badge-demo-icon))])]
-     [:h6 "OPTIONS"]
-     [:p "These are the options that can be applied to adapt the component's
-         appearance."]
-     [mdl/table
-      :class  "mdl-demo-options"
-      :shadow 3
-      :headers
-      [["Key"      :non-numeric true]
-       ["Effect"   :non-numeric true]
-       ["Comments" :non-numeric true]]
-      :rows
-      [[":el"             "Container element for badge" "Optional; Defaults to :span"]
-       [":child"          "Content inside the :el" "nil"]
-       [":badge-label"    "String value on badge" "Not a class, but an attribute"]
-       [":no-background?" "Apply open-circle effect to badge" "Optional"]
-       [":overlap?"       "Make the badge overlap on child" "Optional"]
-       [":icon?"          "Make the child content and MDL icon" "Optional"]]]
-     [:p "Refer to the MDL "
-      [:a {:href "https://getmdl.io/components/index.html#badges-section"}
-       "badges"]
-      " section for more information."]]]])
+  [:div.badge-demo
+   [:h6 "BADGES"]
+   [:p "These are small status descriptors on UI elements."]
+   [demo-doc-component
+    [[badge-demo-number-icon]
+     [badge-demo-icon-icon]]
+    [#(cljs.repl/source badge-demo-number-icon)
+     #(cljs.repl/source badge-demo-icon-icon)]]
+   [demo-doc-component
+    [[badge-demo-number]
+     [badge-demo-icon]]
+    [#(cljs.repl/source badge-demo-number)
+     #(cljs.repl/source badge-demo-icon)]]
+   [:h6 "OPTIONS"]
+   [:p "These are the options that can be applied to adapt the component's
+       appearance."]
+   [mdl/table
+    :class  "mdl-demo-options"
+    :shadow 3
+    :headers
+    [["Key"      :non-numeric true]
+     ["Effect"   :non-numeric true]
+     ["Comments" :non-numeric true]]
+    :rows
+    [[":el"             "Container element for badge" "Optional; Defaults to :span"]
+     [":child"          "Content inside the :el" "nil"]
+     [":badge-label"    "String value on badge" "Not a class, but an attribute"]
+     [":no-background?" "Apply open-circle effect to badge" "Optional"]
+     [":overlap?"       "Make the badge overlap on child" "Optional"]
+     [":icon?"          "Make the child content and MDL icon" "Optional"]]]
+   [:p "Refer to the MDL "
+    [:a {:href "https://getmdl.io/components/index.html#badges-section"}
+     "badges"]
+    " section for more information."]])
+
+(defn button-demo-colored-fab
+  "This is a colored FAB button."
+  []
+  [mdl/button
+   :fab?     true
+   :colored? true
+   :label    [:i.material-icons "add"]])
+
+(defn button-demo-colored-fab-with-ripple
+  "This is a colored FAB button with a ripple effect."
+  []
+  [mdl/button
+   :fab?           true
+   :colored?       true
+   :label          [:i.material-icons "add"]
+   :ripple-effect? true])
+
+(defn button-demo-plain-fab
+  "This is a plain FAB button."
+  []
+  [mdl/button
+   :fab?  true
+   :label [:i.material-icons "add"]])
+
+(defn button-demo-plain-fab-with-ripple
+  "This is a plain FAB button with a ripple effect."
+  []
+  [mdl/button
+   :fab?           true
+   :label          [:i.material-icons "add"]
+   :ripple-effect? true])
+
+(defn button-demo-plain-fab-disabled
+  "This is a plain FAB button that is disabled."
+  []
+  [mdl/button
+   :fab?      true
+   :label     [:i.material-icons "add"]
+   :disabled? true])
+
+(defn button-demo-raised
+  "This is a raised button."
+  []
+  [mdl/button
+   :raised? true
+   :label   "Button"])
+
+(defn button-demo-raised-with-ripple
+  "This is a raised button with a ripple effect."
+  []
+  [mdl/button
+   :raised?        true
+   :label          "Button"
+   :ripple-effect? true])
+
+(defn button-demo-raised-disabled
+  "This is a raised button that is disabled."
+  []
+  [mdl/button
+   :raised?   true
+   :label     "Button"
+   :disabled? true])
 
 (defn button-demo []
-  [mdl/cell
-   :children
-   [[:div.button-demo
-     [:h6 "BUTTONS"]
-     [mdl/button
-      :label "Button"]
-     [mdl/button
-      :primary? true
-      :label "Primary"]
-     [mdl/button
-      :raised? true
-      :label "Raised"]
-     [mdl/button
-      :fab? true
-      :label "Fab"]
-     [mdl/button
-      :mini-fab? true
-      :label [:i.material-icons "add"]]
-     [mdl/button
-      :ripple-effect? true
-      :label "Ripple"]]]])
+  [:div.button-demo
+   [:h6 "BUTTONS"]
+   [:p "These are a variation of Material Design buttons."]
+   [demo-doc-component
+    [[button-demo-colored-fab]
+     [button-demo-colored-fab-with-ripple]]
+    [#(cljs.repl/source button-demo-colored-fab)
+     #(cljs.repl/source button-demo-colored-fab-with-ripple)]]
+   [demo-doc-component
+    [[button-demo-plain-fab]
+     [button-demo-plain-fab-with-ripple]
+     [button-demo-plain-fab-disabled]]
+    [#(cljs.repl/source button-demo-plain-fab)
+     #(cljs.repl/source button-demo-plain-fab-with-ripple)
+     #(cljs.repl/source button-demo-plain-fab-disabled)]]
+   [:h6 "OPTIONS"]
+   [:p "Refer to the MDL "
+    [:a {:href "https://getmdl.io/components/index.html#buttons-section"}
+     "buttons"]
+    " section for more information."]])
 
 (defn card-demo []
-  [mdl/cell
-   :children
-   [[:div.card-demo
-     [:h6 "CARDS"]
-     [mdl/card
-      :shadow 2
+  [:div.card-demo
+   [:h6 "CARDS"]
+   [mdl/card
+    :shadow 2
+    :children
+    [[mdl/card-title
+      :expand? true
+      :header :h4
+      :text "Card"]
+     [mdl/card-actions
+      :border? true
       :children
-      [[mdl/card-title
-        :expand? true
-        :header :h4
-        :text "Card"]
-       [mdl/card-actions
-        :border? true
-        :children
-        [[:a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect
-          "Action"]
-         ]]]]]]])
+      [[:a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect
+        "Action"]
+       ]]]]])
 
 (defn chip-demo []
   [:div.chip-demo
@@ -672,10 +734,6 @@
             :col 1
             :children ["1"]]))])
 
-#_(defn intro-demo
-  []
-    )
-
 (def demo-map
   (sorted-map
    :intro            intro-demo
@@ -697,9 +755,6 @@
    :dialog           dialog-demo
    :list             list-demo))
 
-(def demo-intro
-  [:div "Introduction"])
-
 (defn app-view []
   (let [current-demo (r/atom :intro)]
     (fn []
@@ -709,7 +764,7 @@
         :current-demo-ra current-demo
         :children
         [[grid-demo
-          [(@current-demo demo-map demo-intro)]
+          [(@current-demo demo-map)]
           ]
          [mega-footer-demo]
          [mini-footer-demo]]]])))
