@@ -13,7 +13,7 @@
     (cond-> {:on-click on-click
              :id id
              :class (cond-> "mdl-button mdl-js-button"
-                      class           (str (str " " class))
+                      class          (str (str " " class))
                       raised?        (str " mdl-button--raised")
                       fab?           (str " mdl-button--fab")
                       mini-fab?      (str " mdl-button--fab mdl-button--mini-fab")
