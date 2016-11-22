@@ -68,22 +68,41 @@
       [:span.mdl-demo
        [badge-demo-icon-icon]]]
      [:pre
-      (with-redefs [println identity]
-        (cljs.repl/source badge-demo-number-icon))
-      "\n\n"
-      (with-redefs [println identity]
-        (cljs.repl/source badge-demo-icon-icon))]
+      (clojure.string/join
+       "\n\n"
+       [(with-redefs [println identity]
+          (cljs.repl/source badge-demo-number-icon))
+        (with-redefs [println identity]
+          (cljs.repl/source badge-demo-icon-icon))])]
      [:div.mdl-demo-container
       [:span.mdl-demo
        [badge-demo-number]]
       [:span.mdl-demo
        [badge-demo-icon]]]
      [:pre
-      (with-redefs [println identity]
-        (cljs.repl/source badge-demo-number))
-      "\n\n"
-      (with-redefs [println identity]
-        (cljs.repl/source badge-demo-icon))]
+      (clojure.string/join
+       "\n\n"
+       [(with-redefs [println identity]
+          (cljs.repl/source badge-demo-number))
+        (with-redefs [println identity]
+          (cljs.repl/source badge-demo-icon))])]
+     [:h6 "OPTIONS"]
+     [:p "These are the options that can be applied to adapt the component's
+         appearance."]
+     [mdl/table
+      :class  "mdl-demo-options"
+      :shadow 3
+      :headers
+      [["Key"      :non-numeric true]
+       ["Effect"   :non-numeric true]
+       ["Comments" :non-numeric true]]
+      :rows
+      [[":el"             "Container element for badge" "Optional; Defaults to :span"]
+       [":child"          "Content inside the :el" "nil"]
+       [":badge-label"    "String value on badge" "Not a class, but an attribute"]
+       [":no-background?" "Apply open-circle effect to badge" "Optional"]
+       [":overlap?"       "Make the badge overlap on child" "Optional"]
+       [":icon?"          "Make the child content and MDL icon" "Optional"]]]
      [:p "Refer to the MDL "
       [:a {:href "https://getmdl.io/components/index.html#badges-section"}
        "badges"]
