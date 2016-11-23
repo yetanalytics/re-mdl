@@ -2,7 +2,7 @@
 
 (defn contact
   "Implementation of the MDL chip inner contact component."
-  [& {:keys [el content
+  [& {:keys [el child
              id class attr]
       :or   {el :span}
       :as   args}]
@@ -12,11 +12,11 @@
      :class (cond-> "mdl-chip__contact"
               class (str " " class))}
     attr)
-   content])
+   child])
 
 (defn text
   "Implementation of the MDL chip inner text component."
-  [& {:keys [el content
+  [& {:keys [el child
              id class attr]
       :or   {el :span}
       :as   args}]
@@ -26,12 +26,12 @@
      :class (cond-> "mdl-chip__text"
               class (str " " class))}
     attr)
-   content])
+   child])
 
 (defn action
   "Implementation of the MDL chip inner action component."
-  [& {:keys [el content on-click
-             button?
+  [& {:keys [el child on-click
+             type
              id class attr]
       :or   {el :button}
       :as   args}]
@@ -41,9 +41,9 @@
              :on-click on-click
              :class    (cond-> "mdl-chip__action"
                          class (str " " class))}
-      button? (assoc :type button?))
+      type (assoc :type type))
     attr)
-   content])
+   child])
 
 (defn chip
   "Implementation of the MDL chip component."
@@ -52,7 +52,7 @@
              id class attr]
       :or   {el :span}
       :as   args}]
-  (into [el
+  (into [(if button? :button el)
          (merge
           (cond-> {:id       id
                    :on-click on-click

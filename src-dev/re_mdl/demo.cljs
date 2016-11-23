@@ -1,13 +1,17 @@
 (ns ^:figwheel-always re-mdl.demo
   (:require
    [re-mdl.core  :as mdl]
-   [reagent.core :as r]))
+   [reagent.core :as r]
+   [cljs.repl    :refer-macros [source]]))
 
 (enable-console-print!)
 
 ;; define your app data so that it doesn't get over-written on reload
 
 (defonce app-state (r/atom {:text "Hello world!"}))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; HELPER COMPONENTS AND FUNCTIONS TO GENERATE DEMO COMPONENTS
 
 (defn demo-doc
   "This function will generate the doc by forcing cljs.repl/source
@@ -29,6 +33,37 @@
      "\n\n"
      (mapv demo-doc doc))]])
 
+(defn demo-options
+  "This will take a title, a description, and vector of table rows to render."
+  [{:keys [title description rows]
+    :or   {title "OPTIONS"}}]
+  [:div
+   [:h6 title]
+   [:p description]
+   [mdl/table
+    :class  "mdl-demo-options"
+    :shadow 3
+    :headers
+    [["Key"      :non-numeric true]
+     ["Effect"   :non-numeric true]
+     ["Comments" :non-numeric true]]
+    :rows
+    rows]])
+
+(defn demo-reference
+  "This generates a small text component to show reference to MDL site."
+  [component]
+  [:p "Refer to the MDL "
+   [:a {:href
+        (str "https://getmdl.io/components/index.html#"
+             component
+             "-section")}
+    component]
+   " section for more information."])
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DEMOS BEGIN
+
 (defn intro-demo []
   [:div.intro-demo
    [:h6 "INTRO"]
@@ -41,19 +76,26 @@
     ". Re-mdl is a ClojureScript library that sits atop "
     [:a {:href "https://github.com/reagent-project/reagent"} "Reagent"]
     ". This demo is built using re-mdl to demonstrate and document it's use."]
-   [:h6 "SHARED OPTIONS"]
-   [:p "These are the shared options for all re-mdl components."]
-   [mdl/table
-    :class  "mdl-demo-options"
-    :shadow 3
-    :headers
-    [["Key"      :non-numeric true]
-     ["Effect"   :non-numeric true]
-     ["Comments" :non-numeric true]]
-    :rows
-    [[":id"    "The id for the HTML element"            "Optional; String if used"]
-     [":class" "The class for the HTML element"         "Optional; String if used"]
-     [":attr"  "Any other HTML attributes not provided" "You can also override existing attrs"]]]])
+   [demo-options
+    {:title       "SHARED OPTIONS"
+     :description "These are the shared options for all re-mdl components."
+     :rows
+     [[":id"    "The id for the HTML element"            "Optional; String if used"]
+      [":class" "The class for the HTML element"         "Optional; String if used"]
+      [":attr"  "Any other HTML attributes not provided" "You can also override existing attrs"]]}]
+   [:h6 "CHANGE LOG"]
+   [mdl/list-coll
+    :children
+    (into []
+          (for [s ["Button"
+                   "add card menu"
+                   "fix textfields"
+                   "docs and demo added to match mdl"
+                   "chip and chip inners changed content to child"]]
+            [mdl/list-item
+             :children
+             [[mdl/list-item-primary-content
+               :content s]]]))]])
 
 (defn badge-demo-number-icon
   "This badge is an icon that has an overlapped number."
@@ -94,34 +136,23 @@
    [demo-doc-component
     [[badge-demo-number-icon]
      [badge-demo-icon-icon]]
-    [#(cljs.repl/source badge-demo-number-icon)
-     #(cljs.repl/source badge-demo-icon-icon)]]
+    [#(source badge-demo-number-icon)
+     #(source badge-demo-icon-icon)]]
    [demo-doc-component
     [[badge-demo-number]
      [badge-demo-icon]]
-    [#(cljs.repl/source badge-demo-number)
-     #(cljs.repl/source badge-demo-icon)]]
-   [:h6 "OPTIONS"]
-   [:p "These are the options that can be applied to adapt the component's
-       appearance."]
-   [mdl/table
-    :class  "mdl-demo-options"
-    :shadow 3
-    :headers
-    [["Key"      :non-numeric true]
-     ["Effect"   :non-numeric true]
-     ["Comments" :non-numeric true]]
-    :rows
-    [[":el"             "Container element for badge"         "Optional; Defaults to :span"]
-     [":child"          "Content inside the :el"              "nil"]
-     [":badge-label"    "String value on badge"               "Not a class, but an attribute"]
-     [":no-background?" "Apply open-circle effect to badge"   "Optional"]
-     [":overlap?"       "Make the badge overlap on child"     "Optional"]
-     [":icon?"          "Make the child content and MDL icon" "Optional"]]]
-   [:p "Refer to the MDL "
-    [:a {:href "https://getmdl.io/components/index.html#badges-section"}
-     "badges"]
-    " section for more information."]])
+    [#(source badge-demo-number)
+     #(source badge-demo-icon)]]
+   [demo-options
+    {:description "These are the options that can be applied to adapt the component's appearance."
+     :rows
+     [[":el"             "Container element for badge"         "Optional; Defaults to :span"]
+      [":child"          "Content inside the :el"              "nil"]
+      [":badge-label"    "String value on badge"               "Not a class, but an attribute"]
+      [":no-background?" "Apply open-circle effect to badge"   "Optional"]
+      [":overlap?"       "Make the badge overlap on child"     "Optional"]
+      [":icon?"          "Make the child content and MDL icon" "Optional"]]}]
+   [demo-reference "badges"]])
 
 (defn button-demo-colored-fab
   "This is a colored FAB button."
@@ -284,142 +315,217 @@
    [demo-doc-component
     [[button-demo-colored-fab]
      [button-demo-colored-fab-with-ripple]]
-    [#(cljs.repl/source button-demo-colored-fab)
-     #(cljs.repl/source button-demo-colored-fab-with-ripple)]]
+    [#(source button-demo-colored-fab)
+     #(source button-demo-colored-fab-with-ripple)]]
    [demo-doc-component
     [[button-demo-plain-fab]
      [button-demo-plain-fab-with-ripple]
      [button-demo-plain-fab-disabled]]
-    [#(cljs.repl/source button-demo-plain-fab)
-     #(cljs.repl/source button-demo-plain-fab-with-ripple)
-     #(cljs.repl/source button-demo-plain-fab-disabled)]]
+    [#(source button-demo-plain-fab)
+     #(source button-demo-plain-fab-with-ripple)
+     #(source button-demo-plain-fab-disabled)]]
    [demo-doc-component
     [[button-demo-raised]
      [button-demo-raised-with-ripple]
      [button-demo-raised-disabled]]
-    [#(cljs.repl/source button-demo-raised)
-     #(cljs.repl/source button-demo-raised-with-ripple)
-     #(cljs.repl/source button-demo-raised-disabled)]]
+    [#(source button-demo-raised)
+     #(source button-demo-raised-with-ripple)
+     #(source button-demo-raised-disabled)]]
    [demo-doc-component
     [[button-demo-colored-raised]
      [button-demo-accent-colored-raised]
      [button-demo-accent-colored-raised-with-ripple]]
-    [#(cljs.repl/source button-demo-colored-raised)
-     #(cljs.repl/source button-demo-accent-colored-raised)
-     #(cljs.repl/source button-demo-accent-colored-with-ripple)]]
+    [#(source button-demo-colored-raised)
+     #(source button-demo-accent-colored-raised)
+     #(source button-demo-accent-colored-with-ripple)]]
    [demo-doc-component
     [[button-demo-flat]
      [button-demo-flat-with-ripple]
      [button-demo-flat-disabled]]
-    [#(cljs.repl/source button-demo-flat)
-     #(cljs.repl/source button-demo-flat-with-ripple)
-     #(cljs.repl/source button-demo-flat-disabled)]]
+    [#(source button-demo-flat)
+     #(source button-demo-flat-with-ripple)
+     #(source button-demo-flat-disabled)]]
    [demo-doc-component
     [[button-demo-primary-colored-flat]
      [button-demo-accent-colored-flat]]
-    [#(cljs.repl/source button-demo-primary-colored-flat)
-     #(cljs.repl/source button-demo-accent-colored-flat)]]
+    [#(source button-demo-primary-colored-flat)
+     #(source button-demo-accent-colored-flat)]]
    [demo-doc-component
     [[button-demo-icon]
      [button-demo-colored-icon]]
-    [#(cljs.repl/source button-demo-icon)
-     #(cljs.repl/source button-demo-colored-icon)]]
+    [#(source button-demo-icon)
+     #(source button-demo-colored-icon)]]
    [demo-doc-component
     [[button-demo-mini-fab]
      [button-demo-colored-mini-fab]]
-    [#(cljs.repl/source button-demo-mini-fab)
-     #(cljs.repl/source button-demo-colored-mini-fab)]]
-   [:h6 "OPTIONS"]
-   [:p "These are the options that can be applied to adapt the component's
-       appearance."]
-   [mdl/table
-    :class  "mdl-demo-options"
-    :shadow 3
-    :headers
-    [["Key"      :non-numeric true]
-     ["Effect"   :non-numeric true]
-     ["Comments" :non-numeric true]]
-    :rows
-    [[":el"             "Container element for badge"         "Optional; Defaults to :button"]
-     [":label"          "Content inside the :el"              "String or hiccup"]
-     [":on-click"       "Callback to handle event"            "Optional"]
-     [":icon?"          "Apply small circular effect"         "Optional"]
-     [":disabled?"      "Disables action of a button"         "Optional"]
-     [":raised?"        "Applies the raised effect"           "Optional"]
-     [":fab?"           "Applies circular FAB effect"         "Optional"]
-     [":mini-fab?"      "Applies smaller circular FAB effect" "Optional"]
-     [":colored?"       "Applies colored effect"              "Optional"]
-     [":primary?"       "Applies primary colored effect"      "Optional"]
-     [":accent?"        "Applies accent colored effect"       "Optional"]
-     [":ripple-effect?" "Applies ripple click effect"         "Optional"]
-     [":for"            "Applies HTML for attribute"          "Optional; String is used"]]]
-   [:p "Refer to the MDL "
-    [:a {:href "https://getmdl.io/components/index.html#buttons-section"}
-     "buttons"]
-    " section for more information."]])
+    [#(source button-demo-mini-fab)
+     #(source button-demo-colored-mini-fab)]]
+   [demo-options
+    {:description "These are the options that can be applied to adapt the component's appearance."
+     :rows
+     [[":el"             "Container element for badge"         "Optional; Defaults to :button"]
+      [":label"          "Content inside the :el"              "String or hiccup"]
+      [":on-click"       "Callback to handle event"            "Optional"]
+      [":icon?"          "Apply small circular effect"         "Optional"]
+      [":disabled?"      "Disables action of a button"         "Optional"]
+      [":raised?"        "Applies the raised effect"           "Optional"]
+      [":fab?"           "Applies circular FAB effect"         "Optional"]
+      [":mini-fab?"      "Applies smaller circular FAB effect" "Optional"]
+      [":colored?"       "Applies colored effect"              "Optional"]
+      [":primary?"       "Applies primary colored effect"      "Optional"]
+      [":accent?"        "Applies accent colored effect"       "Optional"]
+      [":ripple-effect?" "Applies ripple click effect"         "Optional"]
+      [":for"            "Applies HTML for attribute"          "Optional; String is used"]]}]
+   [demo-reference "buttons"]])
+
+(defn card-demo-wide-with-share
+  "This is a wide card with a share button."
+  []
+  [mdl/card
+   :shadow   2
+   :children
+   [[mdl/card-title
+     :header :h2
+     :text   "Welcome"]
+    [mdl/card-supporting-text
+     :text "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+           Mauris sagittis pellentesque lacus eleifend lacinia..."]
+    [mdl/card-actions
+     :border? true
+     :children
+     [[mdl/button
+        :el             :a
+        :colored?       true
+        :ripple-effect? true
+        :label          "Get Started"]]]]])
+
+(defn card-demo-original
+  []
+  [mdl/card
+   :shadow 2
+   :children
+   [[mdl/card-title
+     :expand? true
+     :header :h4
+     :text "Card"]
+    [mdl/card-actions
+     :border? true
+     :children
+     [[:a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect
+       "Action"]]]]])
 
 (defn card-demo []
   [:div.card-demo
    [:h6 "CARDS"]
-   [mdl/card
-    :shadow 2
-    :children
-    [[mdl/card-title
-      :expand? true
-      :header :h4
-      :text "Card"]
-     [mdl/card-actions
-      :border? true
-      :children
-      [[:a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect
-        "Action"]
-       ]]]]])
+   [:p "Self-contained pieces of paper with data."]
+   [demo-doc-component
+    [[card-demo-wide-with-share]
+     [card-demo-original]]
+    [#(cljs.repl/source card-demo-wide-with-share)
+     #(cljs.repl/source card-demo-original)]]])
+
+(defn chip-demo-basic
+  "This is a basic chip."
+  []
+  [mdl/chip
+   :children
+   [[mdl/chip-text
+     :child "Basic Chip"]]])
+
+(defn chip-demo-deletable
+  "This is a deletable chip."
+  []
+  [mdl/chip
+   :deletable? true
+   :children
+   [[mdl/chip-text
+     :child "Deletable Chip"]
+    [mdl/chip-action
+     :type     :button
+     :on-click #(js/alert "Delete this chip!")
+     :child    [:i.material-icons
+                "cancel"]]]])
+
+(defn chip-demo-button
+  "This is a chip as a button."
+  []
+  [mdl/chip
+   :button?  :button
+   :on-click #(js/alert "You Clicked a Chip!")
+   :children
+   [[mdl/chip-text
+     :child "Button Chip"]]])
+
+(defn chip-demo-contact
+  "This is a contact chip."
+  []
+  [mdl/chip
+   :contact? true
+   :children
+   [[mdl/chip-contact
+     :class "mdl-color--teal mdl-color-text--white"
+     :child "A"]
+    [mdl/chip-text
+     :child "Contact Chip"]]])
+
+(defn chip-demo-deletable-contact
+  "This is a deletable contact chip."
+  []
+  [mdl/chip
+   :contact?   true
+   :deletable? true
+   :children
+   [[mdl/chip-contact
+     :class "mdl-color--teal mdl-color-text--white"
+     :child "B"]
+    [mdl/chip-text
+     :child "Deletable Chip"]
+    [mdl/chip-action
+     :el    :a
+     :attr  {:href "#"}
+     :child [:i.material-icons
+             "cancel"]]]])
 
 (defn chip-demo []
   [:div.chip-demo
-   [mdl/chip
-    :children
-    [[mdl/chip-text
-      :content "Basic Chip"]]]
-   [mdl/chip
-    :deletable? true
-    :children
-    [[mdl/chip-text
-      :content "Deletable Chip"]
-     [mdl/chip-action
-      :type     :button
-      :on-click #(js/alert "Delete this chip!")
-      :content  [:i.material-icons
-                 "cancel"]]]]
-   [mdl/chip
-    :el       :button
-    :type     :button
-    :on-click #(js/alert "You Clicked a Chip!")
-    :children
-    [[mdl/chip-text
-      :content "Button Chip"]]]
-   [mdl/chip
-    :contact? true
-    :children
-    [[mdl/chip-contact
-      :class "mdl-color--teal mdl-color-text--white"
-      :content "A"]
-     [mdl/chip-text
-      :content "Contact Chip"]]]
-   [mdl/chip
-    :contact?   true
-    :deletable? true
-    :children
-    [[mdl/chip-contact
-      :class "mdl-color--teal mdl-color-text--white"
-      :content "B"]
-     [mdl/chip-text
-      :content "Deletable Chip"]
-     [mdl/chip-action
-      :el      :a
-      :attr    {:href "#"}
-      :content [:i.material-icons
-                "cancel"]]]]])
+   [:h6 "CHIPS"]
+   [:p "Represent complex entities in small blocks."]
+   [demo-doc-component
+    [[chip-demo-basic]
+     [chip-demo-deletable]
+     [chip-demo-button]]
+    [#(source chip-demo-basic)
+     #(source chip-demo-deletable)
+     #(source chip-demo-button)]]
+   [demo-doc-component
+    [[chip-demo-contact]
+     [chip-demo-deletable-contact]]
+    [#(source chip-demo-contact)
+     #(source chip-demo-deletable-contact)]]
+   [demo-options
+    {:title       "SHARED OPTIONS"
+     :description "These are the shared options for all of the chip elements."
+     :rows
+     [[":el"                "The HTML element for the chip" "Default to :span | Action defaults to :button"]
+      [":child | :children" "The descendants of the chip"   "For the chip component this key is :children"]]}]
+   [demo-options
+    {:title       "CHIP OPTIONS"
+     :description "These are the shared options for all of the chip elements."
+     :rows
+     [[":deletable?" "Allows the chip to be deleted"     "Optional"]
+      [":contact?"   "Applies contact view to the chip"  "Optional"]
+      [":button?"    "Turns the container into a button" "Optional; this element accepts keys"]]}]
+   [demo-options
+    {:title       "ACTION OPTIONS"
+     :description "These are the shared options for all of the chip elements."
+     :rows
+     [[":on-click" "Callback function for button event" "Optional"]
+      [":type"     "Sets the type of the button"        "Optional"]]}]
+   [:h6 "TEXT OPTIONS"]
+   [:p "Nothing unique"]
+   [:h6 "CONTACT OPTIONS"]
+   [:p "Nothing unique"]
+   [demo-reference "chips"]])
 
 (defn grid-demo [& kids]
   [mdl/grid
