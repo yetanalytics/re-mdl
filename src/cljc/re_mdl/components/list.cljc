@@ -1,12 +1,13 @@
 (ns re-mdl.components.list)
 
 (defn item-primary-content
-  [& {:keys [icon avatar content
+  [& {:keys [el icon avatar child
              children
              id class attr]
+      :or   {el :span}
       :as   args}]
   (assert (not (and icon avatar)) "Can't have both icon and avatar")
-  (cond-> [:span
+  (cond-> [el
            (merge {:id id
                    :class (cond-> "mdl-list__item-primary-content"
                             class (str " " class))}
@@ -18,23 +19,24 @@
                         "mdl-list__item-icon"
                         "mdl-list__item-avatar")}
               icon-name])
-           content]
+           child]
     children (into children)))
 
 (defn item-secondary-content
-  [& {:keys [content children
+  [& {:keys [el child children
              id class attr]
+      :or   {el :span}
       :as   args}]
-  (into [:span
+  (into [el
          (merge {:id id
                  :class (cond-> "mdl-list__item-secondary-content"
                           class (str " " class))}
                 attr)
-         content]
+         child]
         children))
 
 (defn item-secondary-action
-  [& {:keys [content
+  [& {:keys [child children
              el href icon
              id class attr]
       :as   args
@@ -42,49 +44,56 @@
   (assert (not (and (= el :span)
                     (or href icon)))
           "href and icon only valid on <a>")
-  [el
-   (merge (cond-> {:id id
-                   :class (cond-> "mdl-list__item-secondary-action"
-                            class (str " " class))}
-            href (assoc :href href))
-          attr)
+  (into [el
+         (merge (cond-> {:id id
+                         :class (cond-> "mdl-list__item-secondary-action"
+                                  class (str " " class))}
+                  href (assoc :href href))
+                attr)
 
-   (or content
-       [:i.material-icons icon])])
+         (or child
+             [:i.material-icons icon])]
+        children))
 
 (defn item-secondary-info
-  [& {:keys [content
+  [& {:keys [el child children
              id class attr]
+      :or   {el :span}
       :as   args}]
-  [:span
-   (merge {:id id
-           :class (cond-> "mdl-list__item-secondary-info"
-                    class (str " " class))}
-          attr)
+  (into [el
+         (merge {:id id
+                 :class (cond-> "mdl-list__item-secondary-info"
+                          class (str " " class))}
+                attr)
 
-   content])
+         child]
+        children))
 
 (defn item-text-body
-  [& {:keys [content
+  [& {:keys [el child children
              id class attr]
+      :or   {el :span}
       :as   args}]
-  [:span
-   (merge {:id id
-           :class (cond-> "mdl-list__item-text-body"
-                    class (str " " class))}
-          attr)
-   content])
+  (into [el
+         (merge {:id id
+                 :class (cond-> "mdl-list__item-text-body"
+                          class (str " " class))}
+                attr)
+         child]
+        children))
 
 (defn item-sub-title
-  [& {:keys [content
+  [& {:keys [el child children
              id class attr]
+      :or   {el :span}
       :as   args}]
-  [:span
-   (merge {:id id
-           :class (cond-> "mdl-list__item-sub-title"
-                    class (str " " class))}
-          attr)
-   content])
+  (into [el
+         (merge {:id id
+                 :class (cond-> "mdl-list__item-sub-title"
+                          class (str " " class))}
+                attr)
+         child]
+        children))
 
 
 (defn item

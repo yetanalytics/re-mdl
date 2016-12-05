@@ -35,25 +35,27 @@
 
 (defn demo-options
   "This will take a title, a description, and vector of table rows to render."
-  [{:keys [title description rows]
-    :or   {title "OPTIONS"}}]
+  [{:keys [title description rows]}]
   [:div
-   [:h6 title]
+   [:h6 (str title " OPTIONS")]
    [:p description]
-   [mdl/table
-    :class  "mdl-demo-options"
-    :shadow 3
-    :headers
-    [["Key"      :non-numeric true]
-     ["Effect"   :non-numeric true]
-     ["Comments" :non-numeric true]]
-    :rows
-    rows]])
+   (if rows
+     [mdl/table
+      :class  "mdl-demo-options"
+      :shadow 3
+      :headers
+      [["Key"      :non-numeric true]
+       ["Effect"   :non-numeric true]
+       ["Comments" :non-numeric true]]
+      :rows
+      rows]
+     "Nothing unique")])
 
 (defn demo-reference
   "This generates a small text component to show reference to MDL site."
   [component]
-  [:p "Refer to the MDL "
+  [:p {:style {:padding-top "30px"}}
+   "Refer to the MDL "
    [:a {:href
         (str "https://getmdl.io/components/index.html#"
              component
@@ -77,12 +79,13 @@
     [:a {:href "https://github.com/reagent-project/reagent"} "Reagent"]
     ". This demo is built using re-mdl to demonstrate and document it's use."]
    [demo-options
-    {:title       "SHARED OPTIONS"
+    {:title       "SHARED"
      :description "These are the shared options for all re-mdl components."
      :rows
-     [[":id"    "The id for the HTML element"            "Optional; String if used"]
-      [":class" "The class for the HTML element"         "Optional; String if used"]
-      [":attr"  "Any other HTML attributes not provided" "You can also override existing attrs"]]}]
+     [[":id"       "The id for the HTML element"            "Optional; String if used"]
+      [":class"    "The class for the HTML element"         "Optional; String if used"]
+      [":attr"     "Any other HTML attributes not provided" "You can also override existing attrs"]
+      [":children" "Nested items for this component"        "Optional; Vector of components"]]}]
    [:h6 "CHANGE LOG"]
    [mdl/list-coll
     :children
@@ -91,11 +94,15 @@
                    "add card menu"
                    "fix textfields"
                    "docs and demo added to match mdl"
-                   "chip and chip inners changed content to child"]]
+                   "chip and chip inners changed content to child"
+                   "list 'content' renamed to 'child'"
+                   "list 'children' added to remaining components"
+                   "added el key to list component options where applicable"
+                   "menu demo isn't visible"]]
             [mdl/list-item
              :children
              [[mdl/list-item-primary-content
-               :content s]]]))]])
+               :child s]]]))]])
 
 (defn badge-demo-number-icon
   "This badge is an icon that has an overlapped number."
@@ -144,7 +151,8 @@
     [#(source badge-demo-number)
      #(source badge-demo-icon)]]
    [demo-options
-    {:description "These are the options that can be applied to adapt the component's appearance."
+    {:title       "badge"
+     :description "These are the options that can be applied to adapt the component's appearance."
      :rows
      [[":el"             "Container element for badge"         "Optional; Defaults to :span"]
       [":child"          "Content inside the :el"              "nil"]
@@ -361,7 +369,8 @@
     [#(source button-demo-mini-fab)
      #(source button-demo-colored-mini-fab)]]
    [demo-options
-    {:description "These are the options that can be applied to adapt the component's appearance."
+    {:title       "button"
+     :description "These are the options that can be applied to adapt the component's appearance."
      :rows
      [[":el"             "Container element for badge"         "Optional; Defaults to :button"]
       [":label"          "Content inside the :el"              "String or hiccup"]
@@ -503,28 +512,30 @@
     [#(source chip-demo-contact)
      #(source chip-demo-deletable-contact)]]
    [demo-options
-    {:title       "SHARED OPTIONS"
+    {:title       "SHARED"
      :description "These are the shared options for all of the chip elements."
      :rows
      [[":el"                "The HTML element for the chip" "Default to :span | Action defaults to :button"]
       [":child | :children" "The descendants of the chip"   "For the chip component this key is :children"]]}]
    [demo-options
-    {:title       "CHIP OPTIONS"
-     :description "These are the shared options for all of the chip elements."
+    {:title       "chip"
+     :description "These are options unique to the chip component, the overall wrapping component."
      :rows
      [[":deletable?" "Allows the chip to be deleted"     "Optional"]
       [":contact?"   "Applies contact view to the chip"  "Optional"]
       [":button?"    "Turns the container into a button" "Optional; this element accepts keys"]]}]
    [demo-options
-    {:title       "ACTION OPTIONS"
-     :description "These are the shared options for all of the chip elements."
+    {:title       "chip-action"
+     :description "These are the options for the action component, which is inside a chip."
      :rows
      [[":on-click" "Callback function for button event" "Optional"]
       [":type"     "Sets the type of the button"        "Optional"]]}]
-   [:h6 "TEXT OPTIONS"]
-   [:p "Nothing unique"]
-   [:h6 "CONTACT OPTIONS"]
-   [:p "Nothing unique"]
+   [demo-options
+    {:title       "chip-text"
+     :description "Text component rendered in the chip. Primary component."}]
+   [demo-options
+    {:title       "chip-contact"
+     :description "Left-most information about the contact. Primarily image or icon."}]
    [demo-reference "chips"]])
 
 (defn grid-demo [& kids]
@@ -854,144 +865,202 @@
                         (.log js/console "Dialog cancelled!")
                         (reset! open? false))])])))
 
-(defn list-demo []
-  [mdl/grid
+(defn list-demo-simple
+  "This is a simple list."
+  []
+  [mdl/list-coll
+   :class "mdl-demo-list"
    :children
-   [[mdl/cell
-     :children
-     [[:p "Simple list"]
-      [mdl/list-coll
-       :children
-       (into []
-             (for [s ["foo" "bar" "baz"]]
-               [mdl/list-item
-                :children
-                [[mdl/list-item-primary-content
-                  :content s]]]))]]]
+   (into []
+         (for [s ["Bryan Cranston"
+                  "Aaron Paul"
+                  "Bob Odenkirk"]]
+           ^{:key s} [mdl/list-item
+                      :children
+                      [[mdl/list-item-primary-content
+                        :child s]]]))])
 
+(defn list-demo-icon
+  "This is a list that has icons."
+  []
+  [mdl/list-coll
+   :class "mdl-demo-list"
+   :children
+   (into []
+         (for [[i s] [["person" "Bryan Cranston"]
+                      ["person" "Aaron Paul"]
+                      ["person" "Bob Odenkirk"]]]
+           ^{:key s} [mdl/list-item
+                      :children
+                      [[mdl/list-item-primary-content
+                        :icon  i
+                        :child s]]]))])
 
+(defn list-demo-avatar-and-action
+  "This is a list that has avatars and actions."
+  []
+  [mdl/list-coll
+   :class "mdl-demo-list"
+   :children
+   (into []
+         (for [[a s] [["person" "Bryan Cranston"]
+                      ["person" "Aaron Paul"]
+                      ["person" "Bob Odenkirk"]]]
+           ^{:key s} [mdl/list-item
+                      :children
+                      [[mdl/list-item-primary-content
+                        :avatar a
+                        :child  s]
+                       [mdl/list-item-secondary-content
+                        :children
+                        [[mdl/list-item-secondary-action
+                          :href "#"
+                          :el   :a
+                          :icon "star"]]]]]))])
 
-    [mdl/cell
-     :children
-     [[:p "Icons"]
-      [mdl/list-coll
-       :children
-       (into []
-             (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
-               [mdl/list-item
-                :children
-                [[mdl/list-item-primary-content
-                  :icon i
-                  :content s]]]))]]]
+(defn list-demo-avatar-and-controls
+  "This is a list that has avatars and controls."
+  []
+  [mdl/list-coll
+   :class "mdl-demo-list"
+   :children
+   (into []
+         (for [[a s c] [["person" "Bryan Cranston" [mdl/toggle-checkbox
+                                                    :ripple-effect? true
+                                                    :checked?       true
+                                                    :handler-fn     #(print "hmm")]]
+                        ["person" "Aaron Paul"     [mdl/toggle-radios
+                                                    :ripple-effect? true
+                                                    :handler-fn     #(print "why")
+                                                    :choices
+                                                    [[:test ""]]]]
+                        ["person" "Bob Odenkirk"   [mdl/toggle-switch
+                                                    :ripple-effect? true
+                                                    :handler-fn     #(print "ugh")]]]]
+           ^{:key s} [mdl/list-item
+                      :children
+                      [[mdl/list-item-primary-content
+                        :avatar a
+                        :child  s]
+                       [mdl/list-item-secondary-content
+                        :children
+                        [[mdl/list-item-secondary-action
+                          :el    :span
+                          :child c]]]]]))])
 
-    [mdl/cell
-     :children
-     [[:p "Avatars"]
+(defn list-demo-subtitle-with-secondary-info-and-action
+  "This is a list that has subtitles and secondary info with an action."
+  []
+  [mdl/list-coll
+   :class "mdl-demo-list"
+   :children
+   (into []
+         (for [[a s t i] [["person" "Bryan Cranston" "62 Episodes" "Actor"]
+                          ["person" "Aaron Paul"     "62 Episodes"]
+                          ["person" "Bob Odenkirk"   "62 Episodes"]]]
+           ^{:key s} [mdl/list-item
+                         :item-type :two-line
+                         :children
+                         [[mdl/list-item-primary-content
+                           :avatar a
+                           :child  s
+                           :children
+                           [[mdl/list-item-sub-title
+                             :child t]]]
+                          [mdl/list-item-secondary-content
+                           :children
+                           [[mdl/list-item-secondary-info
+                             :child i]
+                            [mdl/list-item-secondary-action
+                             :href "#"
+                             :el   :a
+                             :icon "star"]]]]]))])
 
-      [mdl/list-coll
-       :children
-       (into []
-             (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
-               [mdl/list-item
-                :children
-                [[mdl/list-item-primary-content
-                  :avatar i
-                  :content s]]]))]]]
+(defn list-demo-three-line
+  "This is a list that has a three line subtitle."
+  []
+  [mdl/list-coll
+   :class "mdl-demo-list-three"
+   :children
+   (into []
+         (for [[a s t i] [["person" "Bryan Cranston"
+                           "Bryan Cranston played the role of Walter in Breaking Bad. He is also know for playing Hal in Malcolm in the Middle."]
+                          ["person" "Aaron Paul"
+                           "Aaron Paul played the role of Jesse in Breaking Bad. He also featured in the \"Need for Speed\" Movie."]
+                          ["person" "Bob Odenkirk"
+                           "Bob Odenkirk played the role of Saul in Breaking Bad. Due to public fondness for the character, Bob stars in his own show now, called \"Better Call Saul\"."]]]
+           ^{:key s} [mdl/list-item
+                         :item-type :three-line
+                         :children
+                         [[mdl/list-item-primary-content
+                           :avatar a
+                           :child  s
+                           :children
+                           [[mdl/list-item-text-body
+                             :child t]]]
+                          [mdl/list-item-secondary-content
+                           :children
+                           [[mdl/list-item-secondary-action
+                             :href "#"
+                             :el   :a
+                             :icon "star"]]]]]))])
 
-    [mdl/cell
-     :children
-     [[:p "Actions"]
-
-      [mdl/list-coll
-       :children
-       (into []
-             (for [[i s] [["person" "foo"] ["people" "bar"] ["star" "baz"]]]
-               [mdl/list-item
-                :children
-                [[mdl/list-item-primary-content
-                  :avatar i
-                  :content s]
-                 [mdl/list-item-secondary-action
-                  :href "#"
-                  :el :a
-                  :icon "star"]]]))]]]
-
-    [mdl/cell
-     :children
-     [[:p "Input Actions"]
-
-      [mdl/list-coll
-       :children
-       (into []
-             (for [[i s c] [["person" "foo" [mdl/toggle-checkbox
-                                             :id "checkbox-list-demo"
-                                             :checked? true
-                                             :label "Checkbox"
-                                             :handler-fn #(print "checkbox: " %)]]
-                            ["people" "bar" [mdl/toggle-radios
-                                             :name "radio-list-demo"
-                                             :handler-fn #(print "radio: " %)
-                                             :choices
-                                             [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]]]
-                            ["star" "baz" [mdl/toggle-switch
-                                           :id "switch-list-demo"
-                                           :label "On/Off"
-                                           :ripple-effect? true
-                                           :handler-fn #(print (str "switch: " %))]]]]
-               [mdl/list-item
-                :children
-                [[mdl/list-item-primary-content
-                  :avatar i
-                  :content s]
-                 [mdl/list-item-secondary-action
-                  :el :span
-                  :content c]]]))]]]
-
-    [mdl/cell
-     :children
-     [[:p "Two Line"]
-
-      [mdl/list-coll
-       :children
-       (into []
-             (for [[i s subt] [["person" "foo" "subtitle"] ["people" "bar" "subtitle"] ["star" "baz" "subtitle"]]]
-               [mdl/list-item
-                :item-type :two-line
-                :children
-                [[mdl/list-item-primary-content
-                  :avatar i
-                  :content s
-                  :children
-                  [[mdl/list-item-sub-title
-                    :content subt]]]
-                 [mdl/list-item-secondary-action
-                  :href "#"
-                  :el :a
-                  :icon "star"]]]))]]]
-
-    [mdl/cell
-     :children
-     [[:p "Three Line"]
-
-      [mdl/list-coll
-       :children
-       (into []
-             (for [[i s txt] [["person" "foo" "longer text foo bar baz longer text foo bar baz"]
-                              ["people" "bar" "longer text foo bar baz longer text foo bar baz"]
-                              ["star" "baz" "longer text foo bar baz longer text foo bar baz"]]]
-               [mdl/list-item
-                :item-type :three-line
-                :children
-                [[mdl/list-item-primary-content
-                  :avatar i
-                  :content s
-                  :children
-                  [[mdl/list-item-text-body
-                    :content txt]]]
-                 [mdl/list-item-secondary-action
-                  :href "#"
-                  :el :a
-                  :icon "star"]]]))]]]]])
+(defn list-demo []
+  [:div.list-demo
+   [:h6 "LISTS"]
+   [:p "Customizable scrollable lists."]
+   [demo-doc-component
+    [[list-demo-simple]]
+    [#(source list-demo-simple)]]
+   [demo-doc-component
+    [[list-demo-icon]]
+    [#(source list-demo-icon)]]
+   [demo-doc-component
+    [[list-demo-avatar-and-action]]
+    [#(source list-demo-avatar-and-action)]]
+   [demo-doc-component
+    [[list-demo-avatar-and-controls]]
+    [#(source list-demo-avatar-and-controls)]]
+   [demo-doc-component
+    [[list-demo-subtitle-with-secondary-info-and-action]]
+    [#(source list-demo-subtitle-with-secondary-info-and-action)]]
+   [demo-doc-component
+    [[list-demo-three-line]]
+    [#(source list-demo-three-line)]]
+   [demo-options
+    {:title       "list-coll"
+     :description "This is the parent :ul container for the list."}]
+   [demo-options
+    {:title       "list-item"
+     :description "This is the individual :li item for a list."
+     :rows
+     [[":item-type" "Defines how many lines the item should be." "Options: :one-line, :two-line, :three-line; defaults to :one-line"]]}]
+   [demo-options
+    {:title       "list-item-primary-content"
+     :description "This containing element will house the primary portion of the list item."
+     :rows
+     [[":el"]
+      [":icon"]
+      [":avatar"]
+      [":child"]]}]
+   [demo-options
+    {:title       "list-item-sub-title"
+     :description "This is the subtitle that will render within the primary content. Requires :item-type to be :two-line."}]
+   [demo-options
+    {:title       "list-item-text-body"
+     :description "This will render a two lined subtitle. Requires :item-type to be :three-line."}]
+   [demo-options
+    {:title       "list-item-secondary-content"
+     :description "nil"
+     :rows
+     [[":el"]]}]
+   [demo-options
+    {:title       "list-item-secondary-info"
+     :description "nil"}]
+   [demo-options
+    {:title       "list-item-secondary-action"
+     :description "nil"}]
+   [demo-reference "lists"]])
 
 
 (defn grid-spacing-demo []

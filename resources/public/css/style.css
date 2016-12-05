@@ -20,6 +20,7 @@ pre {
 }
 
 .mdl-demo {
+  width: 100%;
   margin-left: 60px;
   margin-right: 60px;
 }
@@ -29,3 +30,13 @@ pre {
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+.mdl-demo-list {
+  text-align: left;
+  width: 300px;
+}
+
+.mdl-demo-list-three {
+  text-align: left;
+  width: 650px;
+]
