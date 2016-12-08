@@ -701,18 +701,40 @@
      [mdl/menu-item
       :label "Slow"]]]])
 
+(defn slider-demo-default
+  "This is a slider that defaults to 0."
+  []
+  (let [model (r/atom 0)]
+    [mdl/slider
+     :id         "slider-default"
+     :model      model
+     :handler-fn #(reset! model %)
+     :min        0
+     :max        100]))
+
+(defn slider-demo-starting
+  "This is a slider with a starting value."
+  []
+  (let [model (r/atom 25)]
+    [mdl/slider
+     :id         "slider-starting"
+     :model      model
+     :handler-fn #(reset! model %)
+     :min        0
+     :max        100]))
 
 (defn slider-demo []
   [:div.slider-demo
-   [:p
-    {:width "300px"}
-    [mdl/slider
-     :id "foo"
-     :init-val 4
-     :min 0
-     :max 10
-     :step 2
-     :handler-fn #(print "slider: " %)]]])
+   [:h6 "SLIDERS"]
+   [:p "This allows you to select a value from a range."]
+   [demo-doc-component
+    [[slider-demo-default]
+     [slider-demo-starting]]
+    [#(source slider-demo-default)
+     #(source slider-demo-starting)]]
+   [demo-options
+    {:description "Options for a slider."}]
+   [demo-reference "sliders"]])
 
 
 (defn toggles-demo []
