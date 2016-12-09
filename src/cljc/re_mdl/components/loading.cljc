@@ -49,8 +49,8 @@
    (merge
     {:id id
      :class (cond-> "mdl-spinner mdl-js-spinner"
-              class (str " " class)
-              is-active? (str " is-active")
+              class         (str " " class)
+              is-active?    (str " is-active")
               single-color? (str " mdl-spinner--single-color"))}
     attr)])
 

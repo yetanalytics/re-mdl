@@ -681,9 +681,31 @@
        :model @pct-done
        ]])))
 
-(defn loading-spinner-demo []
+(defn loading-spinner-demo-default
+  "This is a default spinner."
+  []
   [mdl/loading-spinner
    :is-active? true])
+
+(defn loading-spinner-demo-single-color
+  "This is a single colored spinner."
+  []
+  [mdl/loading-spinner
+   :is-active?    true
+   :single-color? true])
+
+(defn loading-spinner-demo []
+  [:div.loading-spinner-demo
+   [:h6 "Loading Spinners"]
+   [:p "This is a loading spinner for indeterminate load times."]
+   [demo-doc-component
+    [[loading-spinner-demo-default]
+     [loading-spinner-demo-single-color]]
+    [#(source loading-spinner-demo-default)
+     #(source loading-spinner-demo-single-color)]]
+   [demo-options
+    {:description "These are the options for the loading spinner."}]
+   [demo-reference "loading"]])
 
 (defn menu-demo []
   [:div.menu-demo
