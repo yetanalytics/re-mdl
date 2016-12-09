@@ -1,32 +1,34 @@
 (ns re-mdl.components.slider
   (:require #?(:cljs [reagent.core :as r])
-            [re-mdl.util :refer [mdl-init!]]))
+            [re-mdl.util :refer [mdl-init! mdl-get-model]]))
 
 (defn slider*
   [& {:keys [min max step
-             handler-fn
+             handler-fn model
              id class attr
-             init-val]
+             disabled?]
       :as   args}]
   [:input
    (merge
-    {:type "range"
-     :id id
+    (cond->
+        {:type "range"
+         :id   id
 
-     :min min
-     :max max
-     :step step
+         :min  min
+         :max  max
+         :step step
 
-     #?@(:cljs
-         [:on-change
-          (fn [e] (handler-fn (.-value (.-target e))))]
-         :clj [:value init-val])
+         #?@(:cljs
+             [:on-change
+              (fn [e] (handler-fn (.. e -target -value)))]
+             :clj [:value (mdl-get-model model)])
 
-     :class (cond-> "mdl-slider mdl-js-slider"
-              class (str " " class))}
+         :class (cond-> "mdl-slider mdl-js-slider"
+                  class (str " " class))}
+      disabled? (assoc :disabled true))
     attr)])
 
-(defn slider [& {:keys [init-val]
+(defn slider [& {:keys [model]
                  :as args}]
   #?(:cljs
      (r/create-class
@@ -35,7 +37,7 @@
          (let [node (r/dom-node this)]
            (doto node
              mdl-init!
-             (-> .-MaterialSlider (.change init-val)))))
+             (-> .-MaterialSlider (.change (mdl-get-model model))))))
        :reagent-render
        slider*})
      :clj (apply slider* (flatten args))))

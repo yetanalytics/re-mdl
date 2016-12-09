@@ -2,20 +2,22 @@
   (:require [re-mdl.util :refer [wrap-mdl]]))
 
 
-(defn tooltip* [& {:keys [for large? left? right? top? bottom?
+(defn tooltip* [& {:keys [el for large? left? right? top? bottom?
                           children
-                          id class attr]}]
+                          id class attr]
+                   :or   {el :span}
+                   :as   args}]
   (into
-   [:span
+   [el
     (merge
-     {:id id
-      :for for
+     {:id    id
+      :for   for
       :class (cond-> "mdl-tooltip"
-               class (str " " class)
-               large? (str " mdl-tooltip--large")
-               left? (str " mdl-tooltip--left")
-               right? (str " mdl-tooltip--right")
-               top? (str " mdl-tooltip--top")
+               class   (str " " class)
+               large?  (str " mdl-tooltip--large")
+               left?   (str " mdl-tooltip--left")
+               right?  (str " mdl-tooltip--right")
+               top?    (str " mdl-tooltip--top")
                bottom? (str " mdl-tooltip--bottom"))}
      attr)]
    children))

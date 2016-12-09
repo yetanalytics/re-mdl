@@ -692,9 +692,31 @@
        :model @pct-done
        ]])))
 
-(defn loading-spinner-demo []
+(defn loading-spinner-demo-default
+  "This is a default spinner."
+  []
   [mdl/loading-spinner
    :is-active? true])
+
+(defn loading-spinner-demo-single-color
+  "This is a single colored spinner."
+  []
+  [mdl/loading-spinner
+   :is-active?    true
+   :single-color? true])
+
+(defn loading-spinner-demo []
+  [:div.loading-spinner-demo
+   [:h6 "Loading Spinners"]
+   [:p "This is a loading spinner for indeterminate load times."]
+   [demo-doc-component
+    [[loading-spinner-demo-default]
+     [loading-spinner-demo-single-color]]
+    [#(source loading-spinner-demo-default)
+     #(source loading-spinner-demo-single-color)]]
+   [demo-options
+    {:description "These are the options for the loading spinner."}]
+   [demo-reference "loading"]])
 
 (defn menu-demo []
   [:div.menu-demo
@@ -712,18 +734,40 @@
      [mdl/menu-item
       :label "Slow"]]]])
 
+(defn slider-demo-default
+  "This is a slider that defaults to 0."
+  []
+  (let [model (r/atom 0)]
+    [mdl/slider
+     :id         "slider-default"
+     :model      model
+     :handler-fn #(reset! model %)
+     :min        0
+     :max        100]))
+
+(defn slider-demo-starting
+  "This is a slider with a starting value."
+  []
+  (let [model (r/atom 25)]
+    [mdl/slider
+     :id         "slider-starting"
+     :model      model
+     :handler-fn #(reset! model %)
+     :min        0
+     :max        100]))
 
 (defn slider-demo []
   [:div.slider-demo
-   [:p
-    {:width "300px"}
-    [mdl/slider
-     :id "foo"
-     :init-val 4
-     :min 0
-     :max 10
-     :step 2
-     :handler-fn #(print "slider: " %)]]])
+   [:h6 "SLIDERS"]
+   [:p "This allows you to select a value from a range."]
+   [demo-doc-component
+    [[slider-demo-default]
+     [slider-demo-starting]]
+    [#(source slider-demo-default)
+     #(source slider-demo-starting)]]
+   [demo-options
+    {:description "Options for a slider."}]
+   [demo-reference "sliders"]])
 
 
 (defn toggles-demo []
@@ -805,31 +849,67 @@
     :rows 2
     :maxrows 8]]])
 
+(defn tooltip-demo-simple
+  "This is a simple tooltip."
+  []
+  [:span
+   [:div#tooltip-simple.material-icons
+    "add"]
+   [mdl/tooltip
+    :for      "tooltip-simple"
+    :children ["Follow"]]])
+
+(defn tooltip-demo-large
+  "This is a large tooltip."
+  []
+  [:span
+   [:div#tooltip-large.material-icons
+    "print"]
+   [mdl/tooltip
+    :for      "tooltip-large"
+    :large?   true
+    :children ["Print"]]])
+
+(defn tooltip-demo-rich
+  "This is a rich tooltip."
+  []
+  [:span
+   [:div#tooltip-rich.material-icons
+    "cloud_upload"]
+   [mdl/tooltip
+    :for      "tooltip-rich"
+    :children ["Upload "
+               [:b "file.zip"]]]])
+
+(defn tooltip-demo-multiline
+  "This is a multilined tooltip."
+  []
+  [:span
+   [:div#tooltip-multiline.material-icons
+    "share"]
+   [mdl/tooltip
+    :for      "tooltip-multiline"
+    :children ["Share your content"
+               [:br]
+               "via social media"]]])
+
 (defn tooltip-demo []
   [:div.tooltip-demo
-   [grid-demo
-    [:div
-     {:id "tooltip-demo-div"}
-     "A Div"]
-    [mdl/tooltip
-     :for "tooltip-demo-div"
-     :children ["Can have tooltips"]]
-
-    [:p
-     {:id "tooltip-demo-p"}
-     "A p"]
-
-    [mdl/tooltip
-     :for "tooltip-demo-p"
-     :children ["Can also have tooltips"]]
-
-    [:span
-     {:id "tooltip-demo-span"}
-     "A span"]
-    [mdl/tooltip
-     :for "tooltip-demo-span"
-     :large? true
-     :children ["Giant tooltip!"]]]])
+   [:h6 "TOOLTIPS"]
+   [:p "Useful information on hover-over."]
+   [demo-doc-component
+    [[tooltip-demo-simple]
+     [tooltip-demo-large]]
+    [#(source tooltip-demo-simple)
+     #(source tooltip-demo-large)]]
+   [demo-doc-component
+    [[tooltip-demo-rich]
+     [tooltip-demo-multiline]]
+    [#(source tooltip-demo-rich)
+     #(source tooltip-demo-multiline)]]
+   [demo-options
+    {:description "These are the options that can be applied to change the tooltip appearance."}]
+   [demo-reference "tooltips"]])
 
 (defn snackbar-demo []
   [:div.snackbar-demo
