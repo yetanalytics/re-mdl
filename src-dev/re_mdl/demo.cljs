@@ -718,22 +718,121 @@
     {:description "These are the options for the loading spinner."}]
    [demo-reference "loading"]])
 
+(defn menu-demo-lower-left
+  "This is a left-aligned menu that expands down."
+  []
+  [:div.mdl-demo-menu-container
+   [:span
+    [mdl/button
+     :id    "menu-lower-left"
+     :icon? true
+     :label [:i.material-icons "more_vert"]]
+    [mdl/menu
+     :for            "menu-lower-left"
+     :bottom-left?   true
+     :ripple-effect? true
+     :children
+     [[mdl/menu-item
+       :label "Some Action"]
+      [mdl/menu-item
+       :full-bleed-divider? true
+       :label               "Another Action"]
+      [mdl/menu-item
+       :disabled? true
+       :label     "Disabled Action"]
+      [mdl/menu-item
+       :label "Yet Another Action"]]]]])
+
+(defn menu-demo-lower-right
+  "This is a right-aligned menu that expands down."
+  []
+  [:div.mdl-demo-menu-container.mdl-shadow--2dp
+   [:span.bar
+    [mdl/button
+     :id    "menu-lower-right"
+     :icon? true
+     :label [:i.material-icons "more_vert"]]
+    [mdl/menu
+     :for            "menu-lower-right"
+     :bottom-right?  true
+     :ripple-effect? true
+     :children
+     [[mdl/menu-item
+       :label "Some Action"]
+      [mdl/menu-item
+       :label "Another Action"]
+      [mdl/menu-item
+       :disabled? true
+       :label     "Disabled Action"]
+      [mdl/menu-item
+       :label "Yet Another Action"]]]]])
+
+(defn menu-demo-top-left
+  "This is a left aligned menu that expands up."
+  []
+  [:div.mdl-demo-menu-container
+   [:span
+    [mdl/button
+     :id    "menu-top-left"
+     :icon? true
+     :label [:i.material-icons "more_vert"]]
+    [mdl/menu
+     :for            "menu-top-left"
+     :top-left?      true
+     :ripple-effect? true
+     :children
+     [[mdl/menu-item
+       :label "Some Action"]
+      [mdl/menu-item
+       :full-bleed-divider? true
+       :label               "Another Action"]
+      [mdl/menu-item
+       :disabled? true
+       :label     "Disabled Action"]
+      [mdl/menu-item
+       :label "Yet Another Action"]]]]])
+
+(defn menu-demo-top-right
+  "This is a right aligned menu that expands up."
+  []
+  [:div.mdl-demo-menu-container
+   [:span
+    [mdl/button
+     :id    "menu-top-right"
+     :icon? true
+     :label [:i.material-icons "more_vert"]]
+    [mdl/menu
+     :for            "menu-top-right"
+     :top-right?     true
+     :ripple-effect? true
+     :children
+     [[mdl/menu-item
+       :label "Some Action"]
+      [mdl/menu-item
+       :full-bleed-divider? true
+       :label               "Another Action"]
+      [mdl/menu-item
+       :disabled? true
+       :label     "Disabled Action"]
+      [mdl/menu-item
+       :label "Yet Another Action"]]]]])
+
 (defn menu-demo []
   [:div.menu-demo
-   [mdl/button
-    :id "menu-speed"
-    :icon "more_vert"]
-   [mdl/menu
-    :for "menu-speed"
-    :ripple-effect? true
-    :children
-    [[mdl/menu-item
-      :label "Fast"]
-     [mdl/menu-item
-      :label "Medium"]
-     [mdl/menu-item
-      :label "Slow"]]]])
-
+   [:h6 "Menus"]
+   [:p "Lists of clickable actions."]
+   [demo-doc-component
+    [[menu-demo-lower-left]
+     [menu-demo-lower-right]]
+    [#(source menu-demo-lower-left)
+     #(source menu-demo-lower-right)]]
+   [demo-doc-component
+    [[menu-demo-top-left]
+     [menu-demo-top-right]]
+    [#(source menu-demo-top-left)
+     #(source menu-demo-top-right)]]
+   [demo-options]
+   [demo-reference "menus"]])
 (defn slider-demo-default
   "This is a slider that defaults to 0."
   []
@@ -793,17 +892,30 @@
     :ripple-effect? true
     :handler-fn #(print (str "switch: " %))]])
 
-(defn table-demo []
+(defn table-demo-data
+  "This is a table."
+  []
+  [mdl/table
+   :id          "table-demo"
+   :selectable? true
+   :shadow      2
+   :headers
+   [["Material" :non-numeric true] ["Quantity"] ["Unit price"]]
+   :rows
+   [["Acrylic (Transparent)" 25 "$2.90"]
+    ["Plywood (Birch)" 50 "$1.25"]
+    ["Laminate (Gold on Blue)" 10 "$2.35"]]])
+
+(defn table-demo
+  []
   [:div.table-demo
-   [mdl/table
-    :id "table-demo"
-    :selectable? true
-    :headers
-    [["Foo"] ["Bar"] ["Baz" :non-numeric true]]
-    :rows
-    [[3 6 "wat"]
-     [7 3 "foo"]
-     [0 12 "hey"]]]])
+   [:h6 "Tables"]
+   [:p "Organize data"]
+   [demo-doc-component
+    [[table-demo-data]]
+    [#(source table-demo-data)]]
+   [demo-options]
+   [demo-reference "tables"]])
 
 
 (defn text-field-demo []

@@ -29,11 +29,11 @@
      {:id id
       :for for
       :class (cond-> "mdl-menu mdl-js-menu"
-               class (str " " class)
+               class          (str " " class)
                ripple-effect? (str " mdl-js-ripple-effect")
-               top-left? (str " mdl-menu--top-left")
-               top-right? (str " mdl-menu--top-right")
-               bottom-right? (str " mdl-menu--bottom-right"))}
+               top-left?      (str " mdl-menu--top-left")
+               top-right?     (str " mdl-menu--top-right")
+               bottom-right?  (str " mdl-menu--bottom-right"))}
      attr)]
    children))
 
