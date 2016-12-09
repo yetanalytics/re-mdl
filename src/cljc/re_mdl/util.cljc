@@ -5,6 +5,10 @@
   "This will get the content of a model, be it atom or value."
   [model]
   #?(:cljs
+     @model
+     :clj
+     @model)
+  #_#?(:cljs
      (if (satisfies? IDeref model)
        @model
        model)

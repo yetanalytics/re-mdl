@@ -911,15 +911,56 @@
     {:description "These are the options that can be applied to change the tooltip appearance."}]
    [demo-reference "tooltips"]])
 
-(defn snackbar-demo []
+(defn snackbar-demo-color
+  "This is a snackbar that changes the button color."
+  []
+  (let [model-color (r/atom "")]
+    (fn []
+      [:span
+       [mdl/button
+        :raised?  true
+        :label    "show"
+        :attr     {:style {:background-color @model-color}}
+        :on-click (fn []
+                    (reset! model-color (str "#" (.toString
+                                                  (.floor js/Math
+                                                          (* (rand) 0xFFFFFF))
+                                                  16)))
+                    (mdl/snackbar! :message       "Button color changed"
+                                   :timeout       2000
+                                   :actionHandler (fn [_]
+                                                    (reset! model-color ""))
+                                   :actionText    "Undo"))]
+       [mdl/snackbar-target]])))
+
+(defn snackbar-demo-toast
+  "This is a snackbar that updates a counter."
+  []
+  (let [model-count (r/atom 0)]
+    (fn []
+      [:span
+       [mdl/button
+        :raised?  true
+        :label    "show"
+        :on-click (fn []
+                    (swap! model-count inc)
+                    (mdl/snackbar! :message (str "Example Message #" @model-count)))]
+       [mdl/snackbar-target]])))
+
+(defn snackbar-demo
+  []
   [:div.snackbar-demo
-   [mdl/button
-    :label "toast!"
-    :on-click #(mdl/snackbar! :message
-                              "hey there!"
-                              :timeout
-                              6000)]
-   [mdl/snackbar-target]])
+   [:h6 "SNACKBAR"]
+   [:p "Transient popup notifications"]
+   [demo-doc-component
+    [[snackbar-demo-color]]
+    [#(source snackbar-demo-color)]]
+   [demo-doc-component
+    [[snackbar-demo-toast]]
+    [#(source snackbar-demo-toast)]]
+   [demo-options
+    {:description "These are the options for the snackbar."}]
+   [demo-reference "snackbar"]])
 
 (defn dialog-demo []
   (let [open? (r/atom false)]

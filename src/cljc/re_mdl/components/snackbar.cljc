@@ -17,9 +17,9 @@
   (wrap-mdl snackbar-target*))
 
 
-(defn snackbar! [& {:keys [message action-handler action-text timeout] :as args}]
+(defn snackbar! [& {:keys [message actionHandler actionText timeout] :as args}]
   #?(:cljs
      (-> (.querySelector js/document ".mdl-js-snackbar")
          .-MaterialSnackbar
          (.showSnackbar (clj->js args)))
-     :clj (throw (Exception. "Toast doesn't do anything in clj"))))
+     :clj (throw (Exception. "Snackbar doesn't do anything in clj"))))
