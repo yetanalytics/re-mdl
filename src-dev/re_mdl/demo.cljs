@@ -443,6 +443,28 @@
        :ripple-effect? true
        :label          "View updates"]]]]])
 
+(defn card-demo-expand
+  "This is a card with expanded title."
+  []
+  [mdl/card
+   :attr   {:style {:width            "256px"
+                    :height           "256px"
+                    :background-color "#9C9188"}}
+   :shadow 2
+   :children
+   [[mdl/card-title
+     :expand? true]
+    [mdl/card-actions
+     :attr {:style {:background "rgba(0, 0, 0, 0.2)"
+                    :padding    "16px"
+                    :height     "52px"}}
+     :children
+     [[:span
+       {:style {:color       "#fff"
+                :font-size   "14px"
+                :font-weight "500"}}
+       "Image.jpg"]]]]])
+
 (defn card-demo []
   [:div.card-demo
    [:h6 "CARDS"]
@@ -453,6 +475,9 @@
    [demo-doc-component
     [[card-demo-square]]
     [#(source card-demo-square)]]
+   [demo-doc-component
+    [[card-demo-expand]]
+    [#(source card-demo-expand)]]
    [demo-options]
    [demo-reference "cards"]])
 
