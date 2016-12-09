@@ -97,8 +97,7 @@
                    "chip and chip inners changed content to child"
                    "list 'content' renamed to 'child'"
                    "list 'children' added to remaining components"
-                   "added el key to list component options where applicable"
-                   "menu demo isn't visible"]]
+                   "added el key to list component options where applicable"]]
             [mdl/list-item
              :children
              [[mdl/list-item-primary-content
@@ -391,9 +390,13 @@
   "This is a wide card with a share button."
   []
   [mdl/card
-   :shadow   2
+   :attr   {:style {:width "512px"}}
+   :shadow 2
    :children
    [[mdl/card-title
+     :attr   {:style {:height           "176px"
+                      :color            "white"
+                      :background-color "#6B3E99"}}
      :header :h2
      :text   "Welcome"]
     [mdl/card-supporting-text
@@ -403,35 +406,55 @@
      :border? true
      :children
      [[mdl/button
-        :el             :a
-        :colored?       true
-        :ripple-effect? true
-        :label          "Get Started"]]]]])
+       :el             :a
+       :colored?       true
+       :ripple-effect? true
+       :label          "Get Started"]]]
+    [mdl/card-menu
+     :children [[mdl/button
+                 :attr           {:style {:color "white"}}
+                 :icon?          true
+                 :ripple-effect? true
+                 :label          [:i.material-icons "share"]]]]]])
 
-(defn card-demo-original
+(defn card-demo-square
+  "This is a square card."
   []
   [mdl/card
+   :attr   {:style {:width  "320px"
+                    :height "320px"}}
    :shadow 2
    :children
    [[mdl/card-title
-     :expand? true
-     :header :h4
-     :text "Card"]
+     :attr   {:style {:background-color  "#46B6AC"
+                      :color             "white"
+                      :height            "199px"}}
+     :header :h2
+     :text   "Update"]
+    [mdl/card-supporting-text
+     :text "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+           Aenan convallis"]
     [mdl/card-actions
      :border? true
      :children
-     [[:a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect
-       "Action"]]]]])
+     [[mdl/button
+       :el             :a
+       :colored?       true
+       :ripple-effect? true
+       :label          "View updates"]]]]])
 
 (defn card-demo []
   [:div.card-demo
    [:h6 "CARDS"]
    [:p "Self-contained pieces of paper with data."]
    [demo-doc-component
-    [[card-demo-wide-with-share]
-     [card-demo-original]]
-    [#(cljs.repl/source card-demo-wide-with-share)
-     #(cljs.repl/source card-demo-original)]]])
+    [[card-demo-wide-with-share]]
+    [#(cljs.repl/source card-demo-wide-with-share)]]
+   [demo-doc-component
+    [[card-demo-square]]
+    [#(source card-demo-square)]]
+   [demo-options]
+   [demo-reference "cards"]])
 
 (defn chip-demo-basic
   "This is a basic chip."
@@ -1074,8 +1097,39 @@
     {:description "These are the options for the snackbar."}]
    [demo-reference "snackbar"]])
 
-(defn dialog-demo []
+(defn dialog-demo-simple
+  "This is a dialog demo."
+  []
   (let [open? (r/atom false)]
+    (fn []
+      [:span
+       [mdl/button
+        :label    "show-button"
+        :raised?  true
+        :on-click #(reset! open? true)]
+       (when @open?
+         [mdl/dialog
+          :title   "MDL Dialog"
+          :content [[:p "This is an example of the Material Design Lite
+                        Lite dialog component. Please use responsibly."]]
+          :actions [[mdl/button
+                     :label    "Close"
+                     :on-click #(reset! open? false)]
+                    [mdl/button
+                     :label     "Disabled Action"
+                     :disabled? true]]])])))
+
+(defn dialog-demo
+  []
+  [:div.dialog-demo
+   [:h6 "Dialogs"]
+   [:p "Modal windows for dedicated user input."]
+   [demo-doc-component
+    [[dialog-demo-simple]]
+    [#(source dialog-demo-simple)]]
+   [demo-options]
+   [demo-reference "dialog"]]
+  #_(let [open? (r/atom false)]
     (fn []
       [:div.dialog-demo
        [mdl/button

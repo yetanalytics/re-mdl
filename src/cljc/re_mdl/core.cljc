@@ -32,6 +32,8 @@
 
 (def card-actions card/actions)
 
+(def card-menu card/menu)
+
 (def card card/card)
 
 ;; chip

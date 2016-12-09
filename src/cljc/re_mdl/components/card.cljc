@@ -33,8 +33,6 @@
                     border? (str " mdl-card--border"))}
           attr)] children))
 
-
-
 (defn supporting-text [& {:keys [text
                                  border?
                                  id class attr]
@@ -47,9 +45,6 @@
               border? (str " mdl-card--border"))}
     attr)
    text])
-
-
-
 
 (defn actions [& {:keys [children
                           border?
@@ -65,7 +60,17 @@
      attr)]
    children))
 
-
+(defn menu [& {:keys [children
+                      id class attr]
+               :as   args}]
+  (into
+   [:div
+    (merge
+     {:id    id
+      :class (cond-> "mdl-card__menu"
+               class (str " " class))}
+     attr)]
+   children))
 
 (def valid-shadows #{2 3 4 6 8 16})
 

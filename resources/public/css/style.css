@@ -13,7 +13,7 @@ pre {
 }
 
 .mdl-demo-container {
-  text-align: center;
+  margin: auto;
   background: #eeeeee;
   padding-top: 30px;
   padding-bottom: 30px;
