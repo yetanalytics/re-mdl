@@ -53,14 +53,15 @@
 
 (defn demo-reference
   "This generates a small text component to show reference to MDL site."
-  [component]
+  [& [section sub-section]]
   [:p {:style {:padding-top "30px"}}
    "Refer to the MDL "
    [:a {:href
         (str "https://getmdl.io/components/index.html#"
-             component
-             "-section")}
-    component]
+             section
+             "-section/"
+             sub-section)}
+    section]
    " section for more information."])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -680,22 +681,22 @@
      [[:a {:href "#"} "Help"]
       [:a {:href "#"} "Privacy & Terms"]]]]])
 
-(defn tab-demo []
+(defn tab-demo-content
+  "This is a tab that has content."
+  []
   [mdl/tabs
    :children
    [[mdl/tab-bar
      :children
      [[mdl/tab
-      :href "#starks-panel"
+       :href       "#starks-panel"
        :is-active? true
-       :content "Starks"]
+       :content    "Starks"]
       [mdl/tab
-       :href "#lannisters-panel"
-       :is-active? true
+       :href    "#lannisters-panel"
        :content "Lannisters"]
       [mdl/tab
-       :href "#targaryens-panel"
-       :is-active? true
+       :href    "#targaryens-panel"
        :content "Targaryens"]]]
     [mdl/tabs-panel
      :is-active? true
@@ -704,20 +705,35 @@
      [[:ul
        [:li "Eddard"]
        [:li "Catelyn"]
-       [:li "Rob"]]]]
+       [:li "Robb"]
+       [:li "Sansa"]
+       [:li "Brandon"]
+       [:li "Arya"]
+       [:li "Rickon"]]]]
     [mdl/tabs-panel
      :id "lannisters-panel"
      :children
      [[:ul
        [:li "Tywin"]
        [:li "Cersei"]
-       [:li "Jamie"]]]]
+       [:li "Jamie"]
+       [:li "Tyrion"]]]]
     [mdl/tabs-panel
      :id "targaryens-panel"
      :children
      [[:ul
        [:li "Viserys"]
        [:li "Danerys"]]]]]])
+
+(defn tab-demo []
+  [:div.tab-demo
+   [:h6 "Tabs"]
+   [:p "Collections of categorized content."]
+   [demo-doc-component
+    [[tab-demo-content]]
+    [#(source tab-demo-content)]]
+   [demo-options]
+   [demo-reference "layout" "tabs"]])
 
 (defn demo-layout-component [{:keys [href demo title]
                               :or   {href "#"}}]
