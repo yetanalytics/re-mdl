@@ -1,25 +1,28 @@
 (ns re-mdl.components.card)
 
 (defn title [& {:keys [text subtitle-text header
+                       children
                        border?
                        expand?
                        id class attr]
                  :or   {header :h1}
                  :as   args}]
 
-  [:div
-   (merge
-    {:id id
-     :class (cond-> "mdl-card__title"
-              class (str " " class)
-              border? (str " mdl-card--border")
-              expand? (str " mdl-card--expand"))}
-    attr)
-   (when text [header {:class "mdl-card__title-text"}
+  (into
+   [:div
+    (merge
+     {:id id
+      :class (cond-> "mdl-card__title"
+               class (str " " class)
+               border? (str " mdl-card--border")
+               expand? (str " mdl-card--expand"))}
+     attr)
+    (when text [header {:class "mdl-card__title-text"}
                 text])
-   (when subtitle-text
-     [:div.mdl-card__subtitle-text
-      subtitle-text])])
+    (when subtitle-text
+      [:div.mdl-card__subtitle-text
+       subtitle-text])]
+   children))
 
 (defn media [& {:keys [children
                        border?

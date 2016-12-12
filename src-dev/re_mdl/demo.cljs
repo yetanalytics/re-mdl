@@ -465,6 +465,42 @@
                 :font-weight "500"}}
        "Image.jpg"]]]]])
 
+(defn card-demo-event
+  "This is a card with expanded title for an event."
+  []
+  [mdl/card
+   :attr   {:style {:width            "256px"
+                    :height           "256px"
+                    :background-color "#3E4EB8"}}
+   :shadow 2
+   :children
+   [[mdl/card-title
+     :attr    {:style {:align-items "flex-start"
+                       :color       "#fff"}}
+     :expand? true
+     :children
+     [[:h4 {:style {:margin-top "0px"}}
+       "Featured event:" [:br]
+       "May 24, 2016" [:br]
+       "7-11pm"]]]
+    [mdl/card-actions
+     :attr    {:style {:border-color "rgba(255, 255, 255, 0.2)"
+                       :display      "flex"
+                       :box-sizing   "border-box"
+                       :align-items  "center"
+                       :color        "#fff"}}
+     :border? true
+     :children
+     [[mdl/button
+       :attr           {:style {:color "#fff"}}
+       :el             :a
+       :colored?       true
+       :ripple-effect? true
+       :label          "Add to Calender"]
+      [mdl/layout-spacer]
+      [:i.material-icons {:style {:padding-right "10px"}}
+       "event"]]]]])
+
 (defn card-demo []
   [:div.card-demo
    [:h6 "CARDS"]
@@ -476,8 +512,10 @@
     [[card-demo-square]]
     [#(source card-demo-square)]]
    [demo-doc-component
-    [[card-demo-expand]]
-    [#(source card-demo-expand)]]
+    [[card-demo-expand]
+     [card-demo-event]]
+    [#(source card-demo-expand)
+     #(source card-demo-event)]]
    [demo-options]
    [demo-reference "cards"]])
 
