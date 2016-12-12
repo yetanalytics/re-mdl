@@ -635,7 +635,7 @@
             :children
             [kid]]))])
 
-(defn mega-footer-demo []
+(defn footer-demo-mega []
   [mdl/mega-footer
    :logo "Title"
    :middle
@@ -672,7 +672,7 @@
     [[:a {:href "#"} "Help"]
      [:a {:href "#"} "Privacy & Terms"]]]]])
 
-(defn mini-footer-demo []
+(defn footer-demo-mini []
   [mdl/mini-footer
    :logo "Title"
    :left
@@ -680,6 +680,89 @@
      :children
      [[:a {:href "#"} "Help"]
       [:a {:href "#"} "Privacy & Terms"]]]]])
+
+(defn footer-demo
+  []
+  [:div.footer-demo
+   [:h6 "Footers"]
+   [:p "Content that resides at the bottom of the page."]
+   [demo-doc-component
+    [[footer-demo-mega]]
+    [#(source footer-demo-mega)]]
+   [demo-doc-component
+    [[footer-demo-mini]]
+    [#(source footer-demo-mini)]]
+   [demo-options]
+   [demo-reference "layout" "footer"]])
+
+(defn navigation-demo-transparent
+  "This is a navigation layout with a transparent header."
+  []
+  [mdl/layout
+   :attr          {:style {:width    "100%"
+                           :position "relative"
+                           :height   "300px"}}
+   :children
+   [[mdl/layout-header
+     :transparent? true
+     :children
+     [[mdl/layout-header-row
+       :children
+       [[mdl/layout-title
+         :label "Title"]
+        [mdl/layout-spacer]
+        [mdl/layout-nav
+         :children
+         (into []
+               (for [i (range 4)]
+                 ^{:key i} [mdl/layout-nav-link
+                            :href    "#"
+                            :content "Link"]))]]]]]
+    [mdl/layout-drawer
+     :children
+     [[mdl/layout-title
+       :label "Title"]
+      [mdl/layout-nav
+       :children
+       (into []
+             (for [i (range 4)]
+               ^{:key i} [mdl/layout-nav-link
+                          :href    "#"
+                          :content "Link"]))]]]
+    [mdl/layout-content]]])
+
+(defn navigation-demo-fixed-drawer
+  "This is a navigation layout with no header and a fixed drawer."
+  []
+  [mdl/layout
+   :fixed-drawer? true
+   :children
+   [[mdl/layout-drawer
+     :children
+     [[mdl/layout-title
+       :label "Title"]
+      [mdl/layout-nav
+       :children
+       (into []
+             (for [i (range 4)]
+               ^{:key i} [mdl/layout-nav-link
+                          :href    "#"
+                          :content "Link"]))]]]
+    [mdl/layout-content]]])
+
+(defn navigation-demo
+  []
+  [:div.navigation-demo
+   [:h6 "Navigation Layout"]
+   [:p "Header and side drawers used for navigating a site."]
+   [demo-doc-component
+    [[navigation-demo-transparent]]
+    [#(source navigation-demo-transparent)]]
+   [demo-doc-component
+    [[navigation-demo-fixed-drawer]]
+    [#(source navigation-demo-fixed-drawer)]]
+   [demo-options]
+   [demo-reference "layout" "layout"]])
 
 (defn tab-demo-content
   "This is a tab that has content."
@@ -1207,29 +1290,7 @@
     [[dialog-demo-simple]]
     [#(source dialog-demo-simple)]]
    [demo-options]
-   [demo-reference "dialog"]]
-  #_(let [open? (r/atom false)]
-    (fn []
-      [:div.dialog-demo
-       [mdl/button
-        :label "show-dialog"
-        :on-click #(reset! open? true)]
-
-       (when @open?
-         [mdl/dialog
-          :title "A Dialog"
-          :content [[:p "some text"]
-                    [:p "some more text"]]
-          :actions [[mdl/button
-                     :label "OK"
-                     :on-click #(.log js/console "fine")]
-                    [mdl/button
-                     :label "CLOSE"
-                     :on-click #(reset! open? false)
-                     ]]
-          :cancel-fn #(do
-                        (.log js/console "Dialog cancelled!")
-                        (reset! open? false))])])))
+   [demo-reference "dialog"]])
 
 (defn list-demo-simple
   "This is a simple list."
@@ -1517,7 +1578,9 @@
    :tooltip          tooltip-demo
    :snackbar         snackbar-demo
    :dialog           dialog-demo
-   :list             list-demo))
+   :list             list-demo
+   :footer           footer-demo
+   :navigation       navigation-demo))
 
 (defn app-view []
   (let [current-demo (r/atom :intro)]
@@ -1528,17 +1591,11 @@
         :current-demo-ra current-demo
         :children
         [[grid-demo
-          [(@current-demo demo-map)]
-          ]
-         [mega-footer-demo]
-         [mini-footer-demo]]]])))
-
+          [(@current-demo demo-map)]]]]])))
 
 (defn ^:export run []
   (r/render [app-view]
             (js/document.getElementById "app")))
-
-
 
 (defn on-js-reload []
   ;; optionally touch your app-state to force rerendering depending on
