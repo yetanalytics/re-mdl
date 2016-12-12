@@ -35,18 +35,18 @@
          (merge
           {:id id
            :class (cond-> "mdl-cell"
-                    class (str " " class)
+                    class    (str " " class)
                     stretch? (str " mdl-cell--stretch")
-                    align (str " " (align-mdl-class align))
-                    col (str " mdl-cell--" col "-col")
-                    desktop (cond->
-                                (:col desktop) (str " mdl-cell--" (:col desktop) "-col-desktop")
-                                (:hide? desktop) (str " mdl-cell--hide-desktop"))
-                    tablet (cond->
-                               (:col tablet) (str " mdl-cell--" (:col tablet) "-col-tablet")
-                               (:hide? tablet) (str " mdl-cell--hide-tablet"))
-                    phone (cond->
-                              (:col phone) (str " mdl-cell--" (:col phone) "-col-phone")
-                              (:hide? phone) (str " mdl-cell--hide-phone")))}
+                    align    (str " " (align-mdl-class align))
+                    col      (str " mdl-cell--" col "-col")
+                    desktop  (cond->
+                                 (:col desktop) (str " mdl-cell--" (:col desktop) "-col-desktop")
+                                 (:hide? desktop) (str " mdl-cell--hide-desktop"))
+                    tablet   (cond->
+                                 (:col tablet) (str " mdl-cell--" (:col tablet) "-col-tablet")
+                                 (:hide? tablet) (str " mdl-cell--hide-tablet"))
+                    phone    (cond->
+                                 (:col phone) (str " mdl-cell--" (:col phone) "-col-phone")
+                                 (:hide? phone) (str " mdl-cell--hide-phone")))}
           attr)]
         children))

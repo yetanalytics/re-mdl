@@ -61,7 +61,7 @@
              section
              "-section/"
              sub-section)}
-    section]
+    (or sub-section section)]
    " section for more information."])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1428,15 +1428,75 @@
      :description "nil"}]
    [demo-reference "lists"]])
 
+(defn grid-demo-simple
+  "This is a responsive grid demo."
+  []
+  (let [first-style {:box-sizing       "border-box"
+                     :background-color "#BDBDBD"
+                     :height           "50px"
+                     :padding-left     "8px"
+                     :padding-top      "4px"
+                     :color            "white"}
+        rest-style  (assoc first-style :height "200px")]
+    [:div
+     [mdl/grid
+      :children
+      (into []
+            (for [i (range 12)]
+              ^{:key i} [mdl/cell
+                         :attr     {:style first-style}
+                         :col      1
+                         :children ["1"]]))]
+     [mdl/grid
+      :children
+      (into []
+            (for [i (range 3)]
+              ^{:key i} [mdl/cell
+                         :attr     {:style rest-style}
+                         :col      4
+                         :children ["4"]]))]
+     [mdl/grid
+      :children
+      [[mdl/cell
+        :attr     {:style rest-style}
+        :col      6
+        :children ["6"]]
+       [mdl/cell
+        :attr     {:style rest-style}
+        :col      4
+        :children ["4"]]
+       [mdl/cell
+        :attr     {:style rest-style}
+        :col      2
+        :children ["2"]]]]
+     [mdl/grid
+      :children
+      [[mdl/cell
+        :attr     {:style rest-style}
+        :col      6
+        :tablet   true
+        :children ["6 (8 tablet)"]]
+       [mdl/cell
+        :attr     {:style rest-style}
+        :col      4
+        :tablet   true
+        :children ["4 (6 tablet)"]]
+       [mdl/cell
+        :attr     {:style rest-style}
+        :col      2
+        :phone    true
+        :children ["2 (4 phone)"]]]]]))
 
-(defn grid-spacing-demo []
-  [mdl/grid
-   :children
-   (into []
-         (for [i (range 12)]
-           [mdl/cell
-            :col 1
-            :children ["1"]]))])
+(defn grid-spacing-demo
+  []
+  [:div.grid-demo
+   [:h6 "Grids"]
+   [:p "Responsive grid layouts."]
+   [demo-doc-component
+    [[grid-demo-simple]]
+    [#(source grid-demo-simple)]]
+   [demo-options]
+   [demo-reference "layout" "grid"]])
 
 (def demo-map
   (sorted-map
