@@ -4,18 +4,16 @@
 (defn mdl-get-model
   "This will get the content of a model, be it atom or value."
   [model]
-  #?(:cljs
+  #_#?(:cljs
      @model
      :clj
      @model)
-  #_#?(:cljs
+  #?(:cljs
      (if (satisfies? IDeref model)
        @model
        model)
      :clj
-     (if (satisfies? IDeref model)
-       @model
-       model)))
+     model))
 
 (defn mdl-init! [elem]
   #?(:cljs

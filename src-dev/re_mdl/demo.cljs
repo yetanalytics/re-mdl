@@ -1018,27 +1018,61 @@
      #(source menu-demo-top-right)]]
    [demo-options]
    [demo-reference "menus"]])
+
 (defn slider-demo-default
   "This is a slider that defaults to 0."
   []
-  (let [model (r/atom 0)]
-    [mdl/slider
-     :id         "slider-default"
-     :model      model
-     :handler-fn #(reset! model %)
-     :min        0
-     :max        100]))
+  (let [slider-model (r/atom 0)
+        slider-max   (r/atom 10)]
+    (fn []
+      [:div
+       [mdl/slider
+        :id         "slider-default"
+        :model      slider-model
+        :handler-fn #(reset! slider-model (js/Number %))
+        :step       0.5
+        :min        0
+        :max        slider-max]
+       [:p ":model " @slider-model]
+       [mdl/button
+        :raised?  true
+        :label    [:i.material-icons "add"]
+        :on-click #(swap! slider-model (fn [val] (+ val 0.5)))]
+       [mdl/button
+        :raised?  true
+        :label    [:i.material-icons "remove"]
+        :on-click #(swap! slider-model (fn [val] (- val 0.5)))]
+       [:p ":max " @slider-max]
+       [mdl/button
+        :raised?  true
+        :label    [:i.material-icons "add"]
+        :on-click #(swap! slider-max inc)]
+       [mdl/button
+        :raised?  true
+        :label    [:i.material-icons "remove"]
+        :on-click #(swap! slider-max dec)]])))
 
 (defn slider-demo-starting
   "This is a slider with a starting value."
   []
   (let [model (r/atom 25)]
-    [mdl/slider
-     :id         "slider-starting"
-     :model      model
-     :handler-fn #(reset! model %)
-     :min        0
-     :max        100]))
+    (fn []
+      [:div
+       [mdl/slider
+        :id         "slider-starting"
+        :model      model
+        :handler-fn #(reset! model (js/Number %))
+        :min        0
+        :max        100]
+       [:p @model]
+       [mdl/button
+        :raised?  true
+        :label    [:i.material-icons "add"]
+        :on-click #(swap! model inc)]
+       [mdl/button
+        :raised?  true
+        :label    [:i.material-icons "remove"]
+        :on-click #(swap! model dec)]])))
 
 (defn slider-demo []
   [:div.slider-demo
