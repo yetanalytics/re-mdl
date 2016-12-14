@@ -1147,49 +1147,74 @@
    [demo-options]
    [demo-reference "tables"]])
 
+(defn text-field-demo-text
+  []
+  [mdl/textfield
+   :label       "Text..."
+   :handler-fn #(print "Update")])
+
+(defn text-field-demo-numeric
+  []
+  [mdl/textfield
+   :label           "Number..."
+   :handler-fn      #(print "Update")
+   :pattern         "-?[0-9]*(\\.[0-9]+)?"
+   :invalid-message "Input is not a number!"])
+
+(defn text-field-demo-floating-text
+  []
+  [mdl/textfield
+   :floating-label? true
+   :label           "Text..."
+   :handler-fn      #(print "Update")])
+
+(defn text-field-demo-floating-numeric
+  []
+  [mdl/textfield
+   :floating-label? true
+   :label           "Number..."
+   :handler-fn      #(print "Update")
+   :pattern         "-?[0-9]*(\\.[0-9]+)?"
+   :invalid-message "Input is not a number!"])
+
+(defn text-field-demo-multiple-line
+  []
+  [mdl/textfield
+   :type       :textarea
+   :label      "Text lines..."
+   :handler-fn #(print "Update")
+   :rows       3])
+
+(defn text-field-demo-expanding
+  []
+  [mdl/textfield
+   :label "Expandable"
+   :id "text-field-demo-expandable"
+   :handler-fn #(print "expandable: " %)
+   :expandable? true
+   :expand-icon "search"])
 
 (defn text-field-demo []
   [:div.text-field-demo
-   [grid-demo
-    [mdl/textfield
-    :label "Basic Text Field"
-    :id "text-field-demo-basic"
-    :handler-fn #(print "basic text field: " %)]
-   [mdl/textfield
-    :label "With Init Val"
-    :id "text-field-demo-init-val"
-    :handler-fn #(print "init-val text field: " %)
-    :init-val "Foo"]
-   [mdl/textfield
-    :label "Basic Text Area"
-    :id "text-field-demo-basic-textarea"
-    :type :textarea
-    :rows 2
-    :handler-fn #(print "basic text area: " %)]
-   [mdl/textfield
-    :id "text-field-demo-numeric"
-    :label "Numeric validation"
-    :pattern "-?[0-9]*(\\.[0-9]+)?"
-    :invalid-message "Must be a number, yo."
-    :handler-fn #(print "numeric text field: " %)]
-   [mdl/textfield
-    :label "Floating Label"
-    :id "text-field-demo-float"
-    :handler-fn #(print "floating field: " %)
-    :floating-label? true]
-   [mdl/textfield
-    :label "Expandable"
-    :id "text-field-demo-expandable"
-    :handler-fn #(print "expandable: " %)
-    :expandable? true
-    :expand-icon "search"]
-   [mdl/textfield
-    :label "Floating Multiline Textarea"
-    :id "text-field-demo-multiline-textarea"
-    :type :textarea
-    :handler-fn #(print "multiline textarea: " %)
-    :rows 2
-    :maxrows 8]]])
+   [:h6 "Text Fields"]
+   [:p "Textual input components"]
+   [demo-doc-component
+    [[text-field-demo-text]
+     [text-field-demo-numeric]]
+    [#(source text-field-demo-text)
+     #(source text-field-demo-numeric)]]
+   [demo-doc-component
+    [[text-field-demo-floating-text]
+     [text-field-demo-floating-numeric]]
+    [#(source text-field-demo-floating-text)
+     #(source text-field-demo-floating-numeric)]]
+   [demo-doc-component
+    [[text-field-demo-multiple-line]
+     [text-field-demo-expanding]]
+    [#(source text-field-demo-multiple-line)
+     #(source text-field-demo-expanding)]]
+   [demo-options]
+   [demo-reference "textfields"]])
 
 (defn tooltip-demo-simple
   "This is a simple tooltip."
