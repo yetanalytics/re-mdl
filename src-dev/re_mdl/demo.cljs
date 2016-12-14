@@ -1022,57 +1022,28 @@
 (defn slider-demo-default
   "This is a slider that defaults to 0."
   []
-  (let [slider-model (r/atom 0)
-        slider-max   (r/atom 10)]
+  (let [slider-model 0]
     (fn []
-      [:div
-       [mdl/slider
-        :id         "slider-default"
-        :model      slider-model
-        :handler-fn #(reset! slider-model (js/Number %))
-        :step       0.5
-        :min        0
-        :max        slider-max]
-       [:p ":model " @slider-model]
-       [mdl/button
-        :raised?  true
-        :label    [:i.material-icons "add"]
-        :on-click #(swap! slider-model (fn [val] (+ val 0.5)))]
-       [mdl/button
-        :raised?  true
-        :label    [:i.material-icons "remove"]
-        :on-click #(swap! slider-model (fn [val] (- val 0.5)))]
-       [:p ":max " @slider-max]
-       [mdl/button
-        :raised?  true
-        :label    [:i.material-icons "add"]
-        :on-click #(swap! slider-max inc)]
-       [mdl/button
-        :raised?  true
-        :label    [:i.material-icons "remove"]
-        :on-click #(swap! slider-max dec)]])))
+      [mdl/slider
+       :id         "slider-default"
+       :model      slider-model
+       :handler-fn #(print slider-model)
+       :min        0
+       :max        100])))
 
 (defn slider-demo-starting
-  "This is a slider with a starting value."
+  "This is a slider with a starting value and tracks state."
   []
-  (let [model (r/atom 25)]
+  (let [slider-model (r/atom 25)]
     (fn []
       [:div
        [mdl/slider
         :id         "slider-starting"
-        :model      model
-        :handler-fn #(reset! model (js/Number %))
+        :model      slider-model
+        :handler-fn #(reset! slider-model (js/Number %))
         :min        0
         :max        100]
-       [:p @model]
-       [mdl/button
-        :raised?  true
-        :label    [:i.material-icons "add"]
-        :on-click #(swap! model inc)]
-       [mdl/button
-        :raised?  true
-        :label    [:i.material-icons "remove"]
-        :on-click #(swap! model dec)]])))
+       [:p ":model " @slider-model]])))
 
 (defn slider-demo []
   [:div.slider-demo
