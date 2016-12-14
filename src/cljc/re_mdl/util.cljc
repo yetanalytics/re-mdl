@@ -1,13 +1,9 @@
 (ns re-mdl.util
   #?(:cljs (:require [reagent.core :as r])))
 
-(defn mdl-get-model
+(defn mdl-get-value
   "This will get the content of a model, be it atom or value."
   [model]
-  #_#?(:cljs
-     @model
-     :clj
-     @model)
   #?(:cljs
      (if (satisfies? IDeref model)
        @model

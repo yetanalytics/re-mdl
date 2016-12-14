@@ -862,20 +862,60 @@
     [mdl/layout-content
      :children children]]])
 
-
-(defn loading-progress-demo []
-  (let [pct-done (r/atom 0)]
+(defn loading-progress-demo-progress
+  "This is a loading progress bar with some progress."
+  []
+  (let [progress-model (r/atom 44)]
     (fn []
-      [:div.loading-demo
+      [:div
        [mdl/loading-progress
-        :indeterminate? true]
-       [mdl/button
-       :mini-fab? true
-       :on-click #(swap! pct-done inc)
-       :label [:i.material-icons "add"]]
-      [mdl/loading-progress
-       :model @pct-done
-       ]])))
+        :model @progress-model]
+       [:p ":model " @progress-model]
+       [mdl/slider
+        :model      progress-model
+        :handler-fn #(reset! progress-model (js/Number %))]])))
+
+(defn loading-progress-demo-indeterminate
+  "This is an indeterminate loading progress bar."
+  []
+  [mdl/loading-progress
+   :indeterminate? true])
+
+(defn loading-progress-demo-buffer
+  "This is a loading progress bar with a buffer."
+  []
+  (let [progress-model  (r/atom 33)
+        progress-buffer (r/atom 87)]
+    (fn []
+      [:div
+       [mdl/loading-progress
+        :model  progress-model
+        :buffer progress-buffer]
+       [:p ":model " @progress-model]
+       [mdl/slider
+        :model      progress-model
+        :handler-fn #(reset! progress-model (js/Number %))]
+       [:p ":buffer " @progress-buffer]
+       [mdl/slider
+        :model      progress-buffer
+        :handler-fn #(reset! progress-buffer (js/Number %))]])))
+
+(defn loading-progress-demo
+  []
+  [:div.loading-progress-demo
+   [:h6 "Loading Progress Bar"]
+   [:p "This is a loading progress bar for showing load times."]
+   [demo-doc-component
+    [[loading-progress-demo-progress]]
+    [#(source loading-progress-demo-progress)]]
+   [demo-doc-component
+    [[loading-progress-demo-indeterminate]]
+    [#(source loading-progress-demo-indeterminate)]]
+   [demo-doc-component
+    [[loading-progress-demo-buffer]]
+    [#(source loading-progress-demo-buffer)]]
+   [demo-options]
+   [demo-reference "loading" "progress"]])
 
 (defn loading-spinner-demo-default
   "This is a default spinner."
@@ -901,7 +941,7 @@
      #(source loading-spinner-demo-single-color)]]
    [demo-options
     {:description "These are the options for the loading spinner."}]
-   [demo-reference "loading"]])
+   [demo-reference "loading" "spinner"]])
 
 (defn menu-demo-lower-left
   "This is a left-aligned menu that expands down."
