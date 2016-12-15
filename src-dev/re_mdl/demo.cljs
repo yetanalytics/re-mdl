@@ -869,7 +869,7 @@
     (fn []
       [:div
        [mdl/loading-progress
-        :model @progress-model]
+        :model (do (print @progress-model) @progress-model)]
        [:p ":model " @progress-model]
        [mdl/slider
         :model      progress-model
@@ -1074,7 +1074,8 @@
 (defn slider-demo-starting
   "This is a slider with a starting value and tracks state."
   []
-  (let [slider-model (r/atom 25)]
+  (let [slider-model   (r/atom 25)
+        disabled-model (r/atom false)]
     (fn []
       [:div
        [mdl/slider
@@ -1082,8 +1083,18 @@
         :model      slider-model
         :handler-fn #(reset! slider-model (js/Number %))
         :min        0
-        :max        100]
-       [:p ":model " @slider-model]])))
+        :max        100
+        :disabled?  disabled-model]
+       [:p ":model " @slider-model]
+       [mdl/button
+        :label    [:i.material-icons "add"]
+        :on-click #(swap! slider-model inc)]
+       [mdl/button
+        :label    [:i.material-icons "remove"]
+        :on-click #(swap! slider-model dec)]
+       [mdl/button
+        :label    [:i "enable"]
+        :on-click #(swap! disabled-model not)]])))
 
 (defn slider-demo []
   [:div.slider-demo
@@ -1150,30 +1161,37 @@
 (defn text-field-demo-text
   []
   [mdl/textfield
-   :label       "Text..."
-   :handler-fn #(print "Update")])
+   :label       "Text..."])
 
 (defn text-field-demo-numeric
   []
-  [mdl/textfield
-   :label           "Number..."
-   :handler-fn      #(print "Update")
-   :pattern         "-?[0-9]*(\\.[0-9]+)?"
-   :invalid-message "Input is not a number!"])
+  (let [text-field-model (r/atom 5)]
+    (fn []
+      [:div
+       [mdl/textfield
+        :model           text-field-model
+        :label           "Number..."
+        :pattern         "-?[0-9]*(\\.[0-9]+)?"
+        :invalid-message "Input is not a number!"
+        :handler-fn      #(do (print %)
+                              (print (type %))
+                              (reset! text-field-model (js/Number %)))]
+       ;;[:p ":model " @text-field-model]
+       [mdl/slider
+        :model      text-field-model
+        :handler-fn #(reset! text-field-model (js/Number %))]])))
 
 (defn text-field-demo-floating-text
   []
   [mdl/textfield
    :floating-label? true
-   :label           "Text..."
-   :handler-fn      #(print "Update")])
+   :label           "Text..."])
 
 (defn text-field-demo-floating-numeric
   []
   [mdl/textfield
    :floating-label? true
    :label           "Number..."
-   :handler-fn      #(print "Update")
    :pattern         "-?[0-9]*(\\.[0-9]+)?"
    :invalid-message "Input is not a number!"])
 
@@ -1182,15 +1200,13 @@
   [mdl/textfield
    :type       :textarea
    :label      "Text lines..."
-   :handler-fn #(print "Update")
    :rows       3])
 
 (defn text-field-demo-expanding
   []
   [mdl/textfield
-   :label "Expandable"
-   :id "text-field-demo-expandable"
-   :handler-fn #(print "expandable: " %)
+   :label       "Expandable"
+   :id          "text-field-demo-expandable"
    :expandable? true
    :expand-icon "search"])
 

@@ -3,49 +3,48 @@
    #?(:cljs [reagent.core :as r])
    [re-mdl.util :refer [wrap-mdl
                         mdl-init!
-                        mdl-get-value]]))
+                        mdl-get-value
+                        mdl-get-props]]))
 
 (defn progress* [& {:keys [indeterminate? width
                            model buffer
                            id class attr]
                     :or {width "250px"}
                     :as   args}]
-  [:div
-   (merge
-    {:id    id
-     :style {:width width}
-     :class (cond-> "mdl-progress mdl-js-progress"
-              class (str " " class)
-              #?(:cljs indeterminate?
-                 :clj true) ;; always indeterminate for clj
-              (str " mdl-progress__indeterminate"))}
-    attr)])
+  (let [_ (print "model " (mdl-get-value model))
+        _ (mdl-get-value buffer)]
+    [:div
+     (merge
+      {:id    id
+       :style {:width width}
+       :class (cond-> "mdl-progress mdl-js-progress"
+                class (str " " class)
+                #?(:cljs indeterminate?
+                   :clj true) ;; always indeterminate for clj
+                (str " mdl-progress__indeterminate"))}
+      attr)]))
 
 (defn progress [& {:keys [model buffer]
                    :as   args}]
   #?(:cljs
-     (let [set-progress #(doto (-> %1 .-MaterialProgress)
-                           (.setProgress (mdl-get-value %2))
-                           (.setBuffer   (mdl-get-value %3)))]
-       (r/create-class
-        {:component-did-mount
-         (fn [this]
-           (let [node      (r/dom-node this)
-                 _         (mdl-init! node)
-                 get-model #(set-progress node model buffer)]
-             (r/replace-state this
-                              {:model-tracker (r/track! get-model)})))
-         :component-will-unmount
-         (fn [this]
-           (-> (r/state this) :model-tracker r/dispose!))
-         :component-will-update
-         (fn [this new-argv]
-           (let [node  (r/dom-node this)
-                 props (apply hash-map (rest new-argv))]
-             (set-progress node (:model props) (:buffer props))))
-         :reagent-render
-         progress*}))
-     :clj progress*))
+     (r/create-class
+      {:component-did-mount
+       (fn [this]
+         (doto (r/dom-node this)
+           mdl-init!
+           (-> .-MaterialProgress
+               (.setProgress (mdl-get-value model)))
+           (-> .-MaterialProgress
+               (.setBuffer (mdl-get-value buffer)))))
+       :component-will-update
+       (fn [this new-argv]
+         (let [props (mdl-get-props new-argv)]
+           (doto (.-MaterialProgress (r/dom-node this))
+             (-> (.setProgress (mdl-get-value (:model props))))
+             (-> (.setBuffer (mdl-get-value (:buffer props)))))))
+       :reagent-render
+       progress*})
+     :clj (apply progress* (flatten args))))
 
 (defn spinner* [& {:keys [el is-active? single-color?
                           id class attr]

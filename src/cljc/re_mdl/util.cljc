@@ -11,6 +11,11 @@
      :clj
      model))
 
+(defn mdl-get-props
+  "This will read in the new props to a componenet and return a map of them."
+  [props]
+  (apply hash-map (rest props)))
+
 (defn mdl-init! [elem]
   #?(:cljs
      (.upgradeElement js/componentHandler elem)

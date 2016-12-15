@@ -1,11 +1,11 @@
 (ns re-mdl.components.textfield
   (:require #?(:cljs [reagent.core :as r])
-            [re-mdl.util :refer [mdl-init!]]
+            [re-mdl.util :refer [mdl-init! mdl-get-value]]
             [re-mdl.components.button :refer [button]]))
 
 (defn textfield*
   [& {:keys [type input-type rows maxrows floating-label? expandable? expand-icon
-             label pattern invalid-message handler-fn
+             label pattern invalid-message handler-fn disabled? model
              id class attr input-attr]
       :or {type :text
            input-type "text"
@@ -35,10 +35,13 @@
                                                   .-target
                                                   .-value
                                                   handler-fn))])}
+                         (= type :text)     (assoc :value (mdl-get-value model))
                          (= type :textarea) (assoc :rows rows)
-                         pattern (assoc :pattern pattern)
-                         maxrows (assoc :maxrows maxrows))
-                       input-attr)]
+                         pattern   (assoc :pattern pattern)
+                         maxrows   (assoc :maxrows maxrows)
+                         disabled? (assoc :disabled true))
+                       input-attr)
+                      (when (= type :textarea) (mdl-get-value model))]
             label-el [:label.mdl-textfield__label
                       {:for id}
                       label]
@@ -47,8 +50,9 @@
                         invalid-message])
             body (if expandable?
                    [[button
-                     :el :label
-                     :for id
+                     :el    :label
+                     :icon? true
+                     :for   id
                      :label [:i.material-icons expand-icon]]
                     [:div.mdl-textfield__expandable-holder
                      input-el
@@ -67,7 +71,7 @@
            attr)]
          body)))
 
-(defn textfield [& {:keys [init-val]
+(defn textfield [& {:keys [model]
                     :as args}]
   #?(:cljs
      (r/create-class
@@ -76,7 +80,7 @@
          (let [node (r/dom-node this)]
            (doto node
              mdl-init!
-             (-> .-MaterialTextfield (.change init-val)))))
+             (-> .-MaterialTextfield (.change (mdl-get-value model))))))
        :reagent-render
        textfield*})
      :clj (apply textfield* (flatten args))))
