@@ -6,12 +6,7 @@
   [& {:keys [handler-fn disabled? ripple-effect? checked?
              label
              id class attr]
-      #?@(:cljs [:or {handler-fn (fn [e] (.log
-                                         js/console
-                                         (str "Unhandled checkbox: "
-                                              (-> e
-                                                  .-target
-                                                  .-checked))))}])
+      #?@(:cljs [:or {handler-fn (constantly nil)}])
       :as   args}]
   #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
   [:label
@@ -27,10 +22,8 @@
      (cond->
          {:type "checkbox"
           :id id
-          #?@(:cljs [:on-change (fn [e] (-> e
-                                           .-target
-                                           .-checked
-                                           handler-fn))])}
+          #?@(:cljs [:on-change
+                     #(handler-fn (.. % -target -checked))])}
        disabled? (assoc :disabled true)
        #?@(:clj [checked? (assoc :checked true)]))
      attr)]
