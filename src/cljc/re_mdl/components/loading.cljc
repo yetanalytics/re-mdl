@@ -11,7 +11,7 @@
                            id class attr]
                     :or {width "250px"}
                     :as   args}]
-  (let [_ (print "model " (mdl-get-value model))
+  (let [_ (mdl-get-value model)
         _ (mdl-get-value buffer)]
     [:div
      (merge

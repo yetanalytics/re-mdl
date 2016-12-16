@@ -869,7 +869,7 @@
     (fn []
       [:div
        [mdl/loading-progress
-        :model (do (print @progress-model) @progress-model)]
+        :model @progress-model]
        [:p ":model " @progress-model]
        [mdl/slider
         :model      progress-model
@@ -1173,10 +1173,7 @@
         :label           "Number..."
         :pattern         "-?[0-9]*(\\.[0-9]+)?"
         :invalid-message "Input is not a number!"
-        :handler-fn      #(do (print %)
-                              (print (type %))
-                              (reset! text-field-model (js/Number %)))]
-       ;;[:p ":model " @text-field-model]
+        :handler-fn      #(reset! text-field-model (js/Number %))]
        [mdl/slider
         :model      text-field-model
         :handler-fn #(reset! text-field-model (js/Number %))]])))
@@ -1197,10 +1194,19 @@
 
 (defn text-field-demo-multiple-line
   []
-  [mdl/textfield
-   :type       :textarea
-   :label      "Text lines..."
-   :rows       3])
+  (let [text-field-model (r/atom 5)]
+    (fn []
+      [:div
+       [mdl/textfield
+        :type       :textarea
+        :model      text-field-model
+        :label      "Text lines..."
+        :rows       3
+        :handler-fn #(reset! text-field-model (js/Number %))]
+       ;;[:p ":model " @text-field-model]
+       [mdl/slider
+        :model      text-field-model
+        :handler-fn #(reset! text-field-model (js/Number %))]])))
 
 (defn text-field-demo-expanding
   []
