@@ -41,7 +41,7 @@
   (check-attribute comp "for" for))
 
 
-(defn check-component [comp {:keys [id class label for icon disabled? el]
+(defn check-component [comp {:keys [id class label for icon? disabled? el]
                              :or {el :button
                                   class "mdl-button mdl-js-button"
                                   id ""}}]
@@ -76,12 +76,11 @@
                :label "Foo"]]
     (check-component button {:label "Foo"})))
 
-
 (deftest icon
   (let [button [button/button
-                :icon "add"]]
-    (check-component button {:icon "add"
-                             :class "mdl-button mdl-js-button mdl-button--icon"})))
+                :label [:i.material-icons "add"]]]
+    (check-component button {:label [:i.material-icons "add"]
+                             :class "mdl-button mdl-js-button"})))
 
 (deftest on-click
   (let [some-state (atom "foo")

@@ -1203,7 +1203,6 @@
         :label      "Text lines..."
         :rows       3
         :handler-fn #(reset! text-field-model (js/Number %))]
-       ;;[:p ":model " @text-field-model]
        [mdl/slider
         :model      text-field-model
         :handler-fn #(reset! text-field-model (js/Number %))]])))
