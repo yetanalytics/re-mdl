@@ -82,7 +82,7 @@
                 :label [:i.material-icons "add"]]]
     (check-component button {:label [:i.material-icons "add"]
                              :icon? true
-                             :class "mdl-button mdl-js-button"})))
+                             :class "mdl-button mdl-js-button mdl-button--icon"})))
 
 (deftest on-click
   (let [some-state (atom "foo")
