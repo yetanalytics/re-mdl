@@ -26,13 +26,20 @@
 (defn check-mdl-upgraded [comp]
   (check-attribute comp "data-upgraded" ",MaterialButton"))
 
+(defn deconstruct-label
+  [label]
+  (if (vector? label)
+    (last label)
+    label))
+
 (defn check-label-or-icon [comp label-or-icon]
-  (is (or
-       (= label-or-icon (.-innerHTML comp))
-       (when-let [inner (sel1 comp [:i])]
-         (and
-          (= (.-className inner) "material-icons")
-          (= (.-innerHTML inner) label-or-icon))))))
+  (let [label-or-icon (deconstruct-label label-or-icon)]
+    (is (or
+         (= label-or-icon (.-innerHTML comp))
+         (when-let [inner (sel1 comp [:i])]
+           (and
+            (= (.-className inner) "material-icons")
+            (= (.-innerHTML inner) label-or-icon)))))))
 
 (defn check-disabled? [comp disabled?]
   (check-attribute comp "disabled" disabled?))
