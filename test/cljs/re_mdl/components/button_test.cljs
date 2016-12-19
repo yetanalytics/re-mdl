@@ -51,7 +51,7 @@
       (check-id id)
       (check-class class)
       check-mdl-upgraded
-      (check-label-or-icon (or label icon ""))
+      (check-label-or-icon (or label icon? ""))
       (check-disabled? disabled?)
       (check-for for))))
 
