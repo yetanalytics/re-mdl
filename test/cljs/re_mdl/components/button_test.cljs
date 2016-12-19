@@ -78,8 +78,10 @@
 
 (deftest icon
   (let [button [button/button
+                :icon? true
                 :label [:i.material-icons "add"]]]
     (check-component button {:label [:i.material-icons "add"]
+                             :icon? true
                              :class "mdl-button mdl-js-button"})))
 
 (deftest on-click
