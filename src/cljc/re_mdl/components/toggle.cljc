@@ -1,7 +1,7 @@
 (ns re-mdl.components.toggle
   (:require #?(:cljs [reagent.core :as r])
             [re-mdl.util :refer [wrap-mdl
-                                 mdl-init!
+                                 mdl-init-mount
                                  mdl-get-value
                                  mdl-get-props]]))
 
@@ -24,7 +24,8 @@
       (merge
        (cond->
            {:type "checkbox"
-            :id id
+            :id   id
+            :defaultChecked (mdl-get-value checked?)
             #?@(:cljs [:on-change
                        #(handler-fn (.. % -target -checked))])}
          disabled? (assoc :disabled true)
@@ -37,11 +38,7 @@
   #?(:cljs
      (r/create-class
       {:component-did-mount
-       (fn [this]
-         (let [node (r/dom-node this)]
-           (mdl-init! node)
-           (when (mdl-get-value checked?)
-             (-> node .-MaterialCheckbox .check))))
+       mdl-init-mount
        :component-did-update
        (fn [this _]
          (let [elem (-> (r/dom-node this) .-MaterialCheckbox)]
@@ -55,49 +52,48 @@
        checkbox*})
      :clj checkbox*))
 
-
-(defn radio* [& {:keys [handler-fn disabled? ripple-effect? checked?
-                        value name label
-                        id class attr]
-                 #?@(:cljs [:or {handler-fn (fn [e] (.log
-                                                    js/console
-                                                    (str "Unhandled radio: "
-                                                         (-> e
-                                                             .-target
-                                                             .-value))))}])
-                 :as   args}]
+(defn radio*
+  [& {:keys [handler-fn disabled? ripple-effect? checked?
+             value name label
+             id class attr]
+      #?@(:cljs [:or {handler-fn (constantly nil)}])
+      :as   args}]
   #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
-  [:label
-   (merge
-    {:for id
-     :class (cond-> "mdl-radio mdl-js-radio"
-              class (str " " class)
-              ripple-effect? (str " mdl-js-ripple-effect"))}
-    attr)
-   [:input.mdl-radio__button
-    (cond->
-        {:type "radio"
-         :id id
-         :name name
-         :value value
-         #?@(:cljs
-             [:on-change (fn [e] (-> e
-                                    .-target
-                                    .-value
-                                    handler-fn))])}
-      disabled? (assoc :disabled true)
-      #?@(:clj [checked? (assoc :checked true)]))]
-   (when label
-     [:span.mdl-radio__label label])])
+  (let [_ (mdl-get-value checked?)]
+    [:label
+     (merge
+      {:for id
+       :class (cond-> "mdl-radio mdl-js-radio"
+                class          (str " " class)
+                ripple-effect? (str " mdl-js-ripple-effect"))}
+      attr)
+     [:input.mdl-radio__button
+      (cond->
+          {:type  "radio"
+           :id    id
+           :name  name
+           :value value
+           :defaultChecked (mdl-get-value checked?)
+           #?@(:cljs
+               [:on-change #(handler-fn (.. % -target -value))])}
+        disabled? (assoc :disabled true)
+        #?@(:clj [checked? (assoc :checked true)]))]
+     (when label
+       [:span.mdl-radio__label label])]))
 
 (defn radio [& {:keys [checked?]}]
   #?(:cljs (r/create-class
             {:component-did-mount
-             (fn [this]
-               (let [node (r/dom-node this)]
-                 (mdl-init! node)
-                 (when checked?
-                   (-> node .-MaterialRadio .check))))
+             mdl-init-mount
+             :component-did-update
+             (fn [this _]
+               (let [elem (-> (r/dom-node this) .-MaterialRadio)]
+                 (if (-> (r/argv this)
+                         mdl-get-props
+                         :checked?
+                         mdl-get-value)
+                   (.check elem)
+                   (.uncheck elem))))
              :reagent-render
              radio*})
      :clj radio*))
@@ -105,7 +101,7 @@
 (defn radios [& {:keys [handler-fn ripple-effect?
                         choices checked disabled name children
                         id class attr]
-                 :or {disabled #{}}
+                 :or   {disabled #{}}
                  :as   args}]
   (into
    [:div
@@ -119,17 +115,15 @@
     (map-indexed
      (fn [idx [val label :as choice]]
        [radio
-        :id (str name idx)
-        :name name
-        :value val
-        :label label
-        :handler-fn handler-fn
-        :disabled? (disabled val)
-        :checked? (= val checked)
+        :id             (str name idx)
+        :name           name
+        :value          val
+        :label          label
+        :handler-fn     handler-fn
+        :disabled?      (disabled val)
+        :checked?       (= val (mdl-get-value checked))
         :ripple-effect? ripple-effect?])
      choices))))
-
-
 
 (defn icon-toggle*
   [& {:keys [handler-fn icon
@@ -152,6 +146,7 @@
        (cond->
            {:type "checkbox"
             :id   id
+            :defaultChecked (mdl-get-value checked?)
             #?@(:cljs
                 [:on-change #(handler-fn (.. % -target -checked))])}
          disabled? (assoc :disabled true)
@@ -163,11 +158,7 @@
   #?(:cljs
      (r/create-class
       {:component-did-mount
-       (fn [this]
-         (let [node (r/dom-node this)]
-           (mdl-init! node)
-           (when (mdl-get-value checked?)
-             (-> node .-MaterialIconToggle .check))))
+       mdl-init-mount
        :component-did-update
        (fn [this _]
          (let [elem (-> (r/dom-node this) .-MaterialIconToggle)]
@@ -203,6 +194,7 @@
        (cond->
            {:type "checkbox"
             :id   id
+            :defaultChecked (mdl-get-value checked?)
             #?@(:cljs [:on-change #(handler-fn (.. % -target -checked))])}
          disabled? (assoc :disabled true)
          #?@(:clj [checked? (assoc :checked true)]))
@@ -214,11 +206,7 @@
   #?(:cljs
      (r/create-class
       {:component-did-mount
-       (fn [this]
-         (let [node (r/dom-node this)]
-           (mdl-init! node)
-           (when (mdl-get-value checked?)
-             (-> node .-MaterialSwitch .on))))
+       mdl-init-mount
        :component-did-update
        (fn [this _]
          (let [elem (-> (r/dom-node this) .-MaterialSwitch)]

@@ -1153,11 +1153,26 @@
   [mdl/toggle-checkbox
    :label "Checkbox"])
 
-(defn toggles-demo-radio-on
-  [])
-
-(defn toggles-demo-radio-off
-  [])
+(defn toggles-demo-radio
+  []
+  (let [radio-model  (r/atom :first)
+        slider-model (r/atom 0)]
+    (fn []
+      [:div
+       [mdl/toggle-radios
+        :name       "radio-demo"
+        :handler-fn #(print %)
+        :checked    radio-model
+        :choices
+        [[:first "First"] [:second "Second"] [:third "Third"]]]
+       [mdl/slider
+        :model      slider-model
+        :max        10
+        :handler-fn #(do (reset! slider-model (js/Number %))
+                         (reset! radio-model (case (mod @slider-model 3)
+                                               0 :first
+                                               1 :second
+                                               2 :third)))]])))
 
 (defn toggles-demo-icon-on
   []
@@ -1217,10 +1232,8 @@
    [demo-reference "toggles" "checkbox"]
    [:h6 "Radio"]
    [demo-doc-component
-    [[toggles-demo-radio-on]
-     [toggles-demo-radio-off]]
-    [#(source toggles-demo-radio-on)
-     #(source toggles-demo-radio-off)]]
+    [[toggles-demo-radio]]
+    [#(source toggles-demo-radio)]]
    [demo-options]
    [demo-reference "toggles" "radio"]
    [:h6 "Icon"]
