@@ -1142,7 +1142,6 @@
         :label          "Checkbox"
         :ripple-effect? true
         :handler-fn     #(swap! checked-model not)]
-       ;;[:p ":slider-model " @slider-model]
        [mdl/slider
         :model      slider-model
         :max        10
@@ -1152,7 +1151,7 @@
 (defn toggles-demo-checkbox-off
   []
   [mdl/toggle-checkbox
-   :label    "Checkbox"])
+   :label "Checkbox"])
 
 (defn toggles-demo-radio-on
   [])
@@ -1161,16 +1160,48 @@
   [])
 
 (defn toggles-demo-icon-on
-  [])
+  []
+  (let [checked-model (r/atom false)
+        slider-model  (r/atom 0)]
+    (fn []
+      [:div
+       [mdl/toggle-icon-toggle
+        :checked?       checked-model
+        :icon           "format_bold"
+        :ripple-effect? true
+        :handler-fn     #(swap! checked-model not)]
+       [mdl/slider
+        :model      slider-model
+        :max        10
+        :handler-fn #(do (reset! slider-model (js/Number %))
+                         (reset! checked-model (odd? @slider-model)))]])))
 
 (defn toggles-demo-icon-off
-  [])
+  []
+  [mdl/toggle-icon-toggle
+   :icon "format_italic"])
 
 (defn toggles-demo-switch-on
-  [])
+  []
+  (let [checked-model (r/atom false)
+        slider-model  (r/atom 0)]
+    (fn []
+      [:div
+       [mdl/toggle-switch
+        :checked?       checked-model
+        :label          "Switch"
+        :ripple-effect? true
+        :handler-fn     #(swap! checked-model not)]
+       [mdl/slider
+        :model      slider-model
+        :max        10
+        :handler-fn #(do (reset! slider-model (js/Number %))
+                         (reset! checked-model (odd? @slider-model)))]])))
 
 (defn toggles-demo-switch-off
-  [])
+  []
+  [mdl/toggle-switch
+   :label "Switch"])
 
 (defn toggles-demo []
   [:div.toggles-demo
@@ -1184,6 +1215,7 @@
      #(source toggles-demo-checkbox-off)]]
    [demo-options]
    [demo-reference "toggles" "checkbox"]
+   [:h6 "Radio"]
    [demo-doc-component
     [[toggles-demo-radio-on]
      [toggles-demo-radio-off]]
@@ -1191,10 +1223,22 @@
      #(source toggles-demo-radio-off)]]
    [demo-options]
    [demo-reference "toggles" "radio"]
+   [:h6 "Icon"]
    [demo-doc-component
     [[toggles-demo-icon-on]
      [toggles-demo-icon-off]]
-    ]])
+    [#(source toggles-demo-icon-on)
+     #(source toggles-demo-icon-off)]]
+   [demo-options]
+   [demo-reference "toggles" "icon"]
+   [:h6 "Switch"]
+   [demo-doc-component
+    [[toggles-demo-switch-on]
+     [toggles-demo-switch-off]]
+    [#(source toggles-demo-switch-on)
+     #(source toggles-demo-switch-off)]]
+   [demo-options]
+   [demo-reference "toggles" "switch"]])
 
 (defn table-demo-data
   "This is a table."

@@ -80,11 +80,10 @@
            (doto node
              mdl-init!
              (-> .-MaterialTextfield (.change (mdl-get-value model))))))
-       :component-will-update
-       (fn [this new-argv]
-         (print "UPDATE TEXTFIELD: " model (mdl-get-props new-argv))
+       :component-did-update
+       (fn [this _]
          (doto (r/dom-node this)
-           (-> .-MaterialTextfield (.change (-> new-argv
+           (-> .-MaterialTextfield (.change (-> (r/argv this)
                                                 mdl-get-props
                                                 :model
                                                 mdl-get-value)))))

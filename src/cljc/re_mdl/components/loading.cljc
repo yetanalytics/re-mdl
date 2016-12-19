@@ -36,16 +36,12 @@
                (.setProgress (mdl-get-value model)))
            (-> .-MaterialProgress
                (.setBuffer (mdl-get-value buffer)))))
-       :component-will-update
-       (fn [this new-argv]
-         (print "WILL UPDATE: " model)
-         (let [props (mdl-get-props new-argv)]
+       :component-did-update
+       (fn [this _]
+         (let [props (mdl-get-props (r/argv this))]
            (doto (.-MaterialProgress (r/dom-node this))
              (-> (.setProgress (mdl-get-value (:model props))))
              (-> (.setBuffer (mdl-get-value (:buffer props)))))))
-       :component-did-update
-       (fn [this _]
-         (print "DID UPDATE: " model) " PROPS: " (r/props this))
        :reagent-render
        progress*})
      :clj (apply progress* (flatten args))))

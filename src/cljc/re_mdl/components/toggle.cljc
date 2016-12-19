@@ -42,10 +42,13 @@
            (mdl-init! node)
            (when (mdl-get-value checked?)
              (-> node .-MaterialCheckbox .check))))
-       :component-will-update
-       (fn [this new-argv]
+       :component-did-update
+       (fn [this _]
          (let [elem (-> (r/dom-node this) .-MaterialCheckbox)]
-           (if (-> new-argv mdl-get-props :checked? mdl-get-value)
+           (if (-> (r/argv this)
+                   mdl-get-props
+                   :checked?
+                   mdl-get-value)
              (.check elem)
              (.uncheck elem))))
        :reagent-render
@@ -129,39 +132,32 @@
 
 
 (defn icon-toggle*
-  [& {:keys [handler-fn icon disabled? ripple-effect? checked?
+  [& {:keys [handler-fn icon
+             disabled? ripple-effect? checked?
              id class attr]
-      #?@(:cljs [:or {handler-fn (fn [e] (.log
-                                         js/console
-                                         (str "Unhandled icon-toggle: "
-                                              (-> e
-                                                  .-target
-                                                  .-checked))))}])
+      #?@(:cljs [:or {handler-fn (constantly nil)}])
       :as   args}]
   #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
-  [:label
-   (merge
-    {:for id
+  (let [_ (mdl-get-value checked?)]
+    [:label
+     (merge
+      {:for id
 
-     :class (cond-> "mdl-icon-toggle mdl-js-icon-toggle"
-              class (str " " class)
-              ripple-effect? (str " mdl-js-ripple-effect"))}
-    attr)
-   [:input.mdl-icon-toggle__input
-    (merge
-     (cond->
-         {:type "checkbox"
-          :id id
-          #?@(:cljs
-              [:on-change (fn [e]
-                            (let [val (-> e
-                                          .-target
-                                          .-checked)]
-                              (handler-fn val)))])}
-       disabled? (assoc :disabled true)
-       #?@(:clj [checked? (assoc :checked true)]))
-     attr)]
-   [:i.mdl-icon-toggle__label.material-icons icon]])
+       :class (cond-> "mdl-icon-toggle mdl-js-icon-toggle"
+                class          (str " " class)
+                ripple-effect? (str " mdl-js-ripple-effect"))}
+      attr)
+     [:input.mdl-icon-toggle__input
+      (merge
+       (cond->
+           {:type "checkbox"
+            :id   id
+            #?@(:cljs
+                [:on-change #(handler-fn (.. % -target -checked))])}
+         disabled? (assoc :disabled true)
+         #?@(:clj [checked? (assoc :checked true)]))
+       attr)]
+     [:i.mdl-icon-toggle__label.material-icons icon]]))
 
 (defn icon-toggle [& {:keys [checked?]}]
   #?(:cljs
@@ -170,48 +166,49 @@
        (fn [this]
          (let [node (r/dom-node this)]
            (mdl-init! node)
-           (when checked?
+           (when (mdl-get-value checked?)
              (-> node .-MaterialIconToggle .check))))
+       :component-did-update
+       (fn [this _]
+         (let [elem (-> (r/dom-node this) .-MaterialIconToggle)]
+           (if (-> (r/argv this)
+                   mdl-get-props
+                   :checked?
+                   mdl-get-value)
+             (.check elem)
+             (.uncheck elem))))
        :reagent-render
        icon-toggle*})
      :clj icon-toggle*))
 
-
-
 (defn switch*
-  [& {:keys [handler-fn disabled? ripple-effect? checked?
+  [& {:keys [handler-fn checked?
+             disabled? ripple-effect?
              label
              id class attr]
-      #?@(:cljs [:or {handler-fn (fn [e] (.log
-                                         js/console
-                                         (str "Unhandled switch: "
-                                              (-> e
-                                                  .-target
-                                                  .-checked))))}])
+      #?@(:cljs [:or {handler-fn (constantly nil)}])
       :as   args}]
   #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
-  [:label
-   (merge
-    {:for id
+  (let [_ (mdl-get-value checked?)]
+    [:label
+     (merge
+      {:for id
 
-     :class (cond-> "mdl-switch mdl-js-switch"
-              class (str " " class)
-              ripple-effect? (str " mdl-js-ripple-effect"))}
-    attr)
-   [:input.mdl-switch__input
-    (merge
-     (cond->
-         {:type "checkbox"
-          :id id
-          #?@(:cljs [:on-change (fn [e] (-> e
-                                           .-target
-                                           .-checked
-                                           handler-fn))])}
-       disabled? (assoc :disabled true)
-       #?@(:clj [checked? (assoc :checked true)]))
-     attr)]
-   (when label
-     [:span.mdl-switch__label label])])
+       :class (cond-> "mdl-switch mdl-js-switch"
+                class          (str " " class)
+                ripple-effect? (str " mdl-js-ripple-effect"))}
+      attr)
+     [:input.mdl-switch__input
+      (merge
+       (cond->
+           {:type "checkbox"
+            :id   id
+            #?@(:cljs [:on-change #(handler-fn (.. % -target -checked))])}
+         disabled? (assoc :disabled true)
+         #?@(:clj [checked? (assoc :checked true)]))
+       attr)]
+     (when label
+       [:span.mdl-switch__label label])]))
 
 (defn switch [& {:keys [checked?]}]
   #?(:cljs
@@ -220,8 +217,17 @@
        (fn [this]
          (let [node (r/dom-node this)]
            (mdl-init! node)
-           (when checked?
-             (-> node .-MaterialSwitch .check))))
+           (when (mdl-get-value checked?)
+             (-> node .-MaterialSwitch .on))))
+       :component-did-update
+       (fn [this _]
+         (let [elem (-> (r/dom-node this) .-MaterialSwitch)]
+           (if (-> (r/argv this)
+                   mdl-get-props
+                   :checked?
+                   mdl-get-value)
+             (.on elem)
+             (.off elem))))
        :reagent-render
        switch*})
      :clj switch*))

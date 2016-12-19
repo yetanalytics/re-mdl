@@ -37,12 +37,15 @@
      (r/create-class
       {:component-did-mount
        mdl-init-mount
-       :component-will-update
-       (fn [this new-argv]
+       :component-did-update
+       (fn [this _]
          (-> (r/dom-node this)
              .-MaterialSlider
              (.change
-              (-> new-argv mdl-get-props :model mdl-get-value))))
+              (-> (r/argv this)
+                  mdl-get-props
+                  :model
+                  mdl-get-value))))
        :reagent-render
        slider*})
      :clj (apply slider* (flatten args))))
