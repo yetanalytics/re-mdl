@@ -829,23 +829,18 @@
 (defn demo-layout [& {:keys [demo-map current-demo-ra children]}]
   [mdl/layout
    :fixed-header? true
+   :fixed-drawer? true
    :children
    [[mdl/layout-header
      :children
      [[mdl/layout-header-row
        :children
-       [[mdl/layout-title
-         :label "Re-mdl"
-         :attr  {:on-click (fn [_]
-                             (reset! current-demo-ra :intro))
-                 :style    {:cursor "pointer"}}]
-        [mdl/layout-spacer]
+       [[mdl/layout-spacer]
         [mdl/layout-nav
          :children
-         (into []
-               (for [demo (keys (dissoc demo-map :intro))]
-                 (demo-layout-component {:demo  current-demo-ra
-                                         :title demo})))]]]]]
+         [[mdl/layout-nav-link
+           :href    "https://github.com/yetanalytics/re-mdl"
+           :content [:span [:i.material-icons "link"] " GitHub"]]]]]]]]
     [mdl/layout-drawer
      :children
      [[mdl/layout-title
