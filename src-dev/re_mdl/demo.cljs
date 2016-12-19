@@ -1133,9 +1133,21 @@
 
 (defn toggles-demo-checkbox-on
   []
-  [mdl/toggle-checkbox
-   :checked? true
-   :label    "Checkbox"])
+  (let [checked-model (r/atom false)
+        slider-model  (r/atom 0)]
+    (fn []
+      [:div
+       [mdl/toggle-checkbox
+        :checked?       checked-model
+        :label          "Checkbox"
+        :ripple-effect? true
+        :handler-fn     #(swap! checked-model not)]
+       ;;[:p ":slider-model " @slider-model]
+       [mdl/slider
+        :model      slider-model
+        :max        10
+        :handler-fn #(do (reset! slider-model (js/Number %))
+                         (reset! checked-model (odd? @slider-model)))]])))
 
 (defn toggles-demo-checkbox-off
   []

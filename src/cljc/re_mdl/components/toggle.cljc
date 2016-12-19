@@ -1,6 +1,9 @@
 (ns re-mdl.components.toggle
   (:require #?(:cljs [reagent.core :as r])
-            [re-mdl.util :refer [wrap-mdl mdl-init!]]))
+            [re-mdl.util :refer [wrap-mdl
+                                 mdl-init!
+                                 mdl-get-value
+                                 mdl-get-props]]))
 
 (defn checkbox*
   [& {:keys [handler-fn disabled? ripple-effect? checked?
@@ -9,26 +12,26 @@
       #?@(:cljs [:or {handler-fn (constantly nil)}])
       :as   args}]
   #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
-  [:label
-   (merge
-    {:for id
-
-     :class (cond-> "mdl-checkbox mdl-js-checkbox"
-              class (str " " class)
-              ripple-effect? (str " mdl-js-ripple-effect"))}
-    attr)
-   [:input.mdl-checkbox__input
-    (merge
-     (cond->
-         {:type "checkbox"
-          :id id
-          #?@(:cljs [:on-change
-                     #(handler-fn (.. % -target -checked))])}
-       disabled? (assoc :disabled true)
-       #?@(:clj [checked? (assoc :checked true)]))
-     attr)]
-   (when label
-     [:span.mdl-checkbox__label label])])
+  (let [_ (mdl-get-value checked?)]
+    [:label
+     (merge
+      {:for   id
+       :class (cond-> "mdl-checkbox mdl-js-checkbox"
+                class          (str " " class)
+                ripple-effect? (str " mdl-js-ripple-effect"))}
+      attr)
+     [:input.mdl-checkbox__input
+      (merge
+       (cond->
+           {:type "checkbox"
+            :id id
+            #?@(:cljs [:on-change
+                       #(handler-fn (.. % -target -checked))])}
+         disabled? (assoc :disabled true)
+         #?@(:clj [checked? (assoc :checked true)]))
+       attr)]
+     (when label
+       [:span.mdl-checkbox__label label])]))
 
 (defn checkbox [& {:keys [checked?]}]
   #?(:cljs
@@ -37,8 +40,14 @@
        (fn [this]
          (let [node (r/dom-node this)]
            (mdl-init! node)
-           (when checked?
+           (when (mdl-get-value checked?)
              (-> node .-MaterialCheckbox .check))))
+       :component-will-update
+       (fn [this new-argv]
+         (let [elem (-> (r/dom-node this) .-MaterialCheckbox)]
+           (if (-> new-argv mdl-get-props :checked? mdl-get-value)
+             (.check elem)
+             (.uncheck elem))))
        :reagent-render
        checkbox*})
      :clj checkbox*))
