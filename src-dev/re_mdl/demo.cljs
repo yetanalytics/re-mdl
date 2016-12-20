@@ -157,11 +157,11 @@
      :description "These are the options that can be applied to adapt the component's appearance."
      :rows
      [[":el"             "Container element for badge"         "Optional; Defaults to :span"]
-      [":child"          "Content inside the :el"              "Required; String or element"]
+      [":child"          "Content inside the :el"              "Required; String or hiccup"]
       [":badge-label"    "String value on badge"               "Not a class, but an attribute"]
-      [":no-background?" "Apply open-circle effect to badge"   "Optional"]
-      [":overlap?"       "Make the badge overlap on child"     "Optional"]
-      [":icon?"          "Make the child content and MDL icon" "Optional"]]}]
+      [":no-background?" "Apply open-circle effect to badge"   "Optional; boolean"]
+      [":overlap?"       "Make the badge overlap on child"     "Optional; boolean"]
+      [":icon?"          "Make the child content and MDL icon" "Optional; boolean"]]}]
    [demo-reference "badges"]])
 
 (defn button-demo-colored-fab
@@ -170,7 +170,7 @@
   [mdl/button
    :fab?     true
    :colored? true
-   :label    [:i.material-icons "add"]])
+   :child    [:i.material-icons "add"]])
 
 (defn button-demo-colored-fab-with-ripple
   "This is a colored FAB button with a ripple effect."
@@ -178,7 +178,7 @@
   [mdl/button
    :fab?           true
    :colored?       true
-   :label          [:i.material-icons "add"]
+   :child          [:i.material-icons "add"]
    :ripple-effect? true])
 
 (defn button-demo-plain-fab
@@ -186,14 +186,14 @@
   []
   [mdl/button
    :fab?  true
-   :label [:i.material-icons "add"]])
+   :child [:i.material-icons "add"]])
 
 (defn button-demo-plain-fab-with-ripple
   "This is a plain FAB button with a ripple effect."
   []
   [mdl/button
    :fab?           true
-   :label          [:i.material-icons "add"]
+   :child          [:i.material-icons "add"]
    :ripple-effect? true])
 
 (defn button-demo-plain-fab-disabled
@@ -201,7 +201,7 @@
   []
   [mdl/button
    :fab?      true
-   :label     [:i.material-icons "add"]
+   :child     [:i.material-icons "add"]
    :disabled? true])
 
 (defn button-demo-raised
@@ -209,14 +209,14 @@
   []
   [mdl/button
    :raised? true
-   :label   "Button"])
+   :child   "Button"])
 
 (defn button-demo-raised-with-ripple
   "This is a raised button with a ripple effect."
   []
   [mdl/button
    :raised?        true
-   :label          "Button"
+   :child          "Button"
    :ripple-effect? true])
 
 (defn button-demo-raised-disabled
@@ -224,7 +224,7 @@
   []
   [mdl/button
    :raised?   true
-   :label     "Button"
+   :child     "Button"
    :disabled? true])
 
 (defn button-demo-colored-raised
@@ -233,7 +233,7 @@
   [mdl/button
    :raised?  true
    :colored? true
-   :label    "Button"])
+   :child    "Button"])
 
 (defn button-demo-accent-colored-raised
   "This is a raised button that is accent colored."
@@ -241,7 +241,7 @@
   [mdl/button
    :raised? true
    :accent? true
-   :label   "Button"])
+   :child   "Button"])
 
 (defn button-demo-accent-colored-raised-with-ripple
   "This is a raised button that is accent colored with a ripple."
@@ -249,41 +249,41 @@
   [mdl/button
    :raised?        true
    :accent?        true
-   :label          "Button"
+   :child          "Button"
    :ripple-effect? true])
 
 (defn button-demo-flat
   "This is a flat button."
   []
   [mdl/button
-   :label "Button"])
+   :child "Button"])
 
 (defn button-demo-flat-with-ripple
   "This is a flat button with a ripple."
   []
   [mdl/button
-   :label          "Button"
+   :child          "Button"
    :ripple-effect? true])
 
 (defn button-demo-flat-disabled
   "This is a flat button that is disabled."
   []
   [mdl/button
-   :label     "Button"
+   :child     "Button"
    :disabled? true])
 
 (defn button-demo-primary-colored-flat
   "This is a flat button that is primary colored."
   []
   [mdl/button
-   :label    "Button"
+   :child    "Button"
    :primary? true])
 
 (defn button-demo-accent-colored-flat
   "This is a flat button that is accent colored."
   []
   [mdl/button
-   :label   "Button"
+   :child   "Button"
    :accent? true])
 
 (defn button-demo-icon
@@ -291,14 +291,14 @@
   []
   [mdl/button
    :icon? true
-   :label [:i.material-icons "mood"]])
+   :child [:i.material-icons "mood"]])
 
 (defn button-demo-colored-icon
   "This is a button that is an icon and colored."
   []
   [mdl/button
    :icon?    true
-   :label    [:i.material-icons "mood"]
+   :child    [:i.material-icons "mood"]
    :colored? true])
 
 (defn button-demo-mini-fab
@@ -307,7 +307,7 @@
   [mdl/button
    :fab?      true
    :mini-fab? true
-   :label     [:i.material-icons "add"]])
+   :child     [:i.material-icons "add"]])
 
 (defn button-demo-colored-mini-fab
   "This is a mini FAB button that is colored."
@@ -316,7 +316,7 @@
    :fab?      true
    :mini-fab? true
    :colored?  true
-   :label     [:i.material-icons "add"]])
+   :child     [:i.material-icons "add"]])
 
 (defn button-demo []
   [:div.button-demo
@@ -375,18 +375,18 @@
      :description "These are the options that can be applied to adapt the component's appearance."
      :rows
      [[":el"             "Container element for badge"         "Optional; Defaults to :button"]
-      [":label"          "Content inside the :el"              "String or hiccup"]
-      [":on-click"       "Callback to handle event"            "Optional"]
-      [":icon?"          "Apply small circular effect"         "Optional"]
-      [":disabled?"      "Disables action of a button"         "Optional"]
-      [":raised?"        "Applies the raised effect"           "Optional"]
-      [":fab?"           "Applies circular FAB effect"         "Optional"]
-      [":mini-fab?"      "Applies smaller circular FAB effect" "Optional"]
-      [":colored?"       "Applies colored effect"              "Optional"]
-      [":primary?"       "Applies primary colored effect"      "Optional"]
-      [":accent?"        "Applies accent colored effect"       "Optional"]
-      [":ripple-effect?" "Applies ripple click effect"         "Optional"]
-      [":for"            "Applies HTML for attribute"          "Optional; String is used"]]}]
+      [":child"          "Content inside the :el"              "Required; String or hiccup"]
+      [":on-click"       "Callback to handle event"            "Optional; function"]
+      [":icon?"          "Apply small circular effect"         "Optional; boolean"]
+      [":disabled?"      "Disables action of a button"         "Optional; boolean"]
+      [":raised?"        "Applies the raised effect"           "Optional; boolean"]
+      [":fab?"           "Applies circular FAB effect"         "Optional; boolean"]
+      [":mini-fab?"      "Applies smaller circular FAB effect" "Optional; boolean"]
+      [":colored?"       "Applies colored effect"              "Optional; boolean"]
+      [":primary?"       "Applies primary colored effect"      "Optional; boolean"]
+      [":accent?"        "Applies accent colored effect"       "Optional; boolean"]
+      [":ripple-effect?" "Applies ripple click effect"         "Optional; boolean"]
+      [":for"            "Applies HTML for attribute"          "Optional; :id of element"]]}]
    [demo-reference "buttons"]])
 
 (defn card-demo-wide-with-share
@@ -412,13 +412,13 @@
        :el             :a
        :colored?       true
        :ripple-effect? true
-       :label          "Get Started"]]]
+       :child          "Get Started"]]]
     [mdl/card-menu
      :children [[mdl/button
                  :attr           {:style {:color "white"}}
                  :icon?          true
                  :ripple-effect? true
-                 :label          [:i.material-icons "share"]]]]]])
+                 :child          [:i.material-icons "share"]]]]]])
 
 (defn card-demo-square
   "This is a square card."
@@ -444,7 +444,7 @@
        :el             :a
        :colored?       true
        :ripple-effect? true
-       :label          "View updates"]]]]])
+       :child          "View updates"]]]]])
 
 (defn card-demo-expand
   "This is a card with expanded title."
@@ -499,7 +499,7 @@
        :el             :a
        :colored?       true
        :ripple-effect? true
-       :label          "Add to Calender"]
+       :child          "Add to Calender"]
       [mdl/layout-spacer]
       [:i.material-icons {:style {:padding-right "10px"}}
        "event"]]]]])
@@ -950,7 +950,7 @@
     [mdl/button
      :id    "menu-lower-left"
      :icon? true
-     :label [:i.material-icons "more_vert"]]
+     :child [:i.material-icons "more_vert"]]
     [mdl/menu
      :for            "menu-lower-left"
      :bottom-left?   true
@@ -975,7 +975,7 @@
     [mdl/button
      :id    "menu-lower-right"
      :icon? true
-     :label [:i.material-icons "more_vert"]]
+     :child [:i.material-icons "more_vert"]]
     [mdl/menu
      :for            "menu-lower-right"
      :bottom-right?  true
@@ -999,7 +999,7 @@
     [mdl/button
      :id    "menu-top-left"
      :icon? true
-     :label [:i.material-icons "more_vert"]]
+     :child [:i.material-icons "more_vert"]]
     [mdl/menu
      :for            "menu-top-left"
      :top-left?      true
@@ -1024,7 +1024,7 @@
     [mdl/button
      :id    "menu-top-right"
      :icon? true
-     :label [:i.material-icons "more_vert"]]
+     :child [:i.material-icons "more_vert"]]
     [mdl/menu
      :for            "menu-top-right"
      :top-right?     true
@@ -1086,13 +1086,13 @@
         :disabled?  disabled-model]
        [:p ":model " @slider-model]
        [mdl/button
-        :label    [:i.material-icons "add"]
+        :child    [:i.material-icons "add"]
         :on-click #(swap! slider-model inc)]
        [mdl/button
-        :label    [:i.material-icons "remove"]
+        :child    [:i.material-icons "remove"]
         :on-click #(swap! slider-model dec)]
        [mdl/button
-        :label    [:i "enable"]
+        :child    [:i "enable"]
         :on-click #(swap! disabled-model not)]])))
 
 (defn slider-demo []
@@ -1465,7 +1465,7 @@
       [:span
        [mdl/button
         :raised?  true
-        :label    "show"
+        :child    "show"
         :attr     {:style {:background-color @model-color}}
         :on-click (fn []
                     (reset! model-color (str "#" (.toString
@@ -1487,7 +1487,7 @@
       [:span
        [mdl/button
         :raised?  true
-        :label    "show"
+        :child    "show"
         :on-click (fn []
                     (swap! model-count inc)
                     (mdl/snackbar! :message (str "Example Message #" @model-count)))]
@@ -1515,7 +1515,7 @@
     (fn []
       [:span
        [mdl/button
-        :label    "show-button"
+        :child    "show-button"
         :raised?  true
         :on-click #(reset! open? true)]
        (when @open?
@@ -1524,10 +1524,10 @@
           :content [[:p "This is an example of the Material Design Lite
                         Lite dialog component. Please use responsibly."]]
           :actions [[mdl/button
-                     :label    "Close"
+                     :child    "Close"
                      :on-click #(reset! open? false)]
                     [mdl/button
-                     :label     "Disabled Action"
+                     :child     "Disabled Action"
                      :disabled? true]]])])))
 
 (defn dialog-demo
