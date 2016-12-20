@@ -162,7 +162,15 @@
 (def snackbar-target snackbar/snackbar-target)
 (def snackbar! snackbar/snackbar!)
 
+;; dialog
+
 (def dialog dialog/dialog)
+
+(def dialog-title dialog/title)
+
+(def dialog-content dialog/content)
+
+(def dialog-actions dialog/actions)
 
 (def list-item list/item)
 (def list-coll list/list-coll)

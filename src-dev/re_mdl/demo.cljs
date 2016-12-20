@@ -1558,20 +1558,26 @@
     (fn []
       [:span
        [mdl/button
-        :child    "show-button"
+        :child    "Show Dialog"
         :raised?  true
         :on-click #(reset! open? true)]
        (when @open?
          [mdl/dialog
-          :title   "MDL Dialog"
-          :content [[:p "This is an example of the Material Design Lite
-                        Lite dialog component. Please use responsibly."]]
-          :actions [[mdl/button
-                     :child    "Close"
-                     :on-click #(reset! open? false)]
-                    [mdl/button
-                     :child     "Disabled Action"
-                     :disabled? true]]])])))
+          :children
+          [[mdl/dialog-title
+            :child "MDL Dialog"]
+           [mdl/dialog-content
+            :children
+            [[:p "This is an example of the Material Design Lite
+                        Lite dialog component. Please use responsibly."]]]
+           [mdl/dialog-actions
+            :children
+            [[mdl/button
+              :child    "Close"
+              :on-click #(reset! open? false)]
+             [mdl/button
+              :child     "Disabled Action"
+              :disabled? true]]]]])])))
 
 (defn dialog-demo
   []
@@ -1581,7 +1587,26 @@
    [demo-doc-component
     [[dialog-demo-simple]]
     [#(source dialog-demo-simple)]]
-   [demo-options]
+   [demo-options
+    {:title       "dialog"
+     :description "This is the outer-most container for the dialog box."}]
+   [demo-options
+    {:title       "dialog-actions"
+     :description "This is the actions container for the dialog box."
+     :rows
+     [[":el"          "Container element for the actions"                                "Optional; Defaults to :div"]
+      [":full-width?" "Sets the actions to be on their own line and take the full width" "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "dialog-content"
+     :description "This is the content container for the dialog box."
+     :rows
+     [[":el" "Container for the content" "Optional; Defaults to :div"]]}]
+   [demo-options
+    {:title       "dialog-title"
+     :description "This is the title container of the dialog box."
+     :rows
+     [[":el"    "Container type for the content" "Optional; Defaults to :h3"]
+      [":child" "Content of the title"           "String or hiccup"]]}]
    [demo-reference "dialog"]])
 
 (defn list-demo-simple
