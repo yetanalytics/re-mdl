@@ -67,7 +67,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEMOS BEGIN
 
-(defn intro-demo []
+(defn intro-demo
+  "Intro page sharing common features and overview of re-mdl."
+  []
   [:div.intro-demo
    [:h6 "INTRO"]
    [:p

@@ -1,7 +1,6 @@
 (ns re-mdl.components.tooltip
   (:require [re-mdl.util :refer [wrap-mdl]]))
 
-
 (defn tooltip* [& {:keys [el for large? left? right? top? bottom?
                           children
                           id class attr]
