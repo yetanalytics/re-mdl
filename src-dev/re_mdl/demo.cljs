@@ -157,7 +157,7 @@
      :description "These are the options that can be applied to adapt the component's appearance."
      :rows
      [[":el"             "Container element for badge"         "Optional; Defaults to :span"]
-      [":child"          "Content inside the :el"              "nil"]
+      [":child"          "Content inside the :el"              "Required; String or element"]
       [":badge-label"    "String value on badge"               "Not a class, but an attribute"]
       [":no-background?" "Apply open-circle effect to badge"   "Optional"]
       [":overlap?"       "Make the badge overlap on child"     "Optional"]
