@@ -1515,11 +1515,10 @@
                                                   (.floor js/Math
                                                           (* (rand) 0xFFFFFF))
                                                   16)))
-                    (mdl/snackbar! :message       "Button color changed"
-                                   :timeout       2000
-                                   :actionHandler (fn [_]
-                                                    (reset! model-color ""))
-                                   :actionText    "Undo"))]
+                    (mdl/snackbar! :message        "Button color changed"
+                                   :timeout        2000
+                                   :action-handler #(reset! model-color "")
+                                   :action-text    "Undo"))]
        [mdl/snackbar-target]])))
 
 (defn snackbar-demo-toast
@@ -1548,7 +1547,13 @@
     [[snackbar-demo-toast]]
     [#(source snackbar-demo-toast)]]
    [demo-options
-    {:description "These are the options for the snackbar."}]
+    {:title       "snackbar"
+     :description "These are the options for the snackbar."
+     :rows
+     [[":message"        "The text message to display"                   "String"]
+      [":timeout"        "The amount of time in ms to show the snackbar" "Optional; Defaults to 2750"]
+      [":action-handler" "The callback for when action is clicked"       "Optional"]
+      [":action-text"    "The text to display for the action button"     "Required if :action-handler is provided"]]}]
    [demo-reference "snackbar"]])
 
 (defn dialog-demo-simple
