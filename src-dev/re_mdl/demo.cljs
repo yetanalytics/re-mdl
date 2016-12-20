@@ -618,9 +618,9 @@
    :children
    [[mdl/chip-contact
      :class "mdl-color--teal mdl-color-text--white"
-     :child "B"]
+     :attr  {:style {:background "url(https://placekitten.com/150/150) 0 0 / cover"}}]
     [mdl/chip-text
-     :child "Deletable Chip"]
+     :child "Deletable Contact Chip"]
     [mdl/chip-action
      :el    :a
      :attr  {:href "#"}
