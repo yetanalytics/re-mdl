@@ -93,12 +93,12 @@
     (into []
           (for [s ["Button"
                    "add card menu"
-                   "fix textfields"
                    "docs and demo added to match mdl"
                    "chip and chip inners changed content to child"
                    "list 'content' renamed to 'child'"
                    "list 'children' added to remaining components"
-                   "added el key to list component options where applicable"]]
+                   "added el key to list component options where applicable"
+                   "tooltip done"]]
             [mdl/list-item
              :children
              [[mdl/list-item-primary-content
@@ -835,7 +835,9 @@
      :children
      [[mdl/layout-header-row
        :children
-       [[mdl/layout-spacer]
+       [[mdl/layout-title
+         :label (clojure.string/capitalize (name @current-demo-ra))]
+        [mdl/layout-spacer]
         [mdl/layout-nav
          :children
          [[mdl/layout-nav-link
@@ -1103,28 +1105,6 @@
    [demo-options
     {:description "Options for a slider."}]
    [demo-reference "sliders"]])
-
-#_[:div.toggles-demo
- [mdl/toggle-checkbox
-  :id "checkbox-demo"
-  :checked? true
-  :label "Checkbox"
-  :handler-fn #(print "checkbox: " %)]
- [mdl/toggle-radios
-  :name "radio-demo"
-  :handler-fn #(print "radio: " %)
-  :choices
-  [[:foo "Foo"] [:bar "Bar"] [:baz "Baz"]]]
- [mdl/toggle-icon-toggle
-  :id "icon-toggle-demo"
-  :icon "format_bold"
-  :ripple-effect? true
-  :handler-fn #(print (str "icon-toggle: " %))]
- [mdl/toggle-switch
-  :id "switch-demo"
-  :label "On/Off"
-  :ripple-effect? true
-  :handler-fn #(print (str "switch: " %))]]
 
 (defn toggles-demo-checkbox-on
   []
@@ -1396,6 +1376,50 @@
                [:br]
                "via social media"]]])
 
+(defn tooltip-demo-right
+  "This is a right aligned tooltip."
+  []
+  [:span
+   [:div#tooltip-right.material-icons
+    "arrow_forward"]
+   [mdl/tooltip
+    :for      "tooltip-right"
+    :right?   true
+    :children ["Follow"]]])
+
+(defn tooltip-demo-left
+  "This is a left aligned tooltip."
+  []
+  [:span
+   [:div#tooltip-left.material-icons
+    "arrow_back"]
+   [mdl/tooltip
+    :for      "tooltip-left"
+    :left?    true
+    :children ["Follow"]]])
+
+(defn tooltip-demo-top
+  "This is a top aligned tooltip."
+  []
+  [:span
+   [:div#tooltip-top.material-icons
+    "arrow_upward"]
+   [mdl/tooltip
+    :for      "tooltip-top"
+    :top?     true
+    :children ["Follow"]]])
+
+(defn tooltip-demo-bottom
+  "This is a bottom aligned tooltip."
+  []
+  [:span
+   [:div#tooltip-bottom.material-icons
+    "arrow_downward"]
+   [mdl/tooltip
+    :for      "tooltip-bottom"
+    :bottom?  true
+    :children ["Follow"]]])
+
 (defn tooltip-demo []
   [:div.tooltip-demo
    [:h6 "TOOLTIPS"]
@@ -1410,8 +1434,25 @@
      [tooltip-demo-multiline]]
     [#(source tooltip-demo-rich)
      #(source tooltip-demo-multiline)]]
+   [demo-doc-component
+    [[tooltip-demo-right]
+     [tooltip-demo-left]
+     [tooltip-demo-top]
+     [tooltip-demo-bottom]]
+    [#(source tooltip-demo-right)
+     #(source tooltip-demo-left)
+     #(source tooltip-demo-top)
+     #(source tooltip-demo-bottom)]]
    [demo-options
-    {:description "These are the options that can be applied to change the tooltip appearance."}]
+    {:description "These are the options that can be applied to change the tooltip appearance."
+     :rows
+     [[":el"      "Container element for tooltip"       "Optional; Defaults to :span"]
+      [":for"     "ID of target element to hover over"  "Required"]
+      [":large?"  "Defines a larget tooltip"            "Optional; Boolean"]
+      [":left?"   "Specifies a left aligned tooltip"    "Optional; Boolean"]
+      [":right?"  "Specifies a right aligned tooltip"   "Optional; Boolean"]
+      [":top?"    "Specifies a top aligned tooltip"     "Optional; Boolean"]
+      [":bottom?" "Specifies a bottom aligned tooltip"  "Optional; Boolean"]]}]
    [demo-reference "tooltips"]])
 
 (defn snackbar-demo-color
