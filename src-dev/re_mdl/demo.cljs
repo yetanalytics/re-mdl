@@ -393,18 +393,18 @@
   "This is a wide card with a share button."
   []
   [mdl/card
-   :attr   {:style {:width "512px"}}
+   :attr   {:style {:width  "512px"}}
    :shadow 2
    :children
    [[mdl/card-title
-     :attr   {:style {:height           "176px"
-                      :color            "white"
-                      :background-color "#6B3E99"}}
+     :attr   {:style {:height     "176px"
+                      :color      "#fff"
+                      :background "url(http://www.getmdl.io/assets/demos/welcome_card.jpg) center / cover"}}
      :header :h2
-     :text   "Welcome"]
+     :child  "Welcome"]
     [mdl/card-supporting-text
-     :text "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-           Mauris sagittis pellentesque lacus eleifend lacinia..."]
+     :children ["Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                 Mauris sagittis pellentesque lacus eleifend lacinia..."]]
     [mdl/card-actions
      :border? true
      :children
@@ -429,14 +429,14 @@
    :shadow 2
    :children
    [[mdl/card-title
-     :attr   {:style {:background-color  "#46B6AC"
-                      :color             "white"
-                      :height            "199px"}}
-     :header :h2
-     :text   "Update"]
+     :attr    {:style {:color      "#fff"
+                       :background "url(http://www.getmdl.io/assets/demos/dog.png) bottom right 15% no-repeat #46B6AC"}}
+     :header  :h2
+     :child   "Update"
+     :expand? true]
     [mdl/card-supporting-text
-     :text "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-           Aenan convallis"]
+     :children ["Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                 Aenan convallis"]]
     [mdl/card-actions
      :border? true
      :children
@@ -450,9 +450,9 @@
   "This is a card with expanded title."
   []
   [mdl/card
-   :attr   {:style {:width            "256px"
-                    :height           "256px"
-                    :background-color "#9C9188"}}
+   :attr   {:style {:width      "256px"
+                    :height     "256px"
+                    :background "url(http://www.getmdl.io/assets/demos/image_card.jpg) center /cover"}}
    :shadow 2
    :children
    [[mdl/card-title
@@ -501,7 +501,7 @@
        :ripple-effect? true
        :child          "Add to Calender"]
       [mdl/layout-spacer]
-      [:i.material-icons {:style {:padding-right "10px"}}
+      [:i.material-icons
        "event"]]]]])
 
 (defn card-demo []
@@ -519,7 +519,50 @@
      [card-demo-event]]
     [#(source card-demo-expand)
      #(source card-demo-event)]]
-   [demo-options]
+   [demo-options
+    {:title       "card"
+     :description "These are properties that can be applied to the container card component."
+     :rows
+     [[":el"     "Container element for the card" "Optional; Defaults to :div"]
+      [":shadow" "Shadow depth of the card"       "Optional; Valid options [2 3 4 6 8 16]"]]}]
+   [demo-options
+    {:title       "card-menu"
+     :description "Component that renders in top-right of the card."
+     :rows
+     [[":el" "Container for element" "Optional; Defaults to :div"]]}]
+   [demo-options
+    {:title       "card-actions"
+     :description "A container within a card element for action content."
+     :rows
+     [[":el"      "Container for element"   "Optional; Defaults to :div"]
+      [":border?" "Defines a border on top" "Optional; boolean"]]}]
+   [demo-options
+    {:title       "card-supporting-text"
+     :description "Additional content between the title and action."
+     :rows
+     [[":el"      "Container for element"   "Optional; Defaults to :div"]
+      [":border?" "Defines a border on top" "Optional; boolean"]]}]
+   [demo-options
+    {:title       "card-media"
+     :description "Defines element as a media container."
+     :rows
+     [[":el"      "Container for element"   "Optional; Defaults to :div"]
+      [":border?" "Defines a border on top" "Optional; boolean"]]}]
+   [demo-options
+    {:title       "card-title"
+     :description "Title content for the card. To use mdl-card__title-text style, supply :header and :child. Otherwise you can use :children."
+     :rows
+     [[":el"      "Container element for the title"                        "Optional; Defaults to :div"]
+      [":child"   "Content of the :el"                                     "String or hiccup"]
+      [":header"  "Defines what header value"                              "[h1 - h6]; Defaults to :h1"]
+      [":border?" "Applies a border on top"                                "Optional; boolean"]
+      [":expand?" "Defines the title container to use all available space" "Optional; boolean"]]}]
+   [demo-options
+    {:title       "card-subtitle"
+     :description "Subtitle element. This should be a child of the title component."
+     :rows
+     [[":el"    "Container element for the subtitle" "Optional; Defaults to :div"]
+      [":child" "Content inside of :el"              "String or hiccup"]]}]
    [demo-reference "cards"]])
 
 (defn chip-demo-basic

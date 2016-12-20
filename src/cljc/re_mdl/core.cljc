@@ -26,6 +26,8 @@
 ;; card
 (def card-title card/title)
 
+(def card-subtitle card/subtitle)
+
 (def card-media card/media)
 
 (def card-supporting-text card/supporting-text)
