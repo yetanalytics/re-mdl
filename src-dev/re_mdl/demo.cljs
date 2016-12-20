@@ -1658,9 +1658,9 @@
                        [mdl/list-item-secondary-content
                         :children
                         [[mdl/list-item-secondary-action
-                          :href "#"
-                          :el   :a
-                          :icon "star"]]]]]))])
+                          :href  "#"
+                          :el    :a
+                          :child [:i.material-icons "star"]]]]]]))])
 
 (defn list-demo-avatar-and-controls
   "This is a list that has avatars and controls."
@@ -1716,9 +1716,9 @@
                            [[mdl/list-item-secondary-info
                              :child i]
                             [mdl/list-item-secondary-action
-                             :href "#"
-                             :el   :a
-                             :icon "star"]]]]]))])
+                             :href  "#"
+                             :el    :a
+                             :child [:i.material-icons "star"]]]]]]))])
 
 (defn list-demo-three-line
   "This is a list that has a three line subtitle."
@@ -1745,9 +1745,9 @@
                           [mdl/list-item-secondary-content
                            :children
                            [[mdl/list-item-secondary-action
-                             :href "#"
-                             :el   :a
-                             :icon "star"]]]]]))])
+                             :href  "#"
+                             :el    :a
+                             :child [:i.material-icons "star"]]]]]]))])
 
 (defn list-demo []
   [:div.list-demo
@@ -1783,27 +1783,41 @@
     {:title       "list-item-primary-content"
      :description "This containing element will house the primary portion of the list item."
      :rows
-     [[":el"]
-      [":icon"]
-      [":avatar"]
-      [":child"]]}]
+     [[":el"     "The container element type for the content"             "Optional; Defaults to :span"]
+      [":icon"   "This is the icon that is left aligned to the content"   "Optional; Cannot use with :avatar"]
+      [":avatar" "This is the avatar that is left aligned to the content" "Optional; Cannot use with :icon"]
+      [":child"  "This is the main content of the list item"              "String or hiccup"]]}]
    [demo-options
     {:title       "list-item-sub-title"
-     :description "This is the subtitle that will render within the primary content. Requires :item-type to be :two-line."}]
+     :description "This is the subtitle that will render within the primary content. Requires :item-type to be :two-line."
+     :rows
+     [[":el"    "The container element type for the content" "Optional; Defaults to :span"]
+      [":child" "This is the content inside the container"   "String or hiccup"]]}]
    [demo-options
     {:title       "list-item-text-body"
-     :description "This will render a two lined subtitle. Requires :item-type to be :three-line."}]
+     :description "This will render a two lined subtitle. Requires :item-type to be :three-line."
+     :rows
+     [[":el"    "The container element type for the content" "Optional; Defaults to :span"]
+      [":child" "This is the content inside the container"   "String or hiccup"]]}]
    [demo-options
     {:title       "list-item-secondary-content"
-     :description "nil"
+     :description "This is the container for the secondary content sub-division. Requires :two-lines or :three-lines set on the :list-item component."
      :rows
-     [[":el"]]}]
+     [[":el"    "The container element type for the content" "Optional; Defaults to :span"]
+      [":child" "This is the content inside the container"   "String or hiccup"]]}]
    [demo-options
     {:title       "list-item-secondary-info"
-     :description "nil"}]
+     :description "This defines the information sub-division. Requires :two-lines or :three-lines set on the :list-item component."
+     :rows
+     [[":el"    "The container element type for the content" "Optional; Defaults to :span"]
+      [":child" "This is the content inside the container"   "String or hiccup"]]}]
    [demo-options
     {:title       "list-item-secondary-action"
-     :description "nil"}]
+     :description "This defines the action sub-division. Requires :two-lines or :three-lines set on the :list-item component."
+     :rows
+     [[":el"    "The container element type for the content" "Optional; Defaults to :span"]
+      [":child" "This is the content inside the container"   "String or hiccup"]
+      [":href"  "Address for link to point to."              "Optional; requires :el to be set to :a"]]}]
    [demo-reference "lists"]])
 
 (defn grid-demo-simple
