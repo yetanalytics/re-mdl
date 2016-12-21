@@ -1128,8 +1128,7 @@
 (defn slider-demo-starting
   "This is a slider with a starting value and tracks state."
   []
-  (let [slider-model   (r/atom 25)
-        disabled-model (r/atom false)]
+  (let [slider-model (r/atom 25)]
     (fn []
       [:div
        [mdl/slider
@@ -1137,18 +1136,14 @@
         :model      slider-model
         :handler-fn #(reset! slider-model (js/Number %))
         :min        0
-        :max        100
-        :disabled?  disabled-model]
+        :max        100]
        [:p ":model " @slider-model]
        [mdl/button
         :child    [:i.material-icons "add"]
         :on-click #(swap! slider-model inc)]
        [mdl/button
         :child    [:i.material-icons "remove"]
-        :on-click #(swap! slider-model dec)]
-       [mdl/button
-        :child    [:i "enable"]
-        :on-click #(swap! disabled-model not)]])))
+        :on-click #(swap! slider-model dec)]])))
 
 (defn slider-demo []
   [:div.slider-demo
@@ -1160,10 +1155,18 @@
     [#(source slider-demo-default)
      #(source slider-demo-starting)]]
    [demo-options
-    {:description "Options for a slider."}]
+    {:description "Options for a slider."
+     :rows
+     [[":model"      "This is the current value of the slider"              "Value | Atom"]
+      [":min"        "This is the minimum value on the slider"              "Optional; Defaults to 0"]
+      [":max"        "This is the maximum value on the slider"              "Optional; Defaults to 100"]
+      [":step"       "This is the step amount of the slider"                "Optional; Defaults to 1"]
+      [":disabled?"  "This will disabled the slider input"                  "Optional; Boolean"]
+      [":handler-fn" "A callback function to fire when the slider is moved" "Optional"]]}]
    [demo-reference "sliders"]])
 
 (defn toggles-demo-checkbox-on
+  "This is a checkbox with a r/atom for model. The slider drives its value."
   []
   (let [checked-model (r/atom false)
         slider-model  (r/atom 0)]
@@ -1181,6 +1184,7 @@
                          (reset! checked-model (odd? @slider-model)))]])))
 
 (defn toggles-demo-checkbox-off
+  "This is a simple checkbox with no model."
   []
   [mdl/toggle-checkbox
    :label "Checkbox"])

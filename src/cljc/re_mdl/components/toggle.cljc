@@ -5,34 +5,36 @@
                                  mdl-get-value
                                  mdl-get-props]]))
 
-(defn checkbox*
-  [& {:keys [handler-fn disabled? ripple-effect? checked?
-             label
-             id class attr]
-      #?@(:cljs [:or {handler-fn (constantly nil)}])
-      :as   args}]
+(defn checkbox* [& {:keys [handler-fn disabled? ripple-effect? checked?
+                           label
+                           children
+                           id class attr]
+                    #?@(:cljs [:or {handler-fn (constantly nil)}])
+                    :as   args}]
   #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
   (let [_ (mdl-get-value checked?)]
-    [:label
-     (merge
-      {:for   id
-       :class (cond-> "mdl-checkbox mdl-js-checkbox"
-                class          (str " " class)
-                ripple-effect? (str " mdl-js-ripple-effect"))}
-      attr)
-     [:input.mdl-checkbox__input
+    (into
+     [:label
       (merge
-       (cond->
-           {:type "checkbox"
-            :id   id
-            :defaultChecked (mdl-get-value checked?)
-            #?@(:cljs [:on-change
-                       #(handler-fn (.. % -target -checked))])}
-         disabled? (assoc :disabled true)
-         #?@(:clj [checked? (assoc :checked true)]))
-       attr)]
-     (when label
-       [:span.mdl-checkbox__label label])]))
+       {:for   id
+        :class (cond-> "mdl-checkbox mdl-js-checkbox"
+                 class          (str " " class)
+                 ripple-effect? (str " mdl-js-ripple-effect"))}
+       attr)
+      [:input.mdl-checkbox__input
+       (merge
+        (cond->
+            {:type "checkbox"
+             :id   id
+             :defaultChecked (mdl-get-value checked?)
+             #?@(:cljs [:on-change
+                        #(handler-fn (.. % -target -checked))])}
+          disabled? (assoc :disabled true)
+          #?@(:clj [checked? (assoc :checked true)]))
+        attr)]
+      (when label
+        [:span.mdl-checkbox__label label])]
+     children)))
 
 (defn checkbox [& {:keys [checked?]}]
   #?(:cljs

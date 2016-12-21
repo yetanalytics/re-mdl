@@ -21,7 +21,7 @@
                  class (str " " class)
                  #?(:cljs indeterminate?
                     :clj  true) ;; always indeterminate for clj
-                 (str " mdl-progress__indeterminate"))}
+                 (str " mdl-progress--indeterminate"))}
        attr)]
      children)))
 
