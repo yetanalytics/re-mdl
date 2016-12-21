@@ -81,7 +81,7 @@
 (deftest label
   (let [button [button/button
                :child "Foo"]]
-    (check-component button {:label "Foo"})))
+    (check-component button {:child "Foo"})))
 
 (deftest icon
   (let [button [button/button
