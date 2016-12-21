@@ -911,7 +911,8 @@
     (fn []
       [:div
        [mdl/loading-progress
-        :model @progress-model]
+        :model @progress-model
+        :attr  {:style {:width "250px"}}]
        [:p ":model " @progress-model]
        [mdl/slider
         :model      progress-model
@@ -921,7 +922,8 @@
   "This is an indeterminate loading progress bar."
   []
   [mdl/loading-progress
-   :indeterminate? true])
+   :indeterminate? true
+   :attr           {:style {:width "250px"}}])
 
 (defn loading-progress-demo-buffer
   "This is a loading progress bar with a buffer."
@@ -932,7 +934,8 @@
       [:div
        [mdl/loading-progress
         :model  progress-model
-        :buffer progress-buffer]
+        :buffer progress-buffer
+        :attr   {:style {:width "250px"}}]
        [:p ":model " @progress-model]
        [mdl/slider
         :model      progress-model
@@ -956,7 +959,12 @@
    [demo-doc-component
     [[loading-progress-demo-buffer]]
     [#(source loading-progress-demo-buffer)]]
-   [demo-options]
+   [demo-options
+    {:description "These are the properties that can change how the progress bar renders."
+     :rows
+     [[":model"          "This defines how much progress has been made"                    "Value | Atom"]
+      [":buffer"         "This defines how much buffered data there is"                    "Value | Atom"]
+      [":indeterminate?" "This applies an animation effect. :model and :buffer don't work" "Optional; Boolean"]]}]
    [demo-reference "loading" "progress"]])
 
 (defn loading-spinner-demo-default

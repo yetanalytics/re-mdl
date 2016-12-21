@@ -6,23 +6,24 @@
                         mdl-get-value
                         mdl-get-props]]))
 
-(defn progress* [& {:keys [indeterminate? width
+(defn progress* [& {:keys [indeterminate?
                            model buffer
+                           children
                            id class attr]
-                    :or {width "250px"}
                     :as   args}]
   (let [_ (mdl-get-value model)
         _ (mdl-get-value buffer)]
-    [:div
-     (merge
-      {:id    id
-       :style {:width width}
-       :class (cond-> "mdl-progress mdl-js-progress"
-                class (str " " class)
-                #?(:cljs indeterminate?
-                   :clj true) ;; always indeterminate for clj
-                (str " mdl-progress__indeterminate"))}
-      attr)]))
+    (into
+     [:div
+      (merge
+       {:id    id
+        :class (cond-> "mdl-progress mdl-js-progress"
+                 class (str " " class)
+                 #?(:cljs indeterminate?
+                    :clj  true) ;; always indeterminate for clj
+                 (str " mdl-progress__indeterminate"))}
+       attr)]
+     children)))
 
 (defn progress [& {:keys [model buffer]
                    :as   args}]
