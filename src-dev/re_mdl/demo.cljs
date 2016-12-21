@@ -982,7 +982,11 @@
     [#(source loading-spinner-demo-default)
      #(source loading-spinner-demo-single-color)]]
    [demo-options
-    {:description "These are the options for the loading spinner."}]
+    {:description "These are the options for the loading spinner."
+     :rows
+     [[":el"            "Container element type for the spinner" "Optional; Defaults to :div"]
+      [":is-active?"    "Makes the spinner visible and animate"  "Optional; Boolean"]
+      [":single-color?" "Uses a single primary pallete"          "Optional; Boolean"]]}]
    [demo-reference "loading" "spinner"]])
 
 (defn menu-demo-lower-left

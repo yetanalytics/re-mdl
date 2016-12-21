@@ -47,16 +47,19 @@
      :clj (apply progress* (flatten args))))
 
 (defn spinner* [& {:keys [el is-active? single-color?
+                          children
                           id class attr]
-                   :or {el :div}
+                   :or   {el :div}
                    :as   args}]
-  [el
-   (merge
-    {:id id
-     :class (cond-> "mdl-spinner mdl-js-spinner"
-              class         (str " " class)
-              is-active?    (str " is-active")
-              single-color? (str " mdl-spinner--single-color"))}
-    attr)])
+  (into
+   [el
+    (merge
+     {:id id
+      :class (cond-> "mdl-spinner mdl-js-spinner"
+               class         (str " " class)
+               is-active?    (str " is-active")
+               single-color? (str " mdl-spinner--single-color"))}
+     attr)]
+   children))
 
 (def spinner (wrap-mdl spinner*))
