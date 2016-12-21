@@ -1277,7 +1277,6 @@
   "This is a table."
   []
   [mdl/table
-   :id          "table-demo"
    :selectable? true
    :shadow      2
    :headers
@@ -1287,15 +1286,42 @@
     ["Plywood (Birch)" 50 "$1.25"]
     ["Laminate (Gold on Blue)" 10 "$2.35"]]])
 
+(defn table-demo-data-ascending
+  "This is a table where quantity is sorted ascending order."
+  []
+  [mdl/table
+   :selectable? true
+   :shadow      2
+   :headers
+   [["Material" :non-numeric true] ["Quantity" :ascending true] ["Unit price"]]
+   :rows
+   (into []
+         (sort-by second
+                  >
+                  [["Acrylic (Transparent)" 25 "$2.90"]
+                   ["Plywood (Birch)" 50 "$1.25"]
+                   ["Laminate (Gold on Blue)" 10 "$2.35"]]))])
+
 (defn table-demo
   []
   [:div.table-demo
    [:h6 "Tables"]
    [:p "Organize data"]
    [demo-doc-component
-    [[table-demo-data]]
-    [#(source table-demo-data)]]
-   [demo-options]
+    [[table-demo-data]
+     [table-demo-data-ascending]]
+    [#(source table-demo-data)
+     #(source table-demo-data-ascending)]]
+   [demo-options
+    {:description "The table component has a number of properties to manipulate to change the look."
+     :rows
+     [[":selectable?" "Applies and all/individual checkbox for rows"                  "Optional; Boolean"]
+      [":headers"     "Header title for each column"                                  "Vector with header as first item"]
+      [":non-numeric" "Sets the column formatting to non-numeric; left aligned"       "Optional; part of :header "]
+      [":ascending"   "Sets formatting to header; does NOT actually sort the columns" "Optional; part of :header"]
+      [":descending"  "Sets formatting to header; does NOT actually sort the columns" "Optional; part of :header"]
+      [":rows"        "Text information matching up to the given headers"             "Vector"]
+      [":shadow"      "Shadow effect on the table border."                            "Optional; Only [2 3 4 6 8 16] are valid"]]}]
    [demo-reference "tables"]])
 
 (defn text-field-demo-text
