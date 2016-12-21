@@ -48,7 +48,7 @@
   (check-attribute comp "for" for))
 
 
-(defn check-component [comp {:keys [id class label for icon? disabled? el]
+(defn check-component [comp {:keys [id class child for icon? disabled? el]
                              :or {el :button
                                   class "mdl-button mdl-js-button"
                                   id ""}}]
@@ -58,7 +58,7 @@
       (check-id id)
       (check-class class)
       check-mdl-upgraded
-      (check-label-or-icon (or label icon? ""))
+      (check-label-or-icon (or child icon? ""))
       (check-disabled? disabled?)
       (check-for for))))
 
@@ -80,14 +80,14 @@
 
 (deftest label
   (let [button [button/button
-               :label "Foo"]]
+               :child "Foo"]]
     (check-component button {:label "Foo"})))
 
 (deftest icon
   (let [button [button/button
                 :icon? true
-                :label [:i.material-icons "add"]]]
-    (check-component button {:label [:i.material-icons "add"]
+                :child [:i.material-icons "add"]]]
+    (check-component button {:child [:i.material-icons "add"]
                              :icon? true
                              :class "mdl-button mdl-js-button mdl-button--icon"})))
 
