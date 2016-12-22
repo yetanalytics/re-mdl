@@ -347,7 +347,7 @@
      [button-demo-accent-colored-raised-with-ripple]]
     [#(source button-demo-colored-raised)
      #(source button-demo-accent-colored-raised)
-     #(source button-demo-accent-colored-with-ripple)]]
+     #(source button-demo-accent-colored-raised-with-ripple)]]
    [demo-doc-component
     [[button-demo-flat]
      [button-demo-flat-with-ripple]
@@ -1173,7 +1173,7 @@
     (fn []
       [:div
        [mdl/toggle-checkbox
-        :checked?       checked-model
+        :model          checked-model
         :label          "Checkbox"
         :ripple-effect? true
         :handler-fn     #(swap! checked-model not)]
@@ -1190,15 +1190,15 @@
    :label "Checkbox"])
 
 (defn toggles-demo-radio
+  "This is a radio with a r/atom for the model. The slider drives the value."
   []
   (let [radio-model  (r/atom :first)
         slider-model (r/atom 0)]
     (fn []
       [:div
        [mdl/toggle-radios
-        :name       "radio-demo"
-        :handler-fn #(print %)
-        :checked    radio-model
+        :name  "radio-demo"
+        :model radio-model
         :choices
         [[:first "First"] [:second "Second"] [:third "Third"]]]
        [mdl/slider
@@ -1210,14 +1210,28 @@
                                                1 :second
                                                2 :third)))]])))
 
+(defn toggles-demo-radio-children
+  "This is a radio that is set with :children and not :choices."
+  []
+  [mdl/toggle-radios
+   :name "radio-demo-children"
+   :children
+   (into []
+         (for [[value label] [[:first "First"] [:second "Second"]]]
+           [mdl/toggle-radio
+            :name  "radio-demo-children"
+            :value value
+            :label label]))])
+
 (defn toggles-demo-icon-on
+  "This is an icon toggle that is initially on."
   []
   (let [checked-model (r/atom false)
         slider-model  (r/atom 0)]
     (fn []
       [:div
        [mdl/toggle-icon-toggle
-        :checked?       checked-model
+        :model          checked-model
         :icon           "format_bold"
         :ripple-effect? true
         :handler-fn     #(swap! checked-model not)]
@@ -1228,18 +1242,20 @@
                          (reset! checked-model (odd? @slider-model)))]])))
 
 (defn toggles-demo-icon-off
+  "This is an icon toggle that is initially off."
   []
   [mdl/toggle-icon-toggle
    :icon "format_italic"])
 
 (defn toggles-demo-switch-on
+  "This is a switch that is initially on."
   []
   (let [checked-model (r/atom false)
         slider-model  (r/atom 0)]
     (fn []
       [:div
        [mdl/toggle-switch
-        :checked?       checked-model
+        :model          checked-model
         :label          "Switch"
         :ripple-effect? true
         :handler-fn     #(swap! checked-model not)]
@@ -1250,6 +1266,7 @@
                          (reset! checked-model (odd? @slider-model)))]])))
 
 (defn toggles-demo-switch-off
+  "This is a switch that is initially off."
   []
   [mdl/toggle-switch
    :label "Switch"])
@@ -1264,13 +1281,44 @@
      [toggles-demo-checkbox-off]]
     [#(source toggles-demo-checkbox-on)
      #(source toggles-demo-checkbox-off)]]
-   [demo-options]
+   [demo-options
+    {:title       "toggle-checkbox"
+     :description "These are the available props to modify a checkbox."
+     :rows
+     [[":model"          "Defines the sate of the checkbox"      "Value | Atom"]
+      [":label"          "The label attached to the checkbox"    "Optional"]
+      [":disabled?"      "Disables user interaction"             "Optional"]
+      [":ripple-effect?" "Applies the ripple click effect"       "Optional"]
+      [":handler-fn"     "Callback when the checkbox is clicked" "Optional"]]}]
    [demo-reference "toggles" "checkbox"]
    [:h6 "Radio"]
    [demo-doc-component
-    [[toggles-demo-radio]]
-    [#(source toggles-demo-radio)]]
-   [demo-options]
+    [[toggles-demo-radio]
+     [toggles-demo-radio-children]]
+    [#(source toggles-demo-radio)
+     #(source toggles-demo-radio-children)]]
+   [demo-options
+    {:title       "toggle-radios"
+     :description "These are the available props to modify a radio group. You can let the radio group manage the choices for you by passing a vector of key value tuples under :choices. This lets the :radios manage a lot of the work for you. If you add any extra children this will override choices and you will need to manually inject the :radio components."
+     :rows
+     [[":model"          "Defines the sate of the checkbox"            "Value | Atom"]
+      [":label"          "The label attached to the checkbox"          "Optional"]
+      [":name"           "Group name for the radio group"              "String"]
+      [":disabled"       "Disables user interaction for a given radio" "Optional; Set containing the key of the choice you want disabled. Only valid with :choices"]
+      [":choices"        "Vector of key/value tuples for each radio"   "Cannot work with :children"]
+      [":ripple-effect?" "Applies the ripple click effect"             "Optional"]
+      [":handler-fn"     "Callback when the checkbox is clicked"       "Optional"]]}]
+   [demo-options
+    {:title       "toggle-radio"
+     :description "These are the available props to modify a single radio component. If you set the radio group using :choices instead of :children then you won't need this. If you decide to set them in :children yourself then each element should be :radio with these settings. Using :choices is encouraged instead of managain :children yourself is encouraged."
+     :rows
+     [[":model"          "Defines the sate of the icon toggle" "Value | Atom"]
+      [":name"           "Name of the matching radio group"    "String"]
+      [":value"          "The value for this radio button"     "Anything"]
+      [":label"          "The icon to render as the checkbox"  "Optional"]
+      [":disabled?"      "Disables user interaction"           "Optional"]
+      [":ripple-effect?" "Applies the ripple click effect"     "Optional"]
+      [":handler-fn"     "Callback when the toggle is clicked" "Optional"]]}]
    [demo-reference "toggles" "radio"]
    [:h6 "Icon"]
    [demo-doc-component
@@ -1278,7 +1326,15 @@
      [toggles-demo-icon-off]]
     [#(source toggles-demo-icon-on)
      #(source toggles-demo-icon-off)]]
-   [demo-options]
+   [demo-options
+    {:title       "toggle-icon-toggle"
+     :description "These are the available props to modify a icon toggle."
+     :rows
+     [[":model"          "Defines the sate of the icon toggle" "Value | Atom"]
+      [":icon"           "The icon to render as the checkbox"  "Optional"]
+      [":disabled?"      "Disables user interaction"           "Optional"]
+      [":ripple-effect?" "Applies the ripple click effect"     "Optional"]
+      [":handler-fn"     "Callback when the toggle is clicked" "Optional"]]}]
    [demo-reference "toggles" "icon"]
    [:h6 "Switch"]
    [demo-doc-component
@@ -1286,7 +1342,15 @@
      [toggles-demo-switch-off]]
     [#(source toggles-demo-switch-on)
      #(source toggles-demo-switch-off)]]
-   [demo-options]
+   [demo-options
+    {:title       "toggle-switch"
+     :description "These are the available props to modify a switch toggle."
+     :rows
+     [[":model"          "Defines the sate of the switch toggle"   "Value | Atom"]
+      [":label"          "The label attached to the switch toggle" "Optional"]
+      [":disabled?"      "Disables user interaction"               "Optional"]
+      [":ripple-effect?" "Applies the ripple click effect"         "Optional"]
+      [":handler-fn"     "Callback when the switch is clicked"     "Optional"]]}]
    [demo-reference "toggles" "switch"]])
 
 (defn table-demo-data
