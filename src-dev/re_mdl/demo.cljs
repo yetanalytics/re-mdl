@@ -1952,64 +1952,92 @@
       [":href"  "Address for link to point to."              "Optional; requires :el to be set to :a"]]}]
    [demo-reference "lists"]])
 
-(defn grid-demo-simple
-  "This is a responsive grid demo."
+(defn grid-demo-small
+  "This is a responsive grid demo of small cells."
   []
-  (let [first-style {:box-sizing       "border-box"
-                     :background-color "#BDBDBD"
-                     :height           "50px"
-                     :padding-left     "8px"
-                     :padding-top      "4px"
-                     :color            "white"}
-        rest-style  (assoc first-style :height "200px")]
-    [:div
-     [mdl/grid
-      :children
-      (into []
-            (for [i (range 12)]
-              ^{:key i} [mdl/cell
-                         :attr     {:style first-style}
-                         :col      1
-                         :children ["1"]]))]
-     [mdl/grid
-      :children
-      (into []
-            (for [i (range 3)]
-              ^{:key i} [mdl/cell
-                         :attr     {:style rest-style}
-                         :col      4
-                         :children ["4"]]))]
-     [mdl/grid
-      :children
-      [[mdl/cell
-        :attr     {:style rest-style}
-        :col      6
-        :children ["6"]]
-       [mdl/cell
-        :attr     {:style rest-style}
-        :col      4
-        :children ["4"]]
-       [mdl/cell
-        :attr     {:style rest-style}
-        :col      2
-        :children ["2"]]]]
-     [mdl/grid
-      :children
-      [[mdl/cell
-        :attr     {:style rest-style}
-        :col      6
-        :tablet   true
-        :children ["6 (8 tablet)"]]
-       [mdl/cell
-        :attr     {:style rest-style}
-        :col      4
-        :tablet   true
-        :children ["4 (6 tablet)"]]
-       [mdl/cell
-        :attr     {:style rest-style}
-        :col      2
-        :phone    true
-        :children ["2 (4 phone)"]]]]]))
+  (let [style {:box-sizing       "border-box"
+               :background-color "#BDBDBD"
+               :height           "50px"
+               :padding-left     "8px"
+               :padding-top      "4px"
+               :color            "white"}]
+    (mdl/grid
+     :children
+     (into []
+           (for [i (range 12)]
+             ^{:key i} [mdl/cell
+                        :attr     {:style style}
+                        :col      1
+                        :children ["1"]])))))
+
+(defn grid-demo-medium
+  "This is a responsive grid demo of medium cells."
+  []
+  (let [style {:box-sizing       "border-box"
+               :background-color "#BDBDBD"
+               :height           "200px"
+               :padding-left     "8px"
+               :padding-top      "4px"
+               :color            "white"}]
+    (mdl/grid
+     :children
+     (into []
+           (for [i (range 3)]
+             ^{:key i} [mdl/cell
+                        :attr     {:style style}
+                        :col      4
+                        :children ["4"]])))))
+
+(defn grid-demo-mixed
+  "This is a responsive grid demo with mixed sized cells."
+  []
+  (let [style {:box-sizing       "border-box"
+               :background-color "#BDBDBD"
+               :height           "200px"
+               :padding-left     "8px"
+               :padding-top      "4px"
+               :color            "white"}]
+    [mdl/grid
+     :children
+     [[mdl/cell
+       :attr     {:style style}
+       :col      6
+       :children ["6"]]
+      [mdl/cell
+       :attr     {:style style}
+       :col      4
+       :children ["4"]]
+      [mdl/cell
+       :attr     {:style style}
+       :col      2
+       :children ["2"]]]]))
+
+(defn grid-demo-device
+  "This is a responsive grid demo for mobile device modes."
+  []
+  (let [style {:box-sizing       "border-box"
+               :background-color "#BDBDBD"
+               :height           "200px"
+               :padding-left     "8px"
+               :padding-top      "4px"
+               :color            "white"}]
+    [mdl/grid
+     :children
+     [[mdl/cell
+       :attr     {:style style}
+       :col      6
+       :tablet   {:col 8}
+       :children ["6 (8 tablet)"]]
+      [mdl/cell
+       :attr     {:style style}
+       :col      4
+       :tablet   {:col 6}
+       :children ["4 (6 tablet)"]]
+      [mdl/cell
+       :attr     {:style style}
+       :col      2
+       :phone    {:col 4}
+       :children ["2 (4 phone)"]]]]))
 
 (defn grid-spacing-demo
   []
@@ -2017,9 +2045,31 @@
    [:h6 "Grids"]
    [:p "Responsive grid layouts."]
    [demo-doc-component
-    [[grid-demo-simple]]
-    [#(source grid-demo-simple)]]
-   [demo-options]
+    [[grid-demo-small]
+     [grid-demo-medium]
+     [grid-demo-mixed]
+     [grid-demo-device]]
+    [#(source grid-demo-small)
+     #(source grid-demo-medium)
+     #(source grid-demo-mixed)
+     #(source grid-demo-device)]]
+   [demo-options
+    {:title       "grid"
+     :description "This is the container for the grid component."
+     :rows
+     [[":no-spacing?" "This will modify the cells so there is no space" "Optional"]]}]
+   [demo-options
+    {:title       "cell"
+     :description "These are containers for individual cells."
+     :rows
+     [[":align"    "This will align the cell to this position of the parent" "Valid options [:top :middle :bottom]"]
+      [":col"      "This sets the column size" ""]
+      [":offset"   "" ""]
+      [":order"    "" ""]
+      [":stretch?" "" ""]
+      [":desktop"  "" ""]
+      [":tablet"   "" ""]
+      [":phone"    "" ""]]}]
    [demo-reference "layout" "grid"]])
 
 (def demo-map
