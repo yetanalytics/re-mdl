@@ -195,58 +195,65 @@
 
 ;; TODO: ad-hoc tabs
 
-(defn tab-bar [& {:keys [
-                         children
+(defn tab-bar [& {:keys [children
                          id class attr]
                   :as   args}]
-  (into [:div
-         (merge
-          {:id id
-           :class (cond-> "mdl-tabs__tab-bar"
-                    class (str " " class))}
-          attr)] children))
+  (into
+   [:div
+    (merge
+     {:id    id
+      :class (cond-> "mdl-tabs__tab-bar"
+               class (str " " class))}
+     attr)]
+   children))
 
 (defn tabs* [& {:keys [ripple-effect?
-                      children
-                      id class attr]
-               :as   args}]
-  (into [:div
-         (merge
-          {:id id
-           :class (cond-> "mdl-tabs mdl-js-tabs"
-                    class (str " " class)
-                    ripple-effect? (str " mdl-js-ripple-effect"))}
-          attr)] children))
+                       children
+                       id class attr]
+                :as   args}]
+  (into
+   [:div
+    (merge
+     {:id    id
+      :class (cond-> "mdl-tabs mdl-js-tabs"
+               class          (str " " class)
+               ripple-effect? (str " mdl-js-ripple-effect"))}
+     attr)]
+   children))
 
 (def tabs (wrap-mdl tabs*))
 
 (defn tab [& {:keys [is-active?
-                     href content
+                     href child
+                     children
                      id class attr]
-                     :as   args}]
-  [:a
-   (merge
-    {:id id
-     :href href
-     :class (cond-> "mdl-tabs__tab"
-              class (str " " class)
-              is-active? (str " is-active"))}
-    attr)
-   content])
+              :as   args}]
+  (into
+   [:a
+    (merge
+     {:id    id
+      :href  href
+      :class (cond-> "mdl-tabs__tab"
+               class          (str " " class)
+               is-active?     (str " is-active"))}
+     attr)
+    child]
+   children))
 
-(defn tabs-panel [& {:keys [is-active?
+(defn tabs-panel [& {:keys [el is-active?
                             children
-                            el id class attr]
-                     :or {el :div}
+                            id class attr]
+                     :or   {el :div}
                      :as   args}]
-  (into [el
-         (merge
-          {:id id
-           :class (cond-> "mdl-tabs__panel"
-                    class (str " " class)
-                    is-active? (str " is-active")
-                     )}
-          attr)] children))
+  (into
+   [el
+    (merge
+     {:id    id
+      :class (cond-> "mdl-tabs__panel"
+               class      (str " " class)
+               is-active? (str " is-active"))}
+     attr)]
+   children))
 
 
 ;; Footers

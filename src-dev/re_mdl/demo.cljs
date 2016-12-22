@@ -813,19 +813,20 @@
   "This is a tab that has content."
   []
   [mdl/tabs
+   :ripple-effect? true
    :children
    [[mdl/tab-bar
      :children
      [[mdl/tab
        :href       "#starks-panel"
        :is-active? true
-       :content    "Starks"]
+       :child     "Starks"]
       [mdl/tab
-       :href    "#lannisters-panel"
-       :content "Lannisters"]
+       :href  "#lannisters-panel"
+       :child "Lannisters"]
       [mdl/tab
-       :href    "#targaryens-panel"
-       :content "Targaryens"]]]
+       :href  "#targaryens-panel"
+       :child "Targaryens"]]]
     [mdl/tabs-panel
      :is-active? true
      :id "starks-panel"
@@ -860,7 +861,27 @@
    [demo-doc-component
     [[tab-demo-content]]
     [#(source tab-demo-content)]]
-   [demo-options]
+   [demo-options
+    {:title       "tabs"
+     :description "Outer container for the tabs."
+     :rows
+     [[":ripple-effect?" "Applies ripple click effect to the tab links" "Optional"]]}]
+   [demo-options
+    {:title       "tab-bar"
+     :description "This is the container for the tab link bar."}]
+   [demo-options
+    {:title "tabs-panel"
+     :description "This is a container that has the tab content. Link the :tab-bar anchors to the id of the :tabs-panel."
+     :rows
+     [[":el"         "The element type for the container"                "Optional; Defaults to :div"]
+      [":is-active?" "This defines this container to be default display" "Optional"]]}]
+   [demo-options
+    {:title       "tab"
+     :description "Defines the container for the anchor link of a tab."
+     :rows
+     [[":href"       "Anchor that matches :id of the :tabs-panel"          "String"]
+      [":child"      "Content for the tab anchor"                          "String or hiccup"]
+      [":is-active?" "This defines this tab as the default tab to display" "Optional"]]}]
    [demo-reference "layout" "tabs"]])
 
 (defn demo-layout-component [{:keys [href demo title]
