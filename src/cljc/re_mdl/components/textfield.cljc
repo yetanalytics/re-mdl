@@ -9,7 +9,9 @@
                             floating-label? expandable? expand-icon
                             label pattern invalid-message
                             handler-fn disabled?
-                            id class attr input-attr]
+                            input-attr
+                            children
+                            id class attr]
                      :or {type       :text
                           input-type "text"
                           handler-fn (constantly nil)}
@@ -24,7 +26,7 @@
   (when expandable?
     (assert expand-icon "No :expand-icon set!"))
 
-  (let [_ (print (mdl-get-value model))
+  (let [_ (mdl-get-value model)
         input-el [(case type
                     :text     :input
                     :textarea :textarea)
@@ -39,8 +41,7 @@
                      (= type :textarea) (assoc :rows rows)
                      pattern            (assoc :pattern pattern)
                      disabled?          (assoc :disabled true))
-                   input-attr)
-                  #_(when (= type :textarea) (mdl-get-value model))]
+                   input-attr)]
         label-el [:label.mdl-textfield__label
                   {:for id}
                   label]
@@ -52,7 +53,7 @@
                      :el    :label
                      :icon? true
                      :for   id
-                     :label [:i.material-icons expand-icon]]
+                     :child [:i.material-icons expand-icon]]
                     [:div.mdl-textfield__expandable-holder
                      input-el
                      label-el

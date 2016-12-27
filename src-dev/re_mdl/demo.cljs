@@ -1501,7 +1501,23 @@
      [text-field-demo-expanding]]
     [#(source text-field-demo-multiple-line)
      #(source text-field-demo-expanding)]]
-   [demo-options]
+   [demo-options
+    {:title       "textfield"
+     :description "Configuration options for a textfield component."
+     :rows
+     [[":model"           "The content of the textfield"           "Atom | value"]
+      [":handler-fn"      "Callback when text content changes"     "Optional"]
+      [":type"            "Determines the type of html element"    ":text or :textarea"]
+      [":input-type"      "Sets the type attribute"                "String"]
+      [":rows"            "How many rows on a textarea"            "Required for :textarea"]
+      [":floating-label?" "Applies floating label effect"          "Optional"]
+      [":expandable?"     "Sets container to be expandable"        "Optional"]
+      [":expand-icon"     "If :expandable? show this icon"         "Optional"]
+      [":label"           "Descriptive content about the input"    "String or hiccup"]
+      [":pattern"         "Pattern for input to match"             "Regex or string"]
+      [":invalid-message" "Message to display when :pattern fails" "String or hiccup"]
+      [":disabled?"       "Disables the input element"             "Optional"]
+      [":input-attr"      "Attributes for the input element"       "Optional"]]}]
    [demo-reference "textfields"]])
 
 (defn tooltip-demo-simple
