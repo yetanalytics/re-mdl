@@ -2063,13 +2063,13 @@
      :description "These are containers for individual cells."
      :rows
      [[":align"    "This will align the cell to this position of the parent" "Valid options [:top :middle :bottom]"]
-      [":col"      "This sets the column size" ""]
-      [":offset"   "" ""]
-      [":order"    "" ""]
-      [":stretch?" "" ""]
-      [":desktop"  "" ""]
-      [":tablet"   "" ""]
-      [":phone"    "" ""]]}]
+      [":col"      "This sets the column size"                               "Optional; 1-12 valid"]
+      [":offset"   "Determines columns of whitespace before cell"            "Optional; 1-11 valid"]
+      [":order"    "Reorders cell to assigned position"                      "Optional; 1-12 valid"]
+      [":stretch?" "Stretch the cell vertically to fill container"           "Default"]
+      [":desktop"  "Hash map with desktop mode options"                      "Keys are :col, :offset, :order, and :hide?"]
+      [":tablet"   "Hash map with tablet mode options"                       "Keys are :col, :offset, :order, and :hide?"]
+      [":phone"    "Hash map with phone mode options"                        "Keys are :col, :offset, :order, and :hide?"]]}]
    [demo-reference "layout" "grid"]])
 
 (def demo-map
