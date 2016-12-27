@@ -1121,7 +1121,102 @@
    [demo-doc-component
     [[navigation-demo-fixed-tabs]]
     [#(source navigation-demo-fixed-tabs)]]
-   [demo-options]
+   [demo-options
+    {:title       "layout"
+     :description "The container element for all of the layout components."
+     :rows
+     [[":fixed-drawer?"             "Drawer remains always visible"                 "Optional; Boolean"]
+      [":fixed-header?"             "Header remains always visible"                 "Optional; Boolean"]
+      [":fixed-tabs?"               "Tabs fixed to fill entire row"                 "Optional; Boolean"]
+      [":no-drawer-button?"         "Does not render the drawer button"             "Optional; Boolean"]
+      [":no-desktop-drawer-button?" "Does not render drawer button in desktop mode" "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "layout-title"
+     :description "This component defines the layout title."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen" "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"  "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "layout-spacer"
+     :description "A component used for aligning elements. It grows to fill remaining space and used frequently used to align elements to the right."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen" "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"  "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "layout-header"
+     :description "Defines the container object for the header."
+     :rows
+     [[":large-screen-only?"  "Hides the element on a smaller screen"            "Optional; Boolean"]
+      [":small-screen-only?"  "Hides the element on a larger screen"             "Optional; Boolean"]
+      [":waterfall?"          "Applies waterfall effect to multiple header rows" "Optional; Boolean"]
+      [":waterfall-hide-top?" "Waterfall hides top row instead of bottom"        "Requires :waterfall? to be true"]
+      [":transparent?"        "Makes the header transparent"                     "Optional; Boolean"]
+      [":seamed?"             "No shadow appears on the header"                  "Optional; Boolean"]
+      [":scroll?"             "The header scrolls with page content"             "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "layout-icon"
+     :description "Used to add an application icon."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen" "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"  "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "layout-header-row"
+     :description "This container is used to define a single header row."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen" "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"  "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "layout-drawer"
+     :description "Defines the container as a layout drawer."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen" "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"  "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "layout-content"
+     :description "Page content goes here."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen" "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"  "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "layout-nav"
+     :description "Defines a container for all of the navigation links."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen" "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"  "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "layout-nav-link"
+     :description "Defines a single link with a callback handler."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen" "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"  "Optional; Boolean"]
+      [":href"               "Link to some other content"            "Link"]
+      [":content"            "Content in the link"                   "String or hiccup"]
+      [":on-click"           "Callback for when nav is clicked"      "Optional; Function"]]}]
+   [demo-options
+    {:title       "layout-tab-bar"
+     :description "Defined within the header, this is a container for individual tabs."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen"    "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"     "Optional; Boolean"]
+      [":ripple-effect?"     "Applies ripple effect animation"          "Optional; Boolean"]
+      [":tab-manual-switch?" "Disables tab switch for custom callbacks" "Optional; Boolean"]
+      []]}]
+   [demo-options
+    {:title       "layout-tab"
+     :description "Defines a tab on the tab bar."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen" "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"  "Optional; Boolean"]
+      [":href"               "ID of the referenced tab-panel"        "String"]
+      [":content"            "Content if the tab"                    "String or hiccup"]]}]
+   [demo-options
+    {:title       "layout-tab-panel"
+     :description "Defines a section of content that is referenced on the tab bar."
+     :rows
+     [[":large-screen-only?" "Hides the element on a smaller screen"      "Optional; Boolean"]
+      [":small-screen-only?" "Hides the element on a larger screen"       "Optional; Boolean"]
+      [":is-active?"         "Defines this tab as being currently active" "Optional; Boolean"]
+      [":ripple-effect?"     "Applies the ripple effect animation"        "Optional; Boolean"]]}]
    [demo-reference "layout" "layout"]])
 
 (defn tab-demo-content

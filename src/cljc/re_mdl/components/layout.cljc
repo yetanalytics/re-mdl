@@ -24,29 +24,35 @@
 
 (defn title [& {:keys [large-screen-only? small-screen-only?
                        label
+                       children
                        id class attr]
                 :as   args}]
-  [:span
-   (merge
-    {:id    id
-     :class (cond-> "mdl-layout-title"
-              class              (str " " class)
-              large-screen-only? (str " mdl-layout--large-screen-only")
-              small-screen-only? (str " mdl-layout--small-screen-only"))}
-    attr)
-   label])
+  (into
+   [:span
+    (merge
+     {:id    id
+      :class (cond-> "mdl-layout-title"
+               class              (str " " class)
+               large-screen-only? (str " mdl-layout--large-screen-only")
+               small-screen-only? (str " mdl-layout--small-screen-only"))}
+     attr)
+    label]
+   children))
 
 (defn spacer [& {:keys [large-screen-only? small-screen-only?
+                        children
                         id class attr]
-                :as   args}]
-  [:div
-   (merge
-    {:id id
-     :class (cond-> "mdl-layout-spacer"
-              class (str " " class)
-              large-screen-only? (str " mdl-layout--large-screen-only")
-              small-screen-only? (str " mdl-layout--small-screen-only"))}
-    attr)])
+                 :as   args}]
+  (into
+   [:div
+    (merge
+     {:id id
+      :class (cond-> "mdl-layout-spacer"
+               class (str " " class)
+               large-screen-only? (str " mdl-layout--large-screen-only")
+               small-screen-only? (str " mdl-layout--small-screen-only"))}
+     attr)]
+   children))
 
 (defn header [& {:keys [large-screen-only? small-screen-only? waterfall?
                         transparent? seamed? scroll?
@@ -177,9 +183,9 @@
           attr)] children))
 
 (defn layout-tab [& {:keys [large-screen-only? small-screen-only? is-active?
-                     href content
-                     id class attr]
-              :as   args}]
+                            href content
+                            id class attr]
+                     :as   args}]
   [:a
    (merge
     {:id id
@@ -192,10 +198,11 @@
     attr)
    content])
 
-(defn layout-tab-panel [& {:keys [large-screen-only? small-screen-only? is-active? ripple-effect?
-                           children
-                           id class attr]
-                    :as   args}]
+(defn layout-tab-panel [& {:keys [large-screen-only? small-screen-only?
+                                  is-active? ripple-effect?
+                                  children
+                                  id class attr]
+                           :as   args}]
   (into
    [:section
     (merge
