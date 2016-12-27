@@ -780,57 +780,59 @@
 (defn navigation-demo-transparent
   "This is a navigation layout with a transparent header."
   []
-  [mdl/layout
-   :attr          {:style {:width    "100%"
-                           :position "relative"
-                           :height   "300px"}}
-   :children
-   [[mdl/layout-header
-     :transparent? true
-     :children
-     [[mdl/layout-header-row
-       :children
-       [[mdl/layout-title
-         :label "Title"]
-        [mdl/layout-spacer]
-        [mdl/layout-nav
-         :children
-         (into []
-               (for [i (range 4)]
-                 ^{:key i} [mdl/layout-nav-link
-                            :href    "#"
-                            :content "Link"]))]]]]]
-    [mdl/layout-drawer
-     :children
-     [[mdl/layout-title
-       :label "Title"]
-      [mdl/layout-nav
-       :children
-       (into []
-             (for [i (range 4)]
-               ^{:key i} [mdl/layout-nav-link
-                          :href    "#"
-                          :content "Link"]))]]]
-    [mdl/layout-content]]])
+  [:div.mdl-demo-navigation
+   {:style {:background "url(http://getmdl.io/assets/demos/transparent.jpg) center / cover"}}
+   [mdl/layout
+    :children
+    [[mdl/layout-header
+      :attr         {:style {:color "white"}}
+      :transparent? true
+      :children
+      [[mdl/layout-header-row
+        :children
+        [[mdl/layout-title
+          :label "Title"]
+         [mdl/layout-spacer]
+         [mdl/layout-nav
+          :children
+          (into []
+                (for [i (range 4)]
+                  ^{:key i} [mdl/layout-nav-link
+                             :attr    {:style {:color "white"}}
+                             :href    "#"
+                             :content "Link"]))]]]]]
+     [mdl/layout-drawer
+      :children
+      [[mdl/layout-title
+        :label "Title"]
+       [mdl/layout-nav
+        :children
+        (into []
+              (for [i (range 4)]
+                ^{:key i} [mdl/layout-nav-link
+                           :href    "#"
+                           :content "Link"]))]]]
+     [mdl/layout-content]]]])
 
 (defn navigation-demo-fixed-drawer
   "This is a navigation layout with no header and a fixed drawer."
   []
-  [mdl/layout
-   :fixed-drawer? true
-   :children
-   [[mdl/layout-drawer
-     :children
-     [[mdl/layout-title
-       :label "Title"]
-      [mdl/layout-nav
-       :children
-       (into []
-             (for [i (range 4)]
-               ^{:key i} [mdl/layout-nav-link
-                          :href    "#"
-                          :content "Link"]))]]]
-    [mdl/layout-content]]])
+  [:div.mdl-demo-navigation
+   [mdl/layout
+    :fixed-drawer? true
+    :children
+    [[mdl/layout-drawer
+      :children
+      [[mdl/layout-title
+        :label "Title"]
+       [mdl/layout-nav
+        :children
+        (into []
+              (for [i (range 4)]
+                ^{:key i} [mdl/layout-nav-link
+                           :href    "#"
+                           :content "Link"]))]]]
+     [mdl/layout-content]]]])
 
 (defn navigation-demo
   []
