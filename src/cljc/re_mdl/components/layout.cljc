@@ -258,9 +258,19 @@
 
 ;; Footers
 
-(defn mega-social-btn []
-  [:div.mdl-mega-footer__social-btn])
-
+(defn mega-social-btn [& {:keys [child
+                                 children
+                                 id class attr]
+                          :as   args}]
+  (into
+   [:button
+    (merge
+     {:id    id
+      :class (cond-> "mdl-mega-footer__social-btn"
+               class (str " " class))}
+     attr)
+    child]
+   children))
 
 (defn mega-link-list [& {:keys [children
                                 id class attr]
@@ -272,7 +282,7 @@
                     class (str " " class))}
           attr)]
         (for [child children]
-          [:li child])))
+          ^{:key child} [:li child])))
 
 (defn mega-drop-down [& {:keys [heading
                                 children
@@ -289,74 +299,71 @@
    [mega-link-list
     :children children]])
 
-
-
-(defn mega-footer [& {:keys [loc top left middle right bottom logo
+(defn mega-footer [& {:keys [top left middle right bottom logo
                              children
                              id class attr]
-                      :or {loc :root}
                       :as   args}]
-  (cond-> [:footer
-           (merge
-            {:id id
-             :class (cond-> (case loc
-                              :root "mdl-mega-footer"
-                              :top "mdl-mega-footer__top-section"
-                              :left "mdl-mega-footer__left-section"
-                              :middle "mdl-mega-footer__middle-section"
-                              :right "mdl-mega-footer__right-section"
-                              :bottom "mdl-mega-footer__bottom-section")
-                      class (str " " class))}
-            attr)
-           (when (= loc :bottom)
-             [:div.mdl-logo (or logo "")])
+  (into
+   [:footer
+    (merge
+     {:id    id
+      :class (cond-> "mdl-mega-footer"
+               class (str " " class))}
+     attr)
+    (when top
+      (into [:div.mdl-mega-footer__top-section] top))
+    (when left
+      (into [:div.mdl-mega-footer__left-section] left))
+    (when middle
+      (into [:div.mdl-mega-footer__middle-section] middle))
+    (when right
+      (into [:div.mdl-mega-footer__right-section] right))
+    (when bottom
+      (into [:div.mdl-mega-footer__bottom-section
+             [:div.mdl-logo (or logo "")]] bottom))]
+   children))
 
-           (when top
-             (into [:div.mdl-mega-footer__top-section] top))
-           (when left
-             (into [:div.mdl-mega-footer__left-section] left))
-           (when middle
-             (into [:div.mdl-mega-footer__middle-section] middle))
-           (when right
-             (into [:div.mdl-mega-footer__right-section] right))
-           (when bottom
-             (into [:div.mdl-mega-footer__bottom-section
-                    [:div.mdl-logo (or logo "")]] bottom))]
-    children (into children)))
-
-
-(defn mini-social-btn []
-  [:div.mdl-mega-footer__social-btn])
+(defn mini-social-btn [& {:keys [child
+                                 children
+                                 id class attr]
+                          :as   args}]
+  (into
+   [:button
+    (merge
+     {:id    id
+      :class (cond-> "mdl-mega-footer__social-btn"
+               class (str " " class))}
+     attr)
+    child]
+   children))
 
 (defn mini-link-list [& {:keys [children
                                 id class attr]
                          :as   args}]
-  (into [:ul
-         (merge
-          {:id id
-           :class (cond-> "mdl-mini-footer__link-list"
-                    class (str " " class))}
-          attr)]
-        (for [child children]
-          [:li child])))
+  (into
+   [:ul
+    (merge
+     {:id id
+      :class (cond-> "mdl-mini-footer__link-list"
+               class (str " " class))}
+     attr)]
+   (for [child children]
+     ^{:key child} [:li child])))
 
-(defn mini-footer [& {:keys [loc left right logo
+(defn mini-footer [& {:keys [left right logo
                              children
                              id class attr]
-                      :or {loc :root}
                       :as   args}]
-  (cond-> [:footer
-           (merge
-            {:id id
-             :class (cond-> (case loc
-                              :root "mdl-mini-footer"
-                              :left "mdl-mini-footer__left-section"
-                              :right "mdl-mini-footer__right-section")
-                      class (str " " class))}
-            attr)
-           (when left
-             (into [:div.mdl-mini-footer__left-section
-                    [:div.mdl-logo (or logo "")]] left))
-           (when right
-             (into [:div.mdl-mini-footer__right-section] right))]
-    children (into children)))
+  (into
+   [:footer
+    (merge
+     {:id id
+      :class (cond-> "mdl-mini-footer"
+               class (str " " class))}
+     attr)
+    (when left
+      (into [:div.mdl-mini-footer__left-section
+             [:div.mdl-logo (or logo "")]] left))
+    (when right
+      (into [:div.mdl-mini-footer__right-section] right))]
+   children))

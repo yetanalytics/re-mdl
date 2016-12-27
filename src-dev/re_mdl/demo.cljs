@@ -737,7 +737,44 @@
    [demo-doc-component
     [[footer-demo-mini]]
     [#(source footer-demo-mini)]]
-   [demo-options]
+   [demo-options
+    {:title       "mega-footer"
+     :description "Defines container as a mega-footer component."
+     :rows
+     [[":logo"   "Title that is placed in the :bottom section"    "String or hiccup"]
+      [":top"    "Collection of components in the top section"    "Vector of hiccup elements"]
+      [":left"   "Collection of components in the left section"   "Vector of hiccup elements"]
+      [":middle" "Collection of components in the middle section" "Vector of hiccup elements"]
+      [":right"  "Collection of components in the right section"  "Vector of hiccup elements"]
+      [":bottom" "Collection of components in the bottom section" "Vector of hiccup elements"]]}]
+   [demo-options
+    {:title       "mega-footer-drop-down"
+     :description "Sets this container as a vertical area for content."
+     :rows
+     [[":heading" "Defines the heading of a mega footer drop down" "String or hiccup"]]}]
+   [demo-options
+    {:title       "mega-footer-link-list"
+     :description "Defines an unordered vertical list."}]
+   [demo-options
+    {:title       "mega-footer-social-btn"
+     :description "Decorative square within the footer that is required on buttons."
+     :rows
+     [[":child" "Content inside the button" "String or hiccup"]]}]
+   [demo-options
+    {:title       "mini-footer"
+     :description "Defines the container as a mini-footer component."
+     :rows
+     [[":logo"  "Title that is placed in the :left section"     "String or hiccup"]
+      [":left"  "Collection of components in the left section"  "Vector of hiccup elements"]
+      [":right" "Collection of components in the right section" "Vector of hiccup elements"]]}]
+   [demo-options
+    {:title       "mini-footer-link-list"
+     :description "Defines an unordered horizontal list."}]
+   [demo-options
+    {:title       "mini-footer-social-btn"
+     :description "Decorative square within the footer that is required on buttons."
+     :rows
+     [[":child" "Content inside the button" "String or hiccup"]]}]
    [demo-reference "layout" "footer"]])
 
 (defn navigation-demo-transparent
