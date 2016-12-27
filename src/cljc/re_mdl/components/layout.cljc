@@ -9,10 +9,10 @@
          (merge
           {:id id
            :class (cond-> "mdl-layout mdl-js-layout"
-                    class (str " " class)
+                    class         (str " " class)
                     fixed-drawer? (str " mdl-layout--fixed-drawer")
                     fixed-header? (str " mdl-layout--fixed-header")
-                    fixed-tabs? (str " mdl-layout--fixed-tabs"))}
+                    fixed-tabs?   (str " mdl-layout--fixed-tabs"))}
           attr)] children))
 
 (def layout (wrap-mdl layout*))
@@ -56,10 +56,10 @@
                     class (str " " class)
                     large-screen-only? (str " mdl-layout--large-screen-only")
                     small-screen-only? (str " mdl-layout--small-screen-only")
-                    waterfall? (str " mdl-layout__header--waterfall")
-                    transparent? (str " mdl-layout__header--transparent")
-                    seamed? (str " mdl-layout__header--seamed")
-                    scroll? (str " mdl-layout__header--scroll"))}
+                    waterfall?         (str " mdl-layout__header--waterfall")
+                    transparent?       (str " mdl-layout__header--transparent")
+                    seamed?            (str " mdl-layout__header--seamed")
+                    scroll?            (str " mdl-layout__header--scroll"))}
           attr)] children))
 
 (defn icon [& {:keys [large-screen-only? small-screen-only?
@@ -101,9 +101,9 @@
           attr)] children))
 
 (defn content [& {:keys [large-screen-only? small-screen-only?
-                        children
-                        id class attr]
-                 :as   args}]
+                         children
+                         id class attr]
+                  :as   args}]
   (into
    [:main
     (merge
@@ -146,18 +146,18 @@
     attr)
    content])
 
+;; navigation tabs
 
-;; tabbbbs
-
-(defn layout-tab-bar [& {:keys [large-screen-only? small-screen-only?
-                         children
-                         id class attr]
-                 :as   args}]
+(defn layout-tab-bar [& {:keys [large-screen-only? small-screen-only? ripple-effect?
+                                children
+                                id class attr]
+                         :as   args}]
   (into [:div
          (merge
           {:id id
            :class (cond-> "mdl-layout__tab-bar"
-                    class (str " " class)
+                    class              (str " " class)
+                    ripple-effect?     (str " mdl-js-ripple-effect")
                     large-screen-only? (str " mdl-layout--large-screen-only")
                     small-screen-only? (str " mdl-layout--small-screen-only"))}
           attr)] children))
@@ -182,16 +182,18 @@
                            children
                            id class attr]
                     :as   args}]
-  (into [:section
-         (merge
-          {:id id
-           :class (cond-> "mdl-layout__tab-panel"
-                    class (str " " class)
-                    large-screen-only? (str " mdl-layout--large-screen-only")
-                    small-screen-only? (str " mdl-layout--small-screen-only")
-                    is-active? (str " is-active")
-                    ripple-effect? (str " mdl-js-ripple-effect"))}
-          attr)] children))
+  (into
+   [:section
+    (merge
+     {:id    id
+      :class (cond-> "mdl-layout__tab-panel"
+               class              (str " " class)
+               large-screen-only? (str " mdl-layout--large-screen-only")
+               small-screen-only? (str " mdl-layout--small-screen-only")
+               is-active?         (str " is-active")
+               ripple-effect?     (str " mdl-js-ripple-effect"))}
+     attr)]
+   children))
 
 ;; TODO: ad-hoc tabs
 

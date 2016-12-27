@@ -834,6 +834,264 @@
                            :content "Link"]))]]]
      [mdl/layout-content]]]])
 
+(defn navigation-demo-fixed-header
+  "This is a navigation layout with a fixed header."
+  []
+  [:div.mdl-demo-navigation
+   [mdl/layout
+    :fixed-header? true
+    :children
+    [[mdl/layout-header
+      :attr {:style {:color "white"}}
+      :children
+      [[mdl/layout-header-row
+        :children
+        [[mdl/layout-title
+          :label "Title"]
+         [mdl/layout-spacer]
+         [mdl/layout-nav
+          :children
+          (into []
+                (for [i (range 4)]
+                  ^{:key i} [mdl/layout-nav-link
+                             :attr    {:style {:color "white"}}
+                             :href    "#"
+                             :content "Link"]))]]]]]
+     [mdl/layout-drawer
+      :children
+      [[mdl/layout-title
+        :label "Title"]
+       [mdl/layout-nav
+        :children
+        (into []
+              (for [i (range 4)]
+                ^{:key i} [mdl/layout-nav-link
+                           :href    "#"
+                           :content "Link"]))]]]
+     [mdl/layout-content
+      :attr {:style {:background "white"}}]]]])
+
+(defn navigation-demo-fixed-header-and-drawer
+  "This is a navigation layout with a fixed header and drawer."
+  []
+  [:div.mdl-demo-navigation
+   [mdl/layout
+    :fixed-header? true
+    :fixed-drawer? true
+    :children
+    [[mdl/layout-header
+      :attr {:style {:color "white"}}
+      :children
+      [[mdl/layout-header-row
+        :children
+        [[mdl/layout-spacer]
+         [mdl/textfield
+          :id              "nav-demo-fixed-header-and-drawer-search"
+          :expandable?     true
+          :floating-label? true
+          :expand-icon     "search"]]]]]
+     [mdl/layout-drawer
+      :children
+      [[mdl/layout-title
+        :label "Title"]
+       [mdl/layout-nav
+        :children
+        (into []
+              (for [i (range 4)]
+                ^{:key i} [mdl/layout-nav-link
+                           :href    "#"
+                           :content "Link"]))]]]
+     [mdl/layout-content
+      :attr {:style {:background "white"}}]]]])
+
+(defn navigation-demo-scrolling-header
+  "This is a navigation layout with a scrolling header."
+  []
+  [:div.mdl-demo-navigation
+   [mdl/layout
+    :children
+    [[mdl/layout-header
+      :scroll? true
+      :attr    {:style {:color "white"}}
+      :children
+      [[mdl/layout-header-row
+        :children
+        [[mdl/layout-title
+          :label "Title"]
+         [mdl/layout-spacer]
+         [mdl/layout-nav
+          :children
+          (into []
+                (for [i (range 4)]
+                  ^{:key i} [mdl/layout-nav-link
+                             :attr    {:style {:color "white"}}
+                             :href    "#"
+                             :content "Link"]))]]]]]
+     [mdl/layout-drawer
+      :children
+      [[mdl/layout-title
+        :label "Title"]
+       [mdl/layout-nav
+        :children
+        (into []
+              (for [i (range 4)]
+                ^{:key i} [mdl/layout-nav-link
+                           :href    "#"
+                           :content "Link"]))]]]
+     [mdl/layout-content
+      :children
+      [[:div
+        {:style {:background "white"
+                 :height     "600px"}}]]]]]])
+
+(defn navigation-demo-waterfall-header
+  "This is a navigation layout with a waterfall header."
+  []
+  [:div.mdl-demo-navigation
+   [mdl/layout
+    :children
+    [[mdl/layout-header
+      :attr       {:style {:color "white"}}
+      :waterfall? true
+      :children
+      [[mdl/layout-header-row
+        :children
+        [[mdl/layout-title
+          :label "Title"]
+         [mdl/layout-spacer]
+         [mdl/textfield
+          :id               "nav-demo-waterfall-search"
+          :expandable?      true
+          :floating-label?  true
+          :expand-icon      "search"]]]
+       [mdl/layout-header-row
+        :children
+        [[mdl/layout-spacer]
+         [mdl/layout-nav
+          :children
+          (into []
+                (for [i (range 4)]
+                  ^{:key i} [mdl/layout-nav-link
+                             :attr    {:style {:color "white"}}
+                             :href    "#"
+                             :content "Link"]))]]]]]
+     [mdl/layout-drawer
+      :children
+      [[mdl/layout-title
+        :label "Title"]
+       [mdl/layout-nav
+        :children
+        (into []
+              (for [i (range 4)]
+                ^{:key i} [mdl/layout-nav-link
+                           :href    "#"
+                           :content "Link"]))]]]
+     [mdl/layout-content
+      :children
+      [[:div
+        {:style {:background "white"
+                 :height     "600px"}}]]]]]])
+
+(defn navigation-demo-scrollable-tabs
+  "This is a navigation layout with scrollable tabs."
+  []
+  [:div.mdl-demo-navigation
+   [mdl/layout
+    :fixed-header? true
+    :children
+    [[mdl/layout-header
+      :attr {:style {:color "white"}}
+      :children
+      [[mdl/layout-header-row
+        :children
+        [[mdl/layout-title
+          :label "Title"]]]
+       [mdl/layout-tab-bar
+        :ripple-effect? true
+        :children
+        [[mdl/layout-tab
+          :is-active? true
+          :href       "#scroll-tab-1"
+          :content    "Tab 1"]
+         [mdl/layout-tab
+          :href       "#scroll-tab-2"
+          :content    "Tab 2"]
+         [mdl/layout-tab
+          :href       "#scroll-tab-3"
+          :content    "Tab 3"]
+         [mdl/layout-tab
+          :href       "#scroll-tab-4"
+          :content    "Tab 4"]
+         [mdl/layout-tab
+          :href       "#scroll-tab-5"
+          :content    "Tab 5"]
+         [mdl/layout-tab
+          :href       "#scroll-tab-6"
+          :content    "Tab 6"]]]]]
+     [mdl/layout-drawer
+      :children
+      [[mdl/layout-title
+        :label "Title"]]]
+     [mdl/layout-content
+      :attr {:style {:background "white"}}
+      :children
+      [[mdl/layout-tab-panel
+        :is-active? true
+        :id         "scroll-tab-1"]
+       [mdl/layout-tab-panel
+        :id "scroll-tab-2"]
+       [mdl/layout-tab-panel
+        :id "scroll-tab-3"]
+       [mdl/layout-tab-panel
+        :id "scroll-tab-4"]
+       [mdl/layout-tab-panel
+        :id "scroll-tab-5"]
+       [mdl/layout-tab-panel
+        :id "scroll-tab-6"]]]]]])
+
+(defn navigation-demo-fixed-tabs
+  "This is a navigation layout with fixed tabs."
+  []
+  [:div.mdl-demo-navigation
+   [mdl/layout
+    :fixed-header? true
+    :fixed-tabs?   true
+    :children
+    [[mdl/layout-header
+      :attr {:style {:color "white"}}
+      :children
+      [[mdl/layout-header-row
+        :children
+        [[mdl/layout-title
+          :label "Title"]]]
+       [mdl/layout-tab-bar
+        :ripple-effect? true
+        :children
+        [[mdl/layout-tab
+          :is-active? true
+          :href       "#fixed-tab-1"
+          :content    "Tab 1"]
+         [mdl/layout-tab
+          :href       "#fixed-tab-2"
+          :content    "Tab 2"]
+         [mdl/layout-tab
+          :href       "#fixed-tab-3"
+          :content    "Tab 3"]]]]]
+     [mdl/layout-drawer
+      :children
+      [[mdl/layout-title
+        :label "Title"]]]
+     [mdl/layout-content
+      :attr {:style {:background "white"}}
+      :children
+      [[mdl/layout-tab-panel
+        :is-active? true
+        :id         "fixed-tab-1"]
+       [mdl/layout-tab-panel
+        :id "fixed-tab-2"]
+       [mdl/layout-tab-panel
+        :id "fixed-tab-3"]]]]]])
+
 (defn navigation-demo
   []
   [:div.navigation-demo
@@ -845,6 +1103,24 @@
    [demo-doc-component
     [[navigation-demo-fixed-drawer]]
     [#(source navigation-demo-fixed-drawer)]]
+   [demo-doc-component
+    [[navigation-demo-fixed-header]]
+    [#(source navigation-demo-fixed-header)]]
+   [demo-doc-component
+    [[navigation-demo-fixed-header-and-drawer]]
+    [#(source navigation-demo-fixed-header-and-drawer)]]
+   [demo-doc-component
+    [[navigation-demo-scrolling-header]]
+    [#(source navigation-demo-scrolling-header)]]
+   [demo-doc-component
+    [[navigation-demo-waterfall-header]]
+    [#(source navigation-demo-waterfall-header)]]
+   [demo-doc-component
+    [[navigation-demo-scrollable-tabs]]
+    [#(source navigation-demo-scrollable-tabs)]]
+   [demo-doc-component
+    [[navigation-demo-fixed-tabs]]
+    [#(source navigation-demo-fixed-tabs)]]
    [demo-options]
    [demo-reference "layout" "layout"]])
 
