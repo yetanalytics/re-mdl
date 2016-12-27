@@ -1058,8 +1058,15 @@
 (defn menu-demo-lower-left
   "This is a left-aligned menu that expands down."
   []
-  [:div.mdl-demo-menu-container
-   [:span
+  [:div.mdl-shadow--2dp
+   {:style {:position "relative"
+            :width    "200px"}}
+   [:div
+    {:style {:box-sizing "border-box"
+             :background "#3F51B5"
+             :color      "white"
+             :width      "100%"
+             :padding    "16px"}}
     [mdl/button
      :id    "menu-lower-left"
      :icon? true
@@ -1070,45 +1077,77 @@
      :ripple-effect? true
      :children
      [[mdl/menu-item
-       :label "Some Action"]
+       :child "Some Action"]
       [mdl/menu-item
        :full-bleed-divider? true
-       :label               "Another Action"]
+       :child               "Another Action"]
       [mdl/menu-item
        :disabled? true
-       :label     "Disabled Action"]
+       :child     "Disabled Action"]
       [mdl/menu-item
-       :label "Yet Another Action"]]]]])
+       :child "Yet Another Action"]]]]
+   [:div
+    {:style {:background "white"
+             :height     "200px"
+             :width      "100%"}}]])
 
 (defn menu-demo-lower-right
   "This is a right-aligned menu that expands down."
   []
-  [:div.mdl-demo-menu-container.mdl-shadow--2dp
-   [:span.bar
-    [mdl/button
-     :id    "menu-lower-right"
-     :icon? true
-     :child [:i.material-icons "more_vert"]]
-    [mdl/menu
-     :for            "menu-lower-right"
-     :bottom-right?  true
-     :ripple-effect? true
-     :children
-     [[mdl/menu-item
-       :label "Some Action"]
-      [mdl/menu-item
-       :label "Another Action"]
-      [mdl/menu-item
-       :disabled? true
-       :label     "Disabled Action"]
-      [mdl/menu-item
-       :label "Yet Another Action"]]]]])
+  [:div.mdl-shadow--2dp
+   {:style {:position "relative"
+            :width    "200px"}}
+   [:div
+    {:style {:box-sizing "border-box"
+             :position   "relative"
+             :background "#3F51B5"
+             :color      "white"
+             :height     "64px"
+             :width      "100%"
+             :padding    "16px"}}
+    [:div
+     {:style {:box-sizing "border-box"
+              :position   "absolute"
+              :right      "16px"}}
+     [mdl/button
+      :id    "menu-lower-right"
+      :icon? true
+      :child [:i.material-icons "more_vert"]]
+     [mdl/menu
+      :for            "menu-lower-right"
+      :bottom-right?  true
+      :ripple-effect? true
+      :children
+      [[mdl/menu-item
+        :child "Some Action"]
+       [mdl/menu-item
+        :child "Another Action"]
+       [mdl/menu-item
+        :disabled? true
+        :child     "Disabled Action"]
+       [mdl/menu-item
+        :child "Yet Another Action"]]]]]
+   [:div
+    {:style {:background "white"
+             :height     "200px"
+             :width      "100%"}}]])
 
 (defn menu-demo-top-left
   "This is a left aligned menu that expands up."
   []
-  [:div.mdl-demo-menu-container
-   [:span
+  [:div.mdl-shadow--2dp
+   {:style {:position "relative"
+            :width    "200px"}}
+   [:div
+    {:style {:background "white"
+             :height     "200px"
+             :width      "100%"}}]
+   [:div
+    {:style {:box-sizing "border-box"
+             :background "#3F51B5"
+             :color      "white"
+             :width      "100%"
+             :padding    "16px"}}
     [mdl/button
      :id    "menu-top-left"
      :icon? true
@@ -1119,40 +1158,55 @@
      :ripple-effect? true
      :children
      [[mdl/menu-item
-       :label "Some Action"]
+       :child "Some Action"]
       [mdl/menu-item
-       :full-bleed-divider? true
-       :label               "Another Action"]
+       :child "Another Action"]
       [mdl/menu-item
        :disabled? true
-       :label     "Disabled Action"]
+       :child     "Disabled Action"]
       [mdl/menu-item
-       :label "Yet Another Action"]]]]])
+       :child "Yet Another Action"]]]]])
 
 (defn menu-demo-top-right
   "This is a right aligned menu that expands up."
   []
-  [:div.mdl-demo-menu-container
-   [:span
-    [mdl/button
-     :id    "menu-top-right"
-     :icon? true
-     :child [:i.material-icons "more_vert"]]
-    [mdl/menu
-     :for            "menu-top-right"
-     :top-right?     true
-     :ripple-effect? true
-     :children
-     [[mdl/menu-item
-       :label "Some Action"]
-      [mdl/menu-item
-       :full-bleed-divider? true
-       :label               "Another Action"]
-      [mdl/menu-item
-       :disabled? true
-       :label     "Disabled Action"]
-      [mdl/menu-item
-       :label "Yet Another Action"]]]]])
+  [:div.mdl-shadow--2dp
+   {:style {:position "relative"
+            :width    "200px"}}
+   [:div
+    {:style {:background "white"
+             :height     "200px"
+             :width      "100%"}}]
+   [:div
+    {:style {:box-sizing "border-box"
+             :position   "relative"
+             :background "#3F51B5"
+             :color      "white"
+             :height     "64px"
+             :width      "100%"
+             :padding    "16px"}}
+    [:div
+     {:style {:box-sizing "border-box"
+              :position   "absolute"
+              :right      "16px"}}
+     [mdl/button
+      :id    "menu-top-right"
+      :icon? true
+      :child [:i.material-icons "more_vert"]]
+     [mdl/menu
+      :for            "menu-top-right"
+      :top-right?     true
+      :ripple-effect? true
+      :children
+      [[mdl/menu-item
+        :child "Some Action"]
+       [mdl/menu-item
+        :child "Another Action"]
+       [mdl/menu-item
+        :disabled? true
+        :child     "Disabled Action"]
+       [mdl/menu-item
+        :child "Yet Another Action"]]]]]])
 
 (defn menu-demo []
   [:div.menu-demo
@@ -1168,7 +1222,23 @@
      [menu-demo-top-right]]
     [#(source menu-demo-top-left)
      #(source menu-demo-top-right)]]
-   [demo-options]
+   [demo-options
+    {:title       "menu"
+     :description "This is the container object for generating a dropdown, unordered list."
+     :rows
+     [[":for"            "This is the :id of the button attached to the menu" "String"]
+      [":ripple-effect?" "Apply ripple effect to option links"                "Optional; Boolean"]
+      [":top-left?"      "Positions menu above button with left align"        "Optional; Boolean"]
+      [":top-right?"     "Positions menu above button with right align"       "Optional; Boolean"]
+      [":bottom-right?"  "Positions menu below button with right align"       "Optional; Boolean"]]}]
+   [demo-options
+    {:title       "menu-item"
+     :description "Describes the individual menu options."
+     :rows
+     [[":child"               "Content rendered within the list item"                      "String or hiccup"]
+      [":disabled?"           "This will disable the list item"                            "Optional; Boolean"]
+      [":on-click"            "Callback for clicking and item"                             "Optional; function"]
+      [":full-bleed-divider?" "Applies a full line divider between this and the next item" "Optional; Boolean"]]}]
    [demo-reference "menus"]])
 
 (defn slider-demo-default
