@@ -88,23 +88,7 @@
      [[":id"       "The id for the HTML element"            "Optional; String if used"]
       [":class"    "The class for the HTML element"         "Optional; String if used"]
       [":attr"     "Any other HTML attributes not provided" "You can also override existing attrs"]
-      [":children" "Nested items for this component"        "Optional; Vector of components"]]}]
-   [:h6 "CHANGE LOG"]
-   [mdl/list-coll
-    :children
-    (into []
-          (for [s ["Button"
-                   "add card menu"
-                   "docs and demo added to match mdl"
-                   "chip and chip inners changed content to child"
-                   "list 'content' renamed to 'child'"
-                   "list 'children' added to remaining components"
-                   "added el key to list component options where applicable"
-                   "tooltip done"]]
-            [mdl/list-item
-             :children
-             [[mdl/list-item-primary-content
-               :child s]]]))]])
+      [":children" "Nested items for this component"        "Optional; Vector of components"]]}]])
 
 (defn badge-demo-number-icon
   "This badge is an icon that has an overlapped number."
