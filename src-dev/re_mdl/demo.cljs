@@ -64,6 +64,20 @@
     (or sub-section section)]
    " section for more information."])
 
+(defn demo-simple-list
+  "Helper function to generate simple lists."
+  [heading content]
+  [:div
+   heading
+   [mdl/list-coll
+    :children
+    (into []
+          (for [i content]
+            ^{:key i} [mdl/list-item
+                       :children
+                       [[mdl/list-item-primary-content
+                         :child i]]]))]])
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEMOS BEGIN
 
@@ -88,7 +102,159 @@
      [[":id"       "The id for the HTML element"            "Optional; String if used"]
       [":class"    "The class for the HTML element"         "Optional; String if used"]
       [":attr"     "Any other HTML attributes not provided" "You can also override existing attrs"]
-      [":children" "Nested items for this component"        "Optional; Vector of components"]]}]])
+      [":children" "Nested items for this component"        "Optional; Vector of components"]]}]
+   [:h5 "CHANGELOG"]
+   [demo-simple-list
+    "v0.1.5"
+    [":children keys added to all components."
+     [demo-simple-list
+      "[button]"
+      [":label -> :child."
+       ":icon -> :icon?. This will no longer set the :child content to an icon as well. You need to explicitly pass hiccup to :child with the .material-icons class attached."
+       ":on-click is optional now."]]
+     [demo-simple-list
+      "[card-title]"
+      [":text -> :child."
+       "adds :el allowing custom selection of element type."
+       ":subtitle-text is removed. There is now a new component named card-subtitle. This should be nested in :children of card-title."]]
+     [demo-simple-list
+      "[card-media]"
+      ["ddds :el allowing custom selection of element type."]]
+     [demo-simple-list
+      "[card-supporting-text]"
+      ["adds :el allowing custom selection of element type."
+       "removes :text. Instead, pass all content into :children as collection of strings or hiccup."]]
+     [demo-simple-list
+      "[card-actions]"
+      ["adds :el allowing custom selection of element type."]]
+     [demo-simple-list
+      "[card-menu]"
+      ["a new component to implement the mdl-card__menu style."]]
+     [demo-simple-list
+      "[card]"
+      ["adds :el allowing custom selection of element type."]]
+     [demo-simple-list
+      "[chip-contact]"
+      [":content -> :child."]]
+     [demo-simple-list
+      "[chip-text]"
+      [":content -> :child."]]
+     [demo-simple-list
+      "[chip-action]"
+      [":content -> :child."
+       ":button? -> type."]]
+     [demo-simple-list
+      "[chip]"
+      ["if :button? has a value, it will set the :el to :button."]]
+     [demo-simple-list
+      "[dialog]"
+      ["removes :title-el :title :content :actions :actions-full-width?. Replaces them with components. Pass all of these components into :children."]]
+     [demo-simple-list
+      "[dialog-actions]"
+      [":action-full-width? -> :full-width?."
+       "accepts content in :children."]]
+     [demo-simple-list
+      "[dialog-content]"
+      [":content -> :children."]]
+     [demo-simple-list
+      "[dialog-title]"
+      [":title-el -> :el."
+       ":title -> :child."]]
+     [demo-simple-list
+      "[mega-footer-social-btn]"
+      ["this component is implemented now and accepts input."]]
+     [demo-simple-list
+      "[mega-footer]"
+      ["removes :loc."]]
+     [demo-simple-list
+      "[mini-footer-social-btn]"
+      ["this component is implemented now and accepts input."]]
+     [demo-simple-list
+      "[mini-footer]"
+      ["removes :loc."]]
+     [demo-simple-list
+      "[cell]"
+      ["adds :order and :offset styling."
+       "adds :order and :offset to the :desktop :table and :phone hash maps."]]
+     [demo-simple-list
+      "[list-item-primary-content]"
+      [":content -> :child."
+       "adds :el allowing custom selection of element type. Defaults to :span."]]
+     [demo-simple-list
+      "[list-item-secondary-content]"
+      [":content -> :child."
+       "adds :el allowing custom selection of element type. Defaults to :span."]]
+     [demo-simple-list
+      "[list-item-secondary-action]"
+      [":content -> :child."]]
+     [demo-simple-list
+      "[list-item-secondary-info]"
+      [":content -> :child."
+       "adds :el allowing custom selection of element type. Defaults to :span."]]
+     [demo-simple-list
+      "[list-item-text-body]"
+      [":content -> :child."
+       "adds :el allowing custom selection of element type. Defaults to :span."]]
+     [demo-simple-list
+      "[list-item-sub-title]"
+      [":content -> :child."
+       "adds :el allowing custom selection of element type. Defaults to :span."]]
+     [demo-simple-list
+      "[loading-progress]"
+      ["adds :buffer. Accepts a r/atom."
+       ":model accepts a r/atom."
+       "both :model and :buffer are fully tracked through the lifecycle of the component."]]
+     [demo-simple-list
+      "[menu-item]"
+      [":label -> :child."]]
+     [demo-simple-list
+      "[layout]"
+      ["adds :no-drawer-button? :no-desktop-drawer-button? keys for styling."]]
+     [demo-simple-list
+      "[layout-header]"
+      [":adds :waterfall-hide-top?"]]
+     [demo-simple-list
+      "[layout-tab-bar]"
+      ["adds :ripple-effect? and :tab-manual-switch?."]]
+     [demo-simple-list
+      "[slider]"
+      [":init-val -> :model. This will track the model through the entire lifecycle. Accepts a r/atom as well."
+       ":min :max and :step all accept a r/atom."]]
+     [demo-simple-list
+      "[snackbar]"
+      [":action-handler and :action-text fixed. They are renamed internally to match the actual attributes the snackbar component expects."]]
+     [demo-simple-list
+      "[tabs-panel]"
+      ["adds :el allowing custom selection of element type. Defaults to :div."]]
+     [demo-simple-list
+      "[table]"
+      ["adds :ascending :descending keys to :headers."]]
+     [demo-simple-list
+      "[textfield]"
+      [":init-val -> :model. This will track the model through the entire lifecycle. Accepts a r/atom as well."
+       "removes :maxrows"]]
+     [demo-simple-list
+      "[toggle-checkbox]"
+      [":checked? -> :model. This now accepts r/atoms as well."
+       "rewrote the lifecycles to properly reflects updates to a r/atom model."]]
+     [demo-simple-list
+      "[toggle-radios]"
+      [":checked -> :model. This now accepts r/atoms as well."]]
+     [demo-simple-list
+      "[toggle-radio]"
+      [":checked? -> :model. This now accepts r/atoms as well."
+       "rewrote the lifecycles to properly reflects updates to a r/atom model."]]
+     [demo-simple-list
+      "[toggle-icon-toggle]"
+      [":checked? -> :model. This now accepts r/atoms as well."
+       "rewrote the lifecycles to properly reflects updates to a r/atom model."]]
+     [demo-simple-list
+      "[toggle-switch]"
+      [":checked? -> :model. This now accepts r/atoms as well."
+       "rewrote the lifecycles to properly reflects updates to a r/atom model."]]
+     [demo-simple-list
+      "[tooltip]"
+      ["adds :el to allow element selection. Defaults to :span."]]]]])
 
 (defn badge-demo-number-icon
   "This badge is an icon that has an overlapped number."
@@ -2283,7 +2449,7 @@
    (into []
          (for [[a s c] [["person" "Bryan Cranston" [mdl/toggle-checkbox
                                                     :ripple-effect? true
-                                                    :checked?       true
+                                                    :model          true
                                                     :handler-fn     #(print "hmm")]]
                         ["person" "Aaron Paul"     [mdl/toggle-radios
                                                     :ripple-effect? true
@@ -2292,6 +2458,7 @@
                                                     [[:test ""]]]]
                         ["person" "Bob Odenkirk"   [mdl/toggle-switch
                                                     :ripple-effect? true
+                                                    :model          true
                                                     :handler-fn     #(print "ugh")]]]]
            ^{:key s} [mdl/list-item
                       :children
