@@ -17,8 +17,7 @@
   "This function will generate the doc by forcing cljs.repl/source
   to return a string instead of printing."
   [doc]
-  (with-redefs [println identity]
-    (doc)))
+  (with-out-str (doc)))
 
 (defn demo-doc-component
   "This reagent component generates all of the demo items and then the docs."
@@ -863,9 +862,9 @@
       [:a {:href "#"} "Contact"]]]]
    :bottom
    [[mdl/mega-footer-link-list
-    :children
-    [[:a {:href "#"} "Help"]
-     [:a {:href "#"} "Privacy & Terms"]]]]])
+     :children
+     [[:a {:href "#"} "Help"]
+      [:a {:href "#"} "Privacy & Terms"]]]]])
 
 (defn footer-demo-mini []
   [mdl/mini-footer
@@ -2482,22 +2481,22 @@
                           ["person" "Aaron Paul"     "62 Episodes"]
                           ["person" "Bob Odenkirk"   "62 Episodes"]]]
            ^{:key s} [mdl/list-item
-                         :item-type :two-line
-                         :children
-                         [[mdl/list-item-primary-content
-                           :avatar a
-                           :child  s
-                           :children
-                           [[mdl/list-item-sub-title
-                             :child t]]]
-                          [mdl/list-item-secondary-content
-                           :children
-                           [[mdl/list-item-secondary-info
-                             :child i]
-                            [mdl/list-item-secondary-action
-                             :href  "#"
-                             :el    :a
-                             :child [:i.material-icons "star"]]]]]]))])
+                      :item-type :two-line
+                      :children
+                      [[mdl/list-item-primary-content
+                        :avatar a
+                        :child  s
+                        :children
+                        [[mdl/list-item-sub-title
+                          :child t]]]
+                       [mdl/list-item-secondary-content
+                        :children
+                        [[mdl/list-item-secondary-info
+                          :child i]
+                         [mdl/list-item-secondary-action
+                          :href  "#"
+                          :el    :a
+                          :child [:i.material-icons "star"]]]]]]))])
 
 (defn list-demo-three-line
   "This is a list that has a three line subtitle."
@@ -2513,20 +2512,20 @@
                           ["person" "Bob Odenkirk"
                            "Bob Odenkirk played the role of Saul in Breaking Bad. Due to public fondness for the character, Bob stars in his own show now, called \"Better Call Saul\"."]]]
            ^{:key s} [mdl/list-item
-                         :item-type :three-line
-                         :children
-                         [[mdl/list-item-primary-content
-                           :avatar a
-                           :child  s
-                           :children
-                           [[mdl/list-item-text-body
-                             :child t]]]
-                          [mdl/list-item-secondary-content
-                           :children
-                           [[mdl/list-item-secondary-action
-                             :href  "#"
-                             :el    :a
-                             :child [:i.material-icons "star"]]]]]]))])
+                      :item-type :three-line
+                      :children
+                      [[mdl/list-item-primary-content
+                        :avatar a
+                        :child  s
+                        :children
+                        [[mdl/list-item-text-body
+                          :child t]]]
+                       [mdl/list-item-secondary-content
+                        :children
+                        [[mdl/list-item-secondary-action
+                          :href  "#"
+                          :el    :a
+                          :child [:i.material-icons "star"]]]]]]))])
 
 (defn list-demo []
   [:div.list-demo
