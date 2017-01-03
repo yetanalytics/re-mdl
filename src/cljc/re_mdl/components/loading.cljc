@@ -2,56 +2,65 @@
   (:require
    #?(:cljs [reagent.core :as r])
    [re-mdl.util :refer [wrap-mdl
-                        mdl-init-mount]]))
+                        mdl-init!
+                        mdl-get-value
+                        mdl-get-props]]))
 
-(defn progress* [& {:keys [indeterminate? width
-                           model
+(defn progress* [& {:keys [indeterminate?
+                           model buffer
+                           children
                            id class attr]
-                   :or {width "250px"}
+                    :as   args}]
+  (let [_ (mdl-get-value model)
+        _ (mdl-get-value buffer)]
+    (into
+     [:div
+      (merge
+       {:id    id
+        :class (cond-> "mdl-progress mdl-js-progress"
+                 class (str " " class)
+                 #?(:cljs indeterminate?
+                    :clj  true) ;; always indeterminate for clj
+                 (str " mdl-progress--indeterminate"))}
+       attr)]
+     children)))
+
+(defn progress [& {:keys [model buffer]
                    :as   args}]
-  [:div
-   (merge
-    {:id id
-     :style {:width width}
-     :class (cond-> "mdl-progress mdl-js-progress"
-              class (str " " class)
-              #?(:cljs indeterminate?
-                 :clj true) ;; always indeterminate for clj
-              (str " mdl-progress__indeterminate"))}
-    attr)])
-
-(defn get-progress [& {:keys [model]
-                       :as   args}]
-  model)
-
-(def progress
   #?(:cljs
      (r/create-class
-      {:reagent-render progress*
-       :component-did-mount
+      {:component-did-mount
        (fn [this]
-         (mdl-init-mount this))
+         (doto (r/dom-node this)
+           mdl-init!
+           (-> .-MaterialProgress
+               (.setProgress (mdl-get-value model)))
+           (-> .-MaterialProgress
+               (.setBuffer (mdl-get-value buffer)))))
        :component-did-update
-       (fn [this new-argv]
-         (let [node (r/dom-node this)
-               pct-done (apply get-progress (rest new-argv))]
-           (-> node
-               .-MaterialProgress
-               (.setProgress pct-done))))})
-     :clj progress*))
-
+       (fn [this _]
+         (let [props (mdl-get-props (r/argv this))]
+           (doto (.-MaterialProgress (r/dom-node this))
+             (-> (.setProgress (mdl-get-value (:model props))))
+             (-> (.setBuffer (mdl-get-value (:buffer props)))))))
+       :reagent-render
+       progress*})
+     :clj (apply progress* (flatten args))))
 
 (defn spinner* [& {:keys [el is-active? single-color?
+                          children
                           id class attr]
-                   :or {el :div}
+                   :or   {el :div}
                    :as   args}]
-  [el
-   (merge
-    {:id id
-     :class (cond-> "mdl-spinner mdl-js-spinner"
-              class (str " " class)
-              is-active? (str " is-active")
-              single-color? (str " mdl-spinner--single-color"))}
-    attr)])
+  (into
+   [el
+    (merge
+     {:id id
+      :class (cond-> "mdl-spinner mdl-js-spinner"
+               class         (str " " class)
+               is-active?    (str " is-active")
+               single-color? (str " mdl-spinner--single-color"))}
+     attr)]
+   children))
 
 (def spinner (wrap-mdl spinner*))

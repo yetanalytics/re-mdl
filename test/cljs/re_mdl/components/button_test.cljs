@@ -26,13 +26,20 @@
 (defn check-mdl-upgraded [comp]
   (check-attribute comp "data-upgraded" ",MaterialButton"))
 
+(defn deconstruct-label
+  [label]
+  (if (vector? label)
+    (last label)
+    label))
+
 (defn check-label-or-icon [comp label-or-icon]
-  (is (or
-       (= label-or-icon (.-innerHTML comp))
-       (when-let [inner (sel1 comp [:i])]
-         (and
-          (= (.-className inner) "material-icons")
-          (= (.-innerHTML inner) label-or-icon))))))
+  (let [label-or-icon (deconstruct-label label-or-icon)]
+    (is (or
+         (= label-or-icon (.-innerHTML comp))
+         (when-let [inner (sel1 comp [:i])]
+           (and
+            (= (.-className inner) "material-icons")
+            (= (.-innerHTML inner) label-or-icon)))))))
 
 (defn check-disabled? [comp disabled?]
   (check-attribute comp "disabled" disabled?))
@@ -41,7 +48,7 @@
   (check-attribute comp "for" for))
 
 
-(defn check-component [comp {:keys [id class label for icon disabled? el]
+(defn check-component [comp {:keys [id class child for icon? disabled? el]
                              :or {el :button
                                   class "mdl-button mdl-js-button"
                                   id ""}}]
@@ -51,7 +58,7 @@
       (check-id id)
       (check-class class)
       check-mdl-upgraded
-      (check-label-or-icon (or label icon ""))
+      (check-label-or-icon (or child icon? ""))
       (check-disabled? disabled?)
       (check-for for))))
 
@@ -73,14 +80,15 @@
 
 (deftest label
   (let [button [button/button
-               :label "Foo"]]
-    (check-component button {:label "Foo"})))
-
+               :child "Foo"]]
+    (check-component button {:child "Foo"})))
 
 (deftest icon
   (let [button [button/button
-                :icon "add"]]
-    (check-component button {:icon "add"
+                :icon? true
+                :child [:i.material-icons "add"]]]
+    (check-component button {:child [:i.material-icons "add"]
+                             :icon? true
                              :class "mdl-button mdl-js-button mdl-button--icon"})))
 
 (deftest on-click

@@ -2,3 +2,50 @@
 div._dialog_overlay {
   display: none;
 }
+
+pre {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 8px;
+  background: #dddddd;
+  border: 1px solid #999999;
+  border-radius: 5px;
+}
+
+.mdl-demo-container {
+  margin: auto;
+  background: #eeeeee;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.mdl-demo {
+  width: 100%;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.mdl-demo-options {
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.mdl-demo-list {
+  text-align: left;
+  width: 300px;
+}
+
+.mdl-demo-list-three {
+  text-align: left;
+  width: 650px;
+}
+
+.mdl-demo-navigation {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+  0 3px 1px -2px rgba(0, 0, 0, 0.2),
+  0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  width: 100%;
+  height: 300px;
+  position: relative;
+}

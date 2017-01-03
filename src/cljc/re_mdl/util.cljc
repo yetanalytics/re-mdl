@@ -1,6 +1,21 @@
 (ns re-mdl.util
   #?(:cljs (:require [reagent.core :as r])))
 
+(defn mdl-get-value
+  "This will get the content of a model, be it atom or value."
+  [model]
+  #?(:cljs
+     (if (satisfies? IDeref model)
+       @model
+       model)
+     :clj
+     model))
+
+(defn mdl-get-props
+  "This will read in the new props to a componenet and return a map of them."
+  [props]
+  (apply hash-map (rest props)))
+
 (defn mdl-init! [elem]
   #?(:cljs
      (.upgradeElement js/componentHandler elem)

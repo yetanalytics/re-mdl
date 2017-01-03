@@ -1,41 +1,54 @@
 (ns re-mdl.components.slider
   (:require #?(:cljs [reagent.core :as r])
-            [re-mdl.util :refer [mdl-init!]]))
+            [re-mdl.util :refer [mdl-init-mount
+                                 mdl-get-value
+                                 mdl-get-props]]))
 
-(defn slider*
-  [& {:keys [min max step
-             handler-fn
-             id class attr
-             init-val]
-      :as   args}]
-  [:input
-   (merge
-    {:type "range"
-     :id id
+(defn slider* [& {:keys [min max step model disabled?
+                         handler-fn
+                         children
+                         id class attr]
+                  :or   {min        0
+                         max        100
+                         handler-fn (constantly nil)}
+                  :as   args}]
+  (let [_ (mdl-get-value model)]
+    (into
+     [:input
+      (merge
+       (cond->
+           {:type  "range"
+            :id    id
+            :min   (mdl-get-value min)
+            :max   (mdl-get-value max)
+            :step  (mdl-get-value step)
+            :class (cond-> "mdl-slider mdl-js-slider"
+                     class (str " " class))
+            #?@(:cljs
+                [:on-change
+                 (fn [e] (handler-fn (.. e -target -value)))
+                 :defaultValue
+                 (mdl-get-value model)]
+                :clj [:defaultValue (mdl-get-value model)])}
+         (mdl-get-value disabled?) (assoc :disabled true))
+       attr)]
+     children)))
 
-     :min min
-     :max max
-     :step step
-
-     #?@(:cljs
-         [:on-change
-          (fn [e] (handler-fn (.-value (.-target e))))]
-         :clj [:value init-val])
-
-     :class (cond-> "mdl-slider mdl-js-slider"
-              class (str " " class))}
-    attr)])
-
-(defn slider [& {:keys [init-val]
-                 :as args}]
+(defn slider [& {:keys [model]
+                 :as   args}]
   #?(:cljs
      (r/create-class
       {:component-did-mount
-       (fn [this]
-         (let [node (r/dom-node this)]
-           (doto node
-             mdl-init!
-             (-> .-MaterialSlider (.change init-val)))))
+       mdl-init-mount
+       :component-did-update
+       (fn [this _]
+         (-> (r/dom-node this)
+             .-MaterialSlider
+             (.change
+              (-> (r/argv this)
+                  mdl-get-props
+                  :model
+                  mdl-get-value))))
        :reagent-render
        slider*})
      :clj (apply slider* (flatten args))))
