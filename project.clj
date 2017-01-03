@@ -4,7 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[cljsjs/material "1.2.1-0"]
+  :dependencies [[cljsjs/material "1.3.0-0"]
                  [cljsjs/dialog-polyfill "0.4.3-0"]
                  [reagent "0.6.0-rc" :exclusions [cljsjs/react]]
                  [cljsjs/react-with-addons "15.2.1-1"]
