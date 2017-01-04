@@ -659,7 +659,7 @@
    [:p "Self-contained pieces of paper with data."]
    [demo-doc-component
     [[card-demo-wide-with-share]]
-    [#(cljs.repl/source card-demo-wide-with-share)]]
+    [#(source card-demo-wide-with-share)]]
    [demo-doc-component
     [[card-demo-square]]
     [#(source card-demo-square)]]
@@ -819,17 +819,9 @@
      :description "Left-most information about the contact. Primarily image or icon."}]
    [demo-reference "chips"]])
 
-(defn grid-demo [& kids]
-  [mdl/grid
-   :children
-   (into []
-         (for [kid kids]
-           [mdl/cell
-            :col 12
-            :children
-            [kid]]))])
-
-(defn footer-demo-mega []
+(defn footer-demo-mega
+  "This is a mega footer component."
+  []
   [mdl/mega-footer
    :logo "Title"
    :middle
@@ -866,7 +858,9 @@
      [[:a {:href "#"} "Help"]
       [:a {:href "#"} "Privacy & Terms"]]]]])
 
-(defn footer-demo-mini []
+(defn footer-demo-mini
+  "This is a mini footer component."
+  []
   [mdl/mini-footer
    :logo "Title"
    :left
@@ -1442,6 +1436,16 @@
       [":child"      "Content for the tab anchor"                          "String or hiccup"]
       [":is-active?" "This defines this tab as the default tab to display" "Optional"]]}]
    [demo-reference "layout" "tabs"]])
+
+(defn grid-demo [& kids]
+  [mdl/grid
+   :children
+   (into []
+         (for [kid kids]
+           [mdl/cell
+            :col 12
+            :children
+            [kid]]))])
 
 (defn demo-layout-component [{:keys [href demo title]
                               :or   {href "#"}}]
@@ -2744,13 +2748,13 @@
 (defn app-view []
   (let [current-demo (r/atom :intro)]
     (fn []
-      [:div ;; extra wrapper div so mdl doesn't clobber the root
-       [demo-layout
-        :demo-map demo-map
-        :current-demo-ra current-demo
-        :children
-        [[grid-demo
-          [(@current-demo demo-map)]]]]])))
+      ;;[:div] ;; extra wrapper div so mdl doesn't clobber the root
+      [demo-layout
+       :demo-map        demo-map
+       :current-demo-ra current-demo
+       :children
+       [[grid-demo
+         [(@current-demo demo-map)]]]])))
 
 (defn ^:export run []
   (r/render [app-view]
