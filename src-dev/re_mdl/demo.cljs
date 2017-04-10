@@ -104,6 +104,14 @@
       [":children" "Nested items for this component"        "Optional; Vector of components"]]}]
    [:h5 "CHANGELOG"]
    [demo-simple-list
+    "v0.1.6"
+    [[demo-simple-list
+      "Demo"
+      ["Removed leftover logging in the demos."]]
+     [demo-simple-list
+      "[textfield]"
+      ["Corrected a bug that would move the cursor to the end of the line whenever the model was updated."]]]]
+   [demo-simple-list
     "v0.1.5"
     [":children keys added to all components."
      [demo-simple-list
@@ -659,7 +667,7 @@
    [:p "Self-contained pieces of paper with data."]
    [demo-doc-component
     [[card-demo-wide-with-share]]
-    [#(cljs.repl/source card-demo-wide-with-share)]]
+    [#(source card-demo-wide-with-share)]]
    [demo-doc-component
     [[card-demo-square]]
     [#(source card-demo-square)]]
@@ -819,17 +827,9 @@
      :description "Left-most information about the contact. Primarily image or icon."}]
    [demo-reference "chips"]])
 
-(defn grid-demo [& kids]
-  [mdl/grid
-   :children
-   (into []
-         (for [kid kids]
-           [mdl/cell
-            :col 12
-            :children
-            [kid]]))])
-
-(defn footer-demo-mega []
+(defn footer-demo-mega
+  "This is a mega footer component."
+  []
   [mdl/mega-footer
    :logo "Title"
    :middle
@@ -866,7 +866,9 @@
      [[:a {:href "#"} "Help"]
       [:a {:href "#"} "Privacy & Terms"]]]]])
 
-(defn footer-demo-mini []
+(defn footer-demo-mini
+  "This is a mini footer component."
+  []
   [mdl/mini-footer
    :logo "Title"
    :left
@@ -1443,6 +1445,16 @@
       [":is-active?" "This defines this tab as the default tab to display" "Optional"]]}]
    [demo-reference "layout" "tabs"]])
 
+(defn grid-demo [& kids]
+  [mdl/grid
+   :children
+   (into []
+         (for [kid kids]
+           [mdl/cell
+            :col 12
+            :children
+            [kid]]))])
+
 (defn demo-layout-component [{:keys [href demo title]
                               :or   {href "#"}}]
   [mdl/layout-nav-link
@@ -1766,14 +1778,11 @@
 (defn slider-demo-default
   "This is a slider that defaults to 0."
   []
-  (let [slider-model 0]
-    (fn []
-      [mdl/slider
-       :id         "slider-default"
-       :model      slider-model
-       :handler-fn #(print slider-model)
-       :min        0
-       :max        100])))
+  [mdl/slider
+   :id    "slider-default"
+   :min   0
+   :model 5
+   :max   100])
 
 (defn slider-demo-starting
   "This is a slider with a starting value and tracks state."
@@ -2057,7 +2066,7 @@
 (defn text-field-demo-text
   []
   [mdl/textfield
-   :label       "Text..."])
+   :label "Text..."])
 
 (defn text-field-demo-numeric
   []
@@ -2448,17 +2457,14 @@
    (into []
          (for [[a s c] [["person" "Bryan Cranston" [mdl/toggle-checkbox
                                                     :ripple-effect? true
-                                                    :model          true
-                                                    :handler-fn     #(print "hmm")]]
+                                                    :model          true]]
                         ["person" "Aaron Paul"     [mdl/toggle-radios
                                                     :ripple-effect? true
-                                                    :handler-fn     #(print "why")
                                                     :choices
                                                     [[:test ""]]]]
                         ["person" "Bob Odenkirk"   [mdl/toggle-switch
                                                     :ripple-effect? true
-                                                    :model          true
-                                                    :handler-fn     #(print "ugh")]]]]
+                                                    :model          true]]]]
            ^{:key s} [mdl/list-item
                       :children
                       [[mdl/list-item-primary-content
@@ -2744,13 +2750,13 @@
 (defn app-view []
   (let [current-demo (r/atom :intro)]
     (fn []
-      [:div ;; extra wrapper div so mdl doesn't clobber the root
-       [demo-layout
-        :demo-map demo-map
-        :current-demo-ra current-demo
-        :children
-        [[grid-demo
-          [(@current-demo demo-map)]]]]])))
+      ;;[:div] ;; extra wrapper div so mdl doesn't clobber the root
+      [demo-layout
+       :demo-map        demo-map
+       :current-demo-ra current-demo
+       :children
+       [[grid-demo
+         [(@current-demo demo-map)]]]])))
 
 (defn ^:export run []
   (r/render [app-view]

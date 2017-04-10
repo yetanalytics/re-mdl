@@ -9,7 +9,7 @@
                            label handler-fn
                            children
                            id class attr]
-                    #?@(:cljs [:or {handler-fn (constantly nil)}])
+                    :or   {handler-fn (constantly nil)}
                     :as   args}]
   #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
   (let [_ (mdl-get-value model)]

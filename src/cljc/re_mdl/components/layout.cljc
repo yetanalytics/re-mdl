@@ -5,20 +5,21 @@
                          no-drawer-button? no-desktop-drawer-button?
                          children
                          id class attr]
-                 :as   args}]
-  (into
-   [:div
-    (merge
-     {:id    id
-      :class (cond-> "mdl-layout mdl-js-layout"
-               class                     (str " " class)
-               fixed-drawer?             (str " mdl-layout--fixed-drawer")
-               fixed-header?             (str " mdl-layout--fixed-header")
-               fixed-tabs?               (str " mdl-layout--fixed-tabs")
-               no-drawer-button?         (str " mdl-layout--no-drawer-button")
-               no-desktop-drawer-button? (str " mdl-layout--no-desktop-drawer-button"))}
-     attr)]
-   children))
+                  :as   args}]
+  [:div
+   (into
+    [:div
+     (merge
+      {:id    id
+       :class (cond-> "mdl-layout mdl-js-layout"
+                class                     (str " " class)
+                fixed-drawer?             (str " mdl-layout--fixed-drawer")
+                fixed-header?             (str " mdl-layout--fixed-header")
+                fixed-tabs?               (str " mdl-layout--fixed-tabs")
+                no-drawer-button?         (str " mdl-layout--no-drawer-button")
+                no-desktop-drawer-button? (str " mdl-layout--no-desktop-drawer-button"))}
+      attr)]
+    children)])
 
 (def layout (wrap-mdl layout*))
 
