@@ -104,6 +104,14 @@
       [":children" "Nested items for this component"        "Optional; Vector of components"]]}]
    [:h5 "CHANGELOG"]
    [demo-simple-list
+    "v0.1.6"
+    [[demo-simple-list
+      "Demo"
+      ["Removed leftover logging in the demos."]]
+     [demo-simple-list
+      "[textfield]"
+      ["Corrected a bug that would move the cursor to the end of the line whenever the model was updated."]]]]
+   [demo-simple-list
     "v0.1.5"
     [":children keys added to all components."
      [demo-simple-list
@@ -1770,14 +1778,11 @@
 (defn slider-demo-default
   "This is a slider that defaults to 0."
   []
-  (let [slider-model 0]
-    (fn []
-      [mdl/slider
-       :id         "slider-default"
-       :model      slider-model
-       :handler-fn #(print slider-model)
-       :min        0
-       :max        100])))
+  [mdl/slider
+   :id    "slider-default"
+   :min   0
+   :model 5
+   :max   100])
 
 (defn slider-demo-starting
   "This is a slider with a starting value and tracks state."
@@ -2061,7 +2066,7 @@
 (defn text-field-demo-text
   []
   [mdl/textfield
-   :label       "Text..."])
+   :label "Text..."])
 
 (defn text-field-demo-numeric
   []
@@ -2452,17 +2457,14 @@
    (into []
          (for [[a s c] [["person" "Bryan Cranston" [mdl/toggle-checkbox
                                                     :ripple-effect? true
-                                                    :model          true
-                                                    :handler-fn     #(print "hmm")]]
+                                                    :model          true]]
                         ["person" "Aaron Paul"     [mdl/toggle-radios
                                                     :ripple-effect? true
-                                                    :handler-fn     #(print "why")
                                                     :choices
                                                     [[:test ""]]]]
                         ["person" "Bob Odenkirk"   [mdl/toggle-switch
                                                     :ripple-effect? true
-                                                    :model          true
-                                                    :handler-fn     #(print "ugh")]]]]
+                                                    :model          true]]]]
            ^{:key s} [mdl/list-item
                       :children
                       [[mdl/list-item-primary-content

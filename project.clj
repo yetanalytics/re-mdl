@@ -1,4 +1,4 @@
-(defproject com.yetanalytics/re-mdl "0.1.5-SNAPSHOT"
+(defproject com.yetanalytics/re-mdl "0.1.6-SNAPSHOT"
   :description "Yet another library of reusable UI components for Reagent"
   :url "https://github.com/yetanalytics/re-mdl.git"
   :license {:name "Eclipse Public License"
