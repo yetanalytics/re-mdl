@@ -7,7 +7,7 @@ Yet another library of reusable UI components for Reagent
 
 ## Overview
 
-Re-mdl gives you reusable components for use with Google's [Material Design Lite](http://www.getmdl.io/) in the style of [re-com](https://github.com/Day8/re-com). Re-mdl is in active development, and is not ready for use!!!
+Re-mdl gives you reusable components for use with Google's [Material Design Lite](http://www.getmdl.io/) in the style of [re-com](https://github.com/Day8/re-com).
 
 ## Dev Setup
 
