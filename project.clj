@@ -7,14 +7,14 @@
   :dependencies [[cljsjs/material "1.3.0-0"]
                  [cljsjs/dialog-polyfill "0.4.3-0"]
                  [reagent "0.6.0-rc" :exclusions [cljsjs/react]]
-                 [cljsjs/react-with-addons "15.2.1-1"]
-                 [prismatic/dommy "1.1.0"]]
+                 [cljsjs/react-with-addons "15.2.1-1"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-figwheel "0.5.4-7"]
             [lein-doo "0.1.7"]]
 
-  :profiles {:dev {:dependencies [[cljs-react-test "0.1.4-SNAPSHOT"
+  :profiles {:dev {:dependencies [[prismatic/dommy "1.1.0"]
+                                  [cljs-react-test "0.1.4-SNAPSHOT"
                                    :exclusions [cljsjs/react-with-addons
                                                 org.clojure/core.async
                                                 org.clojure/tools.analyzer.jvm
