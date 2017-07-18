@@ -5,14 +5,19 @@
                                  mdl-get-value
                                  mdl-get-props]]))
 
-(defn checkbox* [& {:keys [disabled? ripple-effect? model
-                           label handler-fn
-                           children
-                           id class attr]
-                    :or   {handler-fn (constantly nil)}
-                    :as   args}]
-  #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
-  (let [_ (mdl-get-value model)]
+(defn checkbox* [this]
+  (let [{:keys [disabled? ripple-effect? model
+                label handler-fn
+                children
+                id class attr]
+         :or   #?(:cljs {handler-fn (constantly nil)}
+                  :clj  {})
+         :as   args}
+        #?(:cljs (-> this r/argv mdl-get-props)
+           :clj  this)
+        _ (mdl-get-value model)]
+    (println "CHECKBOX*: " args handler-fn)
+    #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
     (into
      [:label
       (merge
@@ -36,7 +41,8 @@
         [:span.mdl-checkbox__label label])]
      children)))
 
-(defn checkbox [& {:keys [model]}]
+(defn checkbox [& {:keys [model]
+                   :as   args}]
   #?(:cljs
      (r/create-class
       {:component-did-mount
@@ -50,9 +56,11 @@
                    mdl-get-value)
              (.check elem)
              (.uncheck elem))))
-       :reagent-render
+       :render
        checkbox*})
-     :clj checkbox*))
+     :clj (do
+            (println "CHECKBOX: " args)
+            (checkbox* args))))
 
 (defn radio* [& {:keys [handler-fn disabled? ripple-effect? model
                         value name label

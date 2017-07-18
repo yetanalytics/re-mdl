@@ -9,7 +9,8 @@
              children
              id class attr]
       :or   {el       :button
-             on-click (constantly nil)}
+             ;; TODO Test if this is really needed
+             #_on-click #_(constantly nil)}
       :as   args}]
   (into
    [el
