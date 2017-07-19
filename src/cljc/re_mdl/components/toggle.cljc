@@ -5,19 +5,15 @@
                                  mdl-get-value
                                  mdl-get-props]]))
 
-(defn checkbox* [this]
-  (let [{:keys [disabled? ripple-effect? model
-                label handler-fn
-                children
-                id class attr]
-         :or   #?(:cljs {handler-fn (constantly nil)}
-                  :clj  {})
-         :as   args}
-        #?(:cljs (-> this r/argv mdl-get-props)
-           :clj  this)
-        _ (mdl-get-value model)]
-    (println "CHECKBOX*: " args handler-fn)
-    #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
+(defn checkbox* [& {:keys [disabled? ripple-effect? model
+                           label handler-fn
+                           children
+                           id class attr]
+                    :or   #?(:cljs {handler-fn (constantly nil)}
+                             :clj  {})
+                    :as   args}]
+  #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
+  (let [_ (mdl-get-value model)]
     (into
      [:label
       (merge
@@ -56,11 +52,9 @@
                    mdl-get-value)
              (.check elem)
              (.uncheck elem))))
-       :render
+       :reagent-render
        checkbox*})
-     :clj (do
-            (println "CHECKBOX: " args)
-            (checkbox* args))))
+     :clj (apply checkbox* (apply concat (vec args)))))
 
 (defn radio* [& {:keys [handler-fn disabled? ripple-effect? model
                         value name label
@@ -93,7 +87,8 @@
         [:span.mdl-radio__label label])]
      children)))
 
-(defn radio [& {:keys [model]}]
+(defn radio [& {:keys [model]
+                :as   args}]
   #?(:cljs (r/create-class
             {:component-did-mount
              mdl-init-mount
@@ -108,7 +103,7 @@
                    (.uncheck elem))))
              :reagent-render
              radio*})
-     :clj radio*))
+     :clj (apply radio* (apply concat (vec args)))))
 
 (defn radios [& {:keys [handler-fn ripple-effect? model
                         choices disabled name
@@ -170,7 +165,8 @@
        icon]]
      children)))
 
-(defn icon-toggle [& {:keys [model]}]
+(defn icon-toggle [& {:keys [model]
+                      :as   args}]
   #?(:cljs
      (r/create-class
       {:component-did-mount
@@ -186,7 +182,7 @@
              (.uncheck elem))))
        :reagent-render
        icon-toggle*})
-     :clj icon-toggle*))
+     :clj (apply icon-toggle* (apply concat (vec args)))))
 
 (defn switch* [& {:keys [handler-fn model
                          disabled? ripple-effect?
@@ -219,7 +215,8 @@
         [:span.mdl-switch__label label])]
      children)))
 
-(defn switch [& {:keys [model]}]
+(defn switch [& {:keys [model]
+                 :as   args}]
   #?(:cljs
      (r/create-class
       {:component-did-mount
@@ -235,4 +232,4 @@
              (.off elem))))
        :reagent-render
        switch*})
-     :clj switch*))
+     :clj (apply switch* (apply concat (vec args)))))
