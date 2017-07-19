@@ -45,6 +45,6 @@ Thanks, [gadfly361](https://github.com/gadfly361)!
 
 ## License
 
-Copyright © 2015 Yet Analytics Inc
+Copyright © 2017 Yet Analytics Inc
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
