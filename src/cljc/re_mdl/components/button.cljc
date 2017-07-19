@@ -8,9 +8,7 @@
              for
              children
              id class attr]
-      :or   {el       :button
-             ;; TODO Test if this is really needed
-             #_on-click #_(constantly nil)}
+      :or   {el :button}
       :as   args}]
   (into
    [el
