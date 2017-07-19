@@ -45,7 +45,7 @@
              (-> (.setBuffer (mdl-get-value (:buffer props)))))))
        :reagent-render
        progress*})
-     :clj (apply progress* (flatten args))))
+     :clj (apply progress* (apply concat (vec args)))))
 
 (defn spinner* [& {:keys [el is-active? single-color?
                           children

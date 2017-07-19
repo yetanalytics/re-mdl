@@ -51,4 +51,4 @@
                   mdl-get-value))))
        :reagent-render
        slider*})
-     :clj (apply slider* (flatten args))))
+     :clj (apply slider* (apply concat (vec args)))))

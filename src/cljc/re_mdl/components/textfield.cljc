@@ -104,4 +104,4 @@
        ;; use render instead of reagent-render so we can get access to this
        :render
        textfield*})
-     :clj (apply textfield* (flatten args))))
+     :clj (textfield* args)))

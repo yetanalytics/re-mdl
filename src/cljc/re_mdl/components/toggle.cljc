@@ -9,7 +9,8 @@
                            label handler-fn
                            children
                            id class attr]
-                    :or   {handler-fn (constantly nil)}
+                    :or   #?(:cljs {handler-fn (constantly nil)}
+                             :clj  {})
                     :as   args}]
   #?(:clj (when handler-fn (throw (Exception. "No handler function allowed in clj"))))
   (let [_ (mdl-get-value model)]
@@ -36,7 +37,8 @@
         [:span.mdl-checkbox__label label])]
      children)))
 
-(defn checkbox [& {:keys [model]}]
+(defn checkbox [& {:keys [model]
+                   :as   args}]
   #?(:cljs
      (r/create-class
       {:component-did-mount
@@ -52,7 +54,7 @@
              (.uncheck elem))))
        :reagent-render
        checkbox*})
-     :clj checkbox*))
+     :clj (apply checkbox* (apply concat (vec args)))))
 
 (defn radio* [& {:keys [handler-fn disabled? ripple-effect? model
                         value name label
@@ -85,7 +87,8 @@
         [:span.mdl-radio__label label])]
      children)))
 
-(defn radio [& {:keys [model]}]
+(defn radio [& {:keys [model]
+                :as   args}]
   #?(:cljs (r/create-class
             {:component-did-mount
              mdl-init-mount
@@ -100,7 +103,7 @@
                    (.uncheck elem))))
              :reagent-render
              radio*})
-     :clj radio*))
+     :clj (apply radio* (apply concat (vec args)))))
 
 (defn radios [& {:keys [handler-fn ripple-effect? model
                         choices disabled name
@@ -162,7 +165,8 @@
        icon]]
      children)))
 
-(defn icon-toggle [& {:keys [model]}]
+(defn icon-toggle [& {:keys [model]
+                      :as   args}]
   #?(:cljs
      (r/create-class
       {:component-did-mount
@@ -178,7 +182,7 @@
              (.uncheck elem))))
        :reagent-render
        icon-toggle*})
-     :clj icon-toggle*))
+     :clj (apply icon-toggle* (apply concat (vec args)))))
 
 (defn switch* [& {:keys [handler-fn model
                          disabled? ripple-effect?
@@ -211,7 +215,8 @@
         [:span.mdl-switch__label label])]
      children)))
 
-(defn switch [& {:keys [model]}]
+(defn switch [& {:keys [model]
+                 :as   args}]
   #?(:cljs
      (r/create-class
       {:component-did-mount
@@ -227,4 +232,4 @@
              (.off elem))))
        :reagent-render
        switch*})
-     :clj switch*))
+     :clj (apply switch* (apply concat (vec args)))))
