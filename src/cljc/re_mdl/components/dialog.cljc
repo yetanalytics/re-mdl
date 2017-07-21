@@ -1,5 +1,7 @@
 (ns re-mdl.components.dialog
-  (:require [re-mdl.util :refer [wrap-dialog-polyfill]]))
+  (:require [re-mdl.util :refer [wrap-dialog-polyfill]]
+            #?(:clj [re-mdl.macros :refer [build-class]]))
+  #?(:cljs (:require-macros [re-mdl.macros :refer [build-class]])))
 
 (defn title [& {:keys [child el
                        children
@@ -10,8 +12,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-dialog__title"
-               class (str " " class))}
+      :class (build-class "mdl-dialog__title"
+                          class (str " " class))}
      attr)
     child]
    children))
@@ -25,8 +27,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-dialog__content"
-               class (str " " class))}
+      :class (build-class "mdl-dialog__content"
+                          class (str " " class))}
      attr)]
    children))
 
@@ -40,9 +42,9 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-dialog__actions"
-               class       (str " " class)
-               full-width? (str " mdl-dialog__actions--full-width"))}
+      :class (build-class "mdl-dialog__actions"
+                          class       (str " " class)
+                          full-width? " mdl-dialog__actions--full-width")}
      attr)]
    children))
 
@@ -53,8 +55,8 @@
    [:dialog
     (merge
      {:id    id
-      :class (cond-> "mdl-dialog"
-               class (str " " class))}
+      :class (build-class "mdl-dialog"
+                          class (str " " class))}
      attr)]
    children))
 

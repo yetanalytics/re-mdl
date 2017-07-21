@@ -1,5 +1,7 @@
 (ns re-mdl.components.layout
-  (:require [re-mdl.util :refer [wrap-mdl]]))
+  (:require [re-mdl.util :refer [wrap-mdl]]
+            #?(:clj [re-mdl.macros :refer [build-class]]))
+  #?(:cljs (:require-macros [re-mdl.macros :refer [build-class]])))
 
 (defn layout* [& {:keys [fixed-drawer? fixed-header? fixed-tabs?
                          no-drawer-button? no-desktop-drawer-button?
@@ -11,13 +13,13 @@
     [:div
      (merge
       {:id    id
-       :class (cond-> "mdl-layout mdl-js-layout"
-                class                     (str " " class)
-                fixed-drawer?             (str " mdl-layout--fixed-drawer")
-                fixed-header?             (str " mdl-layout--fixed-header")
-                fixed-tabs?               (str " mdl-layout--fixed-tabs")
-                no-drawer-button?         (str " mdl-layout--no-drawer-button")
-                no-desktop-drawer-button? (str " mdl-layout--no-desktop-drawer-button"))}
+       :class (build-class "mdl-layout mdl-js-layout"
+                           class                     (str " " class)
+                           fixed-drawer?             " mdl-layout--fixed-drawer"
+                           fixed-header?             " mdl-layout--fixed-header"
+                           fixed-tabs?               " mdl-layout--fixed-tabs"
+                           no-drawer-button?         " mdl-layout--no-drawer-button"
+                           no-desktop-drawer-button? " mdl-layout--no-desktop-drawer-button")}
       attr)]
     children)])
 
@@ -32,10 +34,10 @@
    [:span
     (merge
      {:id    id
-      :class (cond-> "mdl-layout-title"
-               class              (str " " class)
-               large-screen-only? (str " mdl-layout--large-screen-only")
-               small-screen-only? (str " mdl-layout--small-screen-only"))}
+      :class (build-class "mdl-layout-title"
+                          class              (str " " class)
+                          large-screen-only? " mdl-layout--large-screen-only"
+                          small-screen-only? " mdl-layout--small-screen-only")}
      attr)
     label]
    children))
@@ -48,10 +50,10 @@
    [:div
     (merge
      {:id id
-      :class (cond-> "mdl-layout-spacer"
-               class (str " " class)
-               large-screen-only? (str " mdl-layout--large-screen-only")
-               small-screen-only? (str " mdl-layout--small-screen-only"))}
+      :class (build-class "mdl-layout-spacer"
+                          class (str " " class)
+                          large-screen-only? " mdl-layout--large-screen-only"
+                          small-screen-only? " mdl-layout--small-screen-only")}
      attr)]
    children))
 
@@ -65,28 +67,28 @@
    [:header
     (merge
      {:id id
-      :class (cond-> "mdl-layout__header"
-               class (str " " class)
-               large-screen-only?  (str " mdl-layout--large-screen-only")
-               small-screen-only?  (str " mdl-layout--small-screen-only")
-               waterfall?          (str " mdl-layout__header--waterfall")
-               waterfall-hide-top? (str " mdl-layout__header--waterfall-hide-top")
-               transparent?        (str " mdl-layout__header--transparent")
-               seamed?             (str " mdl-layout__header--seamed")
-               scroll?             (str " mdl-layout__header--scroll"))}
+      :class (build-class "mdl-layout__header"
+                          class (str " " class)
+                          large-screen-only?  " mdl-layout--large-screen-only"
+                          small-screen-only?  " mdl-layout--small-screen-only"
+                          waterfall?          " mdl-layout__header--waterfall"
+                          waterfall-hide-top? " mdl-layout__header--waterfall-hide-top"
+                          transparent?        " mdl-layout__header--transparent"
+                          seamed?             " mdl-layout__header--seamed"
+                          scroll?             " mdl-layout__header--scroll")}
      attr)]
    children))
 
 (defn icon [& {:keys [large-screen-only? small-screen-only?
                       id class attr]
-                :as   args}]
+               :as   args}]
   [:img
    (merge
     {:id    id
-     :class (cond-> "mdl-layout-icon"
-              class (str " " class)
-              large-screen-only? (str " mdl-layout--large-screen-only")
-              small-screen-only? (str " mdl-layout--small-screen-only"))}
+     :class (build-class "mdl-layout-icon"
+                         class (str " " class)
+                         large-screen-only? " mdl-layout--large-screen-only"
+                         small-screen-only? " mdl-layout--small-screen-only")}
     attr)])
 
 (defn header-row [& {:keys [large-screen-only? small-screen-only?
@@ -97,10 +99,10 @@
    [:div
     (merge
      {:id    id
-      :class (cond-> "mdl-layout__header-row"
-               class (str " " class)
-               large-screen-only? (str " mdl-layout--large-screen-only")
-               small-screen-only? (str " mdl-layout--small-screen-only"))}
+      :class (build-class "mdl-layout__header-row"
+                          class (str " " class)
+                          large-screen-only? " mdl-layout--large-screen-only"
+                          small-screen-only? " mdl-layout--small-screen-only")}
      attr)]
    children))
 
@@ -112,10 +114,10 @@
    [:div
     (merge
      {:id    id
-      :class (cond-> "mdl-layout__drawer"
-               class (str " " class)
-               large-screen-only? (str " mdl-layout--large-screen-only")
-               small-screen-only? (str " mdl-layout--small-screen-only"))}
+      :class (build-class "mdl-layout__drawer"
+                          class (str " " class)
+                          large-screen-only? " mdl-layout--large-screen-only"
+                          small-screen-only? " mdl-layout--small-screen-only")}
      attr)]
    children))
 
@@ -127,10 +129,10 @@
    [:main
     (merge
      {:id id
-      :class (cond-> "mdl-layout__content"
-               class (str " " class)
-               large-screen-only? (str " mdl-layout--large-screen-only")
-               small-screen-only? (str " mdl-layout--small-screen-only"))}
+      :class (build-class "mdl-layout__content"
+                          class (str " " class)
+                          large-screen-only? " mdl-layout--large-screen-only"
+                          small-screen-only? " mdl-layout--small-screen-only")}
      attr)]
    children))
 
@@ -141,26 +143,26 @@
   (into [:nav
          (merge
           {:id id
-           :class (cond-> "mdl-navigation"
-                    class (str " " class)
-                    large-screen-only? (str " mdl-layout--large-screen-only")
-                    small-screen-only? (str " mdl-layout--small-screen-only"))}
+           :class (build-class "mdl-navigation"
+                               class (str " " class)
+                               large-screen-only? " mdl-layout--large-screen-only"
+                               small-screen-only? " mdl-layout--small-screen-only")}
           attr)]
         children))
 
 (defn nav-link [& {:keys [large-screen-only? small-screen-only?
                           href content on-click
                           id class attr]
-              :as   args}]
+                   :as   args}]
   [:a
    (merge
     (cond->
         {:id id
          :href href
-         :class (cond-> "mdl-navigation__link"
-                  class (str " " class)
-                  large-screen-only? (str " mdl-layout--large-screen-only")
-                  small-screen-only? (str " mdl-layout--small-screen-only"))}
+         :class (build-class "mdl-navigation__link"
+                             class (str " " class)
+                             large-screen-only? " mdl-layout--large-screen-only"
+                             small-screen-only? " mdl-layout--small-screen-only")}
       on-click (assoc :on-click on-click))
     attr)
    content])
@@ -175,12 +177,12 @@
   (into [:div
          (merge
           {:id id
-           :class (cond-> "mdl-layout__tab-bar"
-                    class              (str " " class)
-                    ripple-effect?     (str " mdl-js-ripple-effect")
-                    large-screen-only? (str " mdl-layout--large-screen-only")
-                    small-screen-only? (str " mdl-layout--small-screen-only")
-                    tab-manual-switch? (str " mdl-layout__tab-manual-switch"))}
+           :class (build-class "mdl-layout__tab-bar"
+                               class              (str " " class)
+                               ripple-effect?     " mdl-js-ripple-effect"
+                               large-screen-only? " mdl-layout--large-screen-only"
+                               small-screen-only? " mdl-layout--small-screen-only"
+                               tab-manual-switch? " mdl-layout__tab-manual-switch")}
           attr)] children))
 
 (defn layout-tab [& {:keys [large-screen-only? small-screen-only? is-active?
@@ -191,11 +193,11 @@
    (merge
     {:id id
      :href href
-     :class (cond-> "mdl-layout__tab"
-              class (str " " class)
-              large-screen-only? (str " mdl-layout--large-screen-only")
-              small-screen-only? (str " mdl-layout--small-screen-only")
-              is-active? (str " is-active"))}
+     :class (build-class "mdl-layout__tab"
+                         class (str " " class)
+                         large-screen-only? " mdl-layout--large-screen-only"
+                         small-screen-only? " mdl-layout--small-screen-only"
+                         is-active? " is-active")}
     attr)
    content])
 
@@ -208,12 +210,12 @@
    [:section
     (merge
      {:id    id
-      :class (cond-> "mdl-layout__tab-panel"
-               class              (str " " class)
-               large-screen-only? (str " mdl-layout--large-screen-only")
-               small-screen-only? (str " mdl-layout--small-screen-only")
-               is-active?         (str " is-active")
-               ripple-effect?     (str " mdl-js-ripple-effect"))}
+      :class (build-class "mdl-layout__tab-panel"
+                          class              (str " " class)
+                          large-screen-only? " mdl-layout--large-screen-only"
+                          small-screen-only? " mdl-layout--small-screen-only"
+                          is-active?         " is-active"
+                          ripple-effect?     " mdl-js-ripple-effect")}
      attr)]
    children))
 
@@ -226,8 +228,8 @@
    [:div
     (merge
      {:id    id
-      :class (cond-> "mdl-tabs__tab-bar"
-               class (str " " class))}
+      :class (build-class "mdl-tabs__tab-bar"
+                          class (str " " class))}
      attr)]
    children))
 
@@ -239,9 +241,9 @@
    [:div
     (merge
      {:id    id
-      :class (cond-> "mdl-tabs mdl-js-tabs"
-               class          (str " " class)
-               ripple-effect? (str " mdl-js-ripple-effect"))}
+      :class (build-class "mdl-tabs mdl-js-tabs"
+                          class          (str " " class)
+                          ripple-effect? " mdl-js-ripple-effect")}
      attr)]
    children))
 
@@ -257,9 +259,9 @@
     (merge
      {:id    id
       :href  href
-      :class (cond-> "mdl-tabs__tab"
-               class          (str " " class)
-               is-active?     (str " is-active"))}
+      :class (build-class "mdl-tabs__tab"
+                          class          (str " " class)
+                          is-active?     " is-active")}
      attr)
     child]
    children))
@@ -273,9 +275,9 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-tabs__panel"
-               class      (str " " class)
-               is-active? (str " is-active"))}
+      :class (build-class "mdl-tabs__panel"
+                          class      (str " " class)
+                          is-active? " is-active")}
      attr)]
    children))
 
@@ -290,8 +292,8 @@
    [:button
     (merge
      {:id    id
-      :class (cond-> "mdl-mega-footer__social-btn"
-               class (str " " class))}
+      :class (build-class "mdl-mega-footer__social-btn"
+                          class (str " " class))}
      attr)
     child]
    children))
@@ -302,8 +304,8 @@
   (into [:ul
          (merge
           {:id id
-           :class (cond-> "mdl-mega-footer__link-list"
-                    class (str " " class))}
+           :class (build-class "mdl-mega-footer__link-list"
+                               class (str " " class))}
           attr)]
         (for [child children]
           ^{:key child} [:li child])))
@@ -315,8 +317,8 @@
   [:div
    (merge
     {:id id
-     :class (cond-> "mdl-mega-footer__drop-down-section"
-              class (str " " class))}
+     :class (build-class "mdl-mega-footer__drop-down-section"
+                         class (str " " class))}
     attr)
    [:h1.mdl-mega-footer__heading
     heading]
@@ -331,8 +333,8 @@
    [:footer
     (merge
      {:id    id
-      :class (cond-> "mdl-mega-footer"
-               class (str " " class))}
+      :class (build-class "mdl-mega-footer"
+                          class (str " " class))}
      attr)
     (when top
       (into [:div.mdl-mega-footer__top-section] top))
@@ -355,8 +357,8 @@
    [:button
     (merge
      {:id    id
-      :class (cond-> "mdl-mega-footer__social-btn"
-               class (str " " class))}
+      :class (build-class "mdl-mega-footer__social-btn"
+                          class (str " " class))}
      attr)
     child]
    children))
@@ -368,8 +370,8 @@
    [:ul
     (merge
      {:id id
-      :class (cond-> "mdl-mini-footer__link-list"
-               class (str " " class))}
+      :class (build-class "mdl-mini-footer__link-list"
+                          class (str " " class))}
      attr)]
    (for [child children]
      ^{:key child} [:li child])))
@@ -382,8 +384,8 @@
    [:footer
     (merge
      {:id id
-      :class (cond-> "mdl-mini-footer"
-               class (str " " class))}
+      :class (build-class "mdl-mini-footer"
+                          class (str " " class))}
      attr)
     (when left
       (into [:div.mdl-mini-footer__left-section

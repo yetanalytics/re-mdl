@@ -1,4 +1,6 @@
-(ns re-mdl.components.badge)
+(ns re-mdl.components.badge
+  (#?(:clj :require
+      :cljs :require-macros) [re-mdl.macros :refer [build-class]]))
 
 (defn badge
   [& {:keys [el child badge-label no-background? overlap? icon?
@@ -10,11 +12,12 @@
    [el
     (merge
      (cond-> {:id id
-              :class (cond-> "mdl-badge"
-                       class          (str (str " " class))
-                       no-background? (str " mdl-badge--no-background")
-                       overlap?       (str " mdl-badge--overlap")
-                       icon?          (str " material-icons"))}
+              :class
+              (build-class "mdl-badge"
+                           class          (str  " " class)
+                           no-background? " mdl-badge--no-background"
+                           overlap?       " mdl-badge--overlap"
+                           icon?          " material-icons")}
        badge-label (assoc :data-badge badge-label))
      attr)
     child]

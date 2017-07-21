@@ -1,9 +1,11 @@
 (ns re-mdl.components.textfield
-  (:require #?(:cljs [reagent.core :as r])
+  (:require #?(:cljs [reagent.core :as r]
+               :clj [re-mdl.macros :refer [build-class]])
             [re-mdl.util :refer [mdl-init!
                                  mdl-get-value
                                  mdl-get-props]]
-            [re-mdl.components.button :refer [button]]))
+            [re-mdl.components.button :refer [button]])
+  #?(:cljs (:require-macros [re-mdl.macros :refer [build-class]])))
 
 (defn textfield* [this]
   (let [{:keys [type input-type rows model
@@ -71,10 +73,10 @@
       (into
        [:div
         (merge
-         {:class (cond-> "mdl-textfield mdl-js-textfield"
-                   class           (str " " class)
-                   floating-label? (str " mdl-textfield--floating-label")
-                   expandable?     (str " mdl-textfield--expandable"))}
+         {:class (build-class "mdl-textfield mdl-js-textfield"
+                              class           (str " " class)
+                              floating-label? " mdl-textfield--floating-label"
+                              expandable?     " mdl-textfield--expandable")}
          attr)]
        body))))
 

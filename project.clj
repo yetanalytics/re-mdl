@@ -1,4 +1,4 @@
-(defproject com.yetanalytics/re-mdl "0.1.7"
+(defproject com.yetanalytics/re-mdl "0.1.8-SNAPSHOT"
   :description "Yet another library of reusable UI components for Reagent"
   :url "https://github.com/yetanalytics/re-mdl.git"
   :license {:name "Eclipse Public License"
@@ -26,7 +26,7 @@
 
   :source-paths ["src/cljc"]
 
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
+  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target" "out"]
 
   :aliases {"ci" ["do"
                   ["doo" "phantom" "test" "once"]

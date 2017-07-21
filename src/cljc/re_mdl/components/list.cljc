@@ -1,4 +1,6 @@
-(ns re-mdl.components.list)
+(ns re-mdl.components.list
+  (#?(:clj :require
+      :cljs :require-macros) [re-mdl.macros :refer [build-class]]))
 
 (defn item-primary-content [& {:keys [el icon avatar child
                                       children
@@ -10,8 +12,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-list__item-primary-content"
-               class (str " " class))}
+      :class (build-class "mdl-list__item-primary-content"
+                          class (str " " class))}
      attr)
     (when-let [icon-name (or icon avatar)]
       [:i.material-icons
@@ -31,8 +33,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-list__item-secondary-content"
-               class (str " " class))}
+      :class (build-class "mdl-list__item-secondary-content"
+                          class (str " " class))}
      attr)
     child]
    children))
@@ -49,8 +51,8 @@
    [el
     (merge
      (cond-> {:id    id
-              :class (cond-> "mdl-list__item-secondary-action"
-                       class (str " " class))}
+              :class (build-class "mdl-list__item-secondary-action"
+                                  class (str " " class))}
        href (assoc :href href))
      attr)
     child]
@@ -65,8 +67,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-list__item-secondary-info"
-               class (str " " class))}
+      :class (build-class "mdl-list__item-secondary-info"
+                          class (str " " class))}
      attr)
     child]
    children))
@@ -80,8 +82,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-list__item-text-body"
-               class (str " " class))}
+      :class (build-class "mdl-list__item-text-body"
+                          class (str " " class))}
      attr)
     child]
    children))
@@ -94,8 +96,8 @@
   (into
    [el
     (merge {:id    id
-            :class (cond-> "mdl-list__item-sub-title"
-                     class (str " " class))}
+            :class (build-class "mdl-list__item-sub-title"
+                                class (str " " class))}
            attr)
     child]
    children))
@@ -113,12 +115,12 @@
    [:li
     (merge
      {:id    id
-      :class (cond-> (str "mdl-list__item mdl-list__item"
-                          (case item-type
-                            :two-line   "--two-line"
-                            :three-line "--three-line"
-                            nil))
-               class (str " " class))}
+      :class (build-class (str "mdl-list__item mdl-list__item"
+                               (case item-type
+                                 :two-line   "--two-line"
+                                 :three-line "--three-line"
+                                 nil))
+                          class (str " " class))}
      attr)]
    children))
 

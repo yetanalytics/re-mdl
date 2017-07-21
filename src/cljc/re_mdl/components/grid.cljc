@@ -1,4 +1,6 @@
-(ns re-mdl.components.grid)
+(ns re-mdl.components.grid
+  (#?(:clj :require
+      :cljs :require-macros) [re-mdl.macros :refer [build-class]]))
 
 (defn grid [& {:keys [no-spacing?
                       children
@@ -8,9 +10,9 @@
    [:div
     (merge
      {:id    id
-      :class (cond-> "mdl-grid"
-               class       (str " " class)
-               no-spacing? (str " mdl-grid--no-spacing"))}
+      :class (build-class "mdl-grid"
+                          class       (str " " class)
+                          no-spacing? " mdl-grid--no-spacing")}
      attr)]
    children))
 
@@ -31,27 +33,27 @@
    [:div
     (merge
      {:id    id
-      :class (cond-> "mdl-cell"
-               class    (str " " class)
-               stretch? (str " mdl-cell--stretch")
-               align    (str " " (align-mdl-class align))
-               offset   (str " mdl-cell--" offset "-offset")
-               order    (str " mdl-cell--" order "-order")
-               col      (str " mdl-cell--" col "-col")
-               desktop  (cond->
-                            (:col desktop)    (str " mdl-cell--" (:col desktop) "-col-desktop")
-                            (:offset desktop) (str " mdl-cell--" (:offset desktop) "-offset-desktop")
-                            (:order desktop)  (str " mdl-cell--" (:order desktop) "-order-desktop")
-                            (:hide? desktop)  (str " mdl-cell--hide-desktop"))
-               tablet   (cond->
-                            (:col tablet)    (str " mdl-cell--" (:col tablet) "-col-tablet")
-                            (:offset tablet) (str " mdl-cell--" (:offset tablet) "-offset-tablet")
-                            (:order tablet)  (str " mdl-cell--" (:order tablet) "-order-tablet")
-                            (:hide? tablet)  (str " mdl-cell--hide-tablet"))
-               phone    (cond->
-                            (:col phone)    (str " mdl-cell--" (:col phone) "-col-phone")
-                            (:offset phone) (str " mdl-cell--" (:offset phone) "-offset-phone")
-                            (:order phone)  (str " mdl-cell--" (:order phone) "-order-phone")
-                            (:hide? phone)  (str " mdl-cell--hide-phone")))}
+      :class
+      (apply str
+             (build-class "mdl-cell"
+                          class    (str " " class)
+                          stretch? (str " mdl-cell--stretch")
+                          align    (str " " (align-mdl-class align))
+                          offset   (str " mdl-cell--" offset "-offset")
+                          order    (str " mdl-cell--" order "-order")
+                          col      (str " mdl-cell--" col "-col"))
+
+             (for [[view-type arg-map] (select-keys args [:desktop :tablet :phone])
+                   [arg v] arg-map
+                   :let [view-str (name view-type)]]
+               (case arg
+                 :col    (str " mdl-cell--" v "-col-" view-str)
+                 :offset (str " mdl-cell--" v "-offset-" view-str)
+                 :order  (str " mdl-cell--" v "-order-" view-str)
+                 :hide?  (str " mdl-cell--hide-" view-str)
+                 (throw (ex-info "Invalid arg for cell view"
+                                 {:type ::invalid-arg
+                                  :arg arg
+                                  :view-type view-type})))))}
      attr)]
    children))

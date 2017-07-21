@@ -1,5 +1,7 @@
 (ns re-mdl.components.menu
-  (:require [re-mdl.util :refer [wrap-mdl]]))
+  (:require [re-mdl.util :refer [wrap-mdl]]
+            #?(:clj [re-mdl.macros :refer [build-class]]))
+  #?(:cljs (:require-macros [re-mdl.macros :refer [build-class]])))
 
 (defn item [& {:keys [child disabled? on-click
                       full-bleed-divider?
@@ -10,10 +12,10 @@
    [:li
     (merge
      (cond-> {:id id
-              :class (cond-> "mdl-menu__item"
+              :class (build-class "mdl-menu__item"
                        class (str " " class)
                        full-bleed-divider?
-                       (str " mdl-menu__item--full-bleed-divider"))}
+                       " mdl-menu__item--full-bleed-divider")}
        disabled? (assoc :disabled true)
        on-click  (assoc :on-click on-click))
      attr)
@@ -30,12 +32,12 @@
     (merge
      {:id id
       :for for
-      :class (cond-> "mdl-menu mdl-js-menu"
+      :class (build-class "mdl-menu mdl-js-menu"
                class          (str " " class)
-               ripple-effect? (str " mdl-js-ripple-effect")
-               top-left?      (str " mdl-menu--top-left")
-               top-right?     (str " mdl-menu--top-right")
-               bottom-right?  (str " mdl-menu--bottom-right"))}
+               ripple-effect? " mdl-js-ripple-effect"
+               top-left?      " mdl-menu--top-left"
+               top-right?     " mdl-menu--top-right"
+               bottom-right?  " mdl-menu--bottom-right")}
      attr)]
    children))
 

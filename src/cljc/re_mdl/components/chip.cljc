@@ -1,4 +1,6 @@
-(ns re-mdl.components.chip)
+(ns re-mdl.components.chip
+  (#?(:clj :require
+      :cljs :require-macros) [re-mdl.macros :refer [build-class]]))
 
 (defn contact
   "Implementation of the MDL chip inner contact component."
@@ -11,8 +13,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-chip__contact"
-               class (str " " class))}
+      :class (build-class "mdl-chip__contact"
+                          class (str " " class))}
      attr)
     child]
    children))
@@ -28,8 +30,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-chip__text"
-               class (str " " class))}
+      :class (build-class "mdl-chip__text"
+                          class (str " " class))}
      attr)
     child]
    children))
@@ -47,8 +49,8 @@
     (merge
      (cond-> {:id       id
               :on-click on-click
-              :class    (cond-> "mdl-chip__action"
-                          class (str " " class))}
+              :class    (build-class "mdl-chip__action"
+                                     class (str " " class))}
        type (assoc :type type))
      attr)
     child]
@@ -66,10 +68,10 @@
     (merge
      (cond-> {:id       id
               :on-click on-click
-              :class    (cond-> "mdl-chip"
-                          class      (str " " class)
-                          contact?   (str " mdl-chip--contact")
-                          deletable? (str " mdl-chip--deletable"))}
+              :class    (build-class "mdl-chip"
+                                     class      (str " " class)
+                                     contact?   " mdl-chip--contact"
+                                     deletable? " mdl-chip--deletable")}
        button? (assoc :type button?))
      attr)]
    children))
