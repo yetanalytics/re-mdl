@@ -26,7 +26,7 @@
 
   :source-paths ["src/cljc"]
 
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
+  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target" "out"]
 
   :aliases {"ci" ["do"
                   ["doo" "phantom" "test" "once"]
