@@ -13,7 +13,7 @@
               :class (str "mdl-badge"
                           (and class          (str  " " class))
                           (and no-background? " mdl-badge--no-background")
-                          (and overlap?)      " mdl-badge--overlap"
+                          (and overlap?       " mdl-badge--overlap")
                           (and icon?          " material-icons"))}
        badge-label (assoc :data-badge badge-label))
      attr)
