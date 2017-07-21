@@ -1,5 +1,7 @@
 (ns re-mdl.components.tooltip
-  (:require [re-mdl.util :refer [wrap-mdl]]))
+  (:require [re-mdl.util :refer [wrap-mdl]]
+            #?(:clj [re-mdl.macros :refer [build-class]]))
+  #?(:cljs (:require-macros [re-mdl.macros :refer [build-class]])))
 
 (defn tooltip* [& {:keys [el for large? left? right? top? bottom?
                           children
@@ -11,13 +13,13 @@
     (merge
      {:id    id
       :for   for
-      :class (cond-> "mdl-tooltip"
-               class   (str " " class)
-               large?  (str " mdl-tooltip--large")
-               left?   (str " mdl-tooltip--left")
-               right?  (str " mdl-tooltip--right")
-               top?    (str " mdl-tooltip--top")
-               bottom? (str " mdl-tooltip--bottom"))}
+      :class (build-class "mdl-tooltip"
+                          class   (str " " class)
+                          large?  " mdl-tooltip--large"
+                          left?   " mdl-tooltip--left"
+                          right?  " mdl-tooltip--right"
+                          top?    " mdl-tooltip--top"
+                          bottom? " mdl-tooltip--bottom")}
      attr)]
    children))
 

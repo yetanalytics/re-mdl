@@ -1,9 +1,11 @@
 (ns re-mdl.components.toggle
-  (:require #?(:cljs [reagent.core :as r])
+  (:require #?(:cljs [reagent.core :as r]
+               :clj [re-mdl.macros :refer [build-class]])
             [re-mdl.util :refer [wrap-mdl
                                  mdl-init-mount
                                  mdl-get-value
-                                 mdl-get-props]]))
+                                 mdl-get-props]])
+  #?(:cljs (:require-macros [re-mdl.macros :refer [build-class]])))
 
 (defn checkbox* [& {:keys [disabled? ripple-effect? model
                            label handler-fn
@@ -18,9 +20,9 @@
      [:label
       (merge
        {:for   id
-        :class (cond-> "mdl-checkbox mdl-js-checkbox"
+        :class (build-class "mdl-checkbox mdl-js-checkbox"
                  class          (str " " class)
-                 ripple-effect? (str " mdl-js-ripple-effect"))}
+                 ripple-effect? " mdl-js-ripple-effect")}
        attr)
       [:input.mdl-checkbox__input
        (merge
@@ -68,9 +70,9 @@
      [:label
       (merge
        {:for id
-        :class (cond-> "mdl-radio mdl-js-radio"
+        :class (build-class "mdl-radio mdl-js-radio"
                  class          (str " " class)
-                 ripple-effect? (str " mdl-js-ripple-effect"))}
+                 ripple-effect? " mdl-js-ripple-effect")}
        attr)
       [:input.mdl-radio__button
        (cond->
@@ -116,7 +118,7 @@
    [:div
     (merge
      {:for   id
-      :class (cond-> "re-mdl-radio"
+      :class (build-class "re-mdl-radio"
                class (str " " class))}
      attr)]
    (or
@@ -146,9 +148,9 @@
      [:label
       (merge
        {:for   id
-        :class (cond-> "mdl-icon-toggle mdl-js-icon-toggle"
+        :class (build-class "mdl-icon-toggle mdl-js-icon-toggle"
                  class          (str " " class)
-                 ripple-effect? (str " mdl-js-ripple-effect"))}
+                 ripple-effect? " mdl-js-ripple-effect")}
        attr)
       [:input.mdl-icon-toggle__input
        (merge
@@ -197,9 +199,9 @@
      [:label
       (merge
        {:for   id
-        :class (cond-> "mdl-switch mdl-js-switch"
+        :class (build-class "mdl-switch mdl-js-switch"
                  class          (str " " class)
-                 ripple-effect? (str " mdl-js-ripple-effect"))}
+                 ripple-effect? " mdl-js-ripple-effect")}
        attr)
       [:input.mdl-switch__input
        (merge

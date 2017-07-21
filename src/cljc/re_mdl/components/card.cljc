@@ -1,4 +1,6 @@
-(ns re-mdl.components.card)
+(ns re-mdl.components.card
+  (#?(:clj :require
+      :cljs :require-macros) [re-mdl.macros :refer [build-class]]))
 
 (defn subtitle [& {:keys [child el
                           children
@@ -8,8 +10,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-card__subtitle-text"
-               class (str " " class))}
+      :class (build-class "mdl-card__subtitle-text"
+                          class (str " " class))}
      attr)
     child]
    children))
@@ -25,10 +27,10 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-card__title"
-               class   (str " " class)
-               border? (str " mdl-card--border")
-               expand? (str " mdl-card--expand"))}
+      :class (build-class "mdl-card__title"
+                          class   (str " " class)
+                          border? " mdl-card--border"
+                          expand? " mdl-card--expand")}
      attr)
     (when child
       [header {:class "mdl-card__title-text"}
@@ -44,9 +46,9 @@
    [el
     (merge
      {:id id
-      :class (cond-> "mdl-card__media"
-               class (str " " class)
-               border? (str " mdl-card--border"))}
+      :class (build-class "mdl-card__media"
+                          class (str " " class)
+                          border? " mdl-card--border")}
      attr)]
    children))
 
@@ -59,9 +61,9 @@
    [el
     (merge
      {:id id
-      :class (cond-> "mdl-card__supporting-text"
-               class (str " " class)
-               border? (str " mdl-card--border"))}
+      :class (build-class "mdl-card__supporting-text"
+                          class (str " " class)
+                          border? " mdl-card--border")}
      attr)]
    children))
 
@@ -74,9 +76,9 @@
    [el
     (merge
      {:id id
-      :class (cond-> "mdl-card__actions"
-               class   (str " " class)
-               border? (str " mdl-card--border"))}
+      :class (build-class "mdl-card__actions"
+                          class   (str " " class)
+                          border? " mdl-card--border")}
      attr)]
    children))
 
@@ -89,8 +91,8 @@
    [el
     (merge
      {:id    id
-      :class (cond-> "mdl-card__menu"
-               class (str " " class))}
+      :class (build-class "mdl-card__menu"
+                          class (str " " class))}
      attr)]
    children))
 
@@ -109,8 +111,8 @@
    [el
     (merge
      {:id id
-      :class (cond-> "mdl-card"
-               class  (str " " class)
-               shadow (str " mdl-shadow--" shadow "dp"))}
+      :class (build-class "mdl-card"
+                          class  (str " " class)
+                          shadow (str " mdl-shadow--" shadow "dp"))}
      attr)]
    children))

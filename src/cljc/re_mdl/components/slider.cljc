@@ -1,8 +1,10 @@
 (ns re-mdl.components.slider
   (:require #?(:cljs [reagent.core :as r])
+            #?(:clj [re-mdl.macros :refer [build-class]])
             [re-mdl.util :refer [mdl-init-mount
                                  mdl-get-value
-                                 mdl-get-props]]))
+                                 mdl-get-props]])
+  #?(:cljs (:require-macros [re-mdl.macros :refer [build-class]])))
 
 (defn slider* [& {:keys [min max step model disabled?
                          handler-fn
@@ -22,8 +24,8 @@
             :min   (mdl-get-value min)
             :max   (mdl-get-value max)
             :step  (mdl-get-value step)
-            :class (cond-> "mdl-slider mdl-js-slider"
-                     class (str " " class))
+            :class (build-class "mdl-slider mdl-js-slider"
+                                class (str " " class))
             #?@(:cljs
                 [:on-change
                  (fn [e] (handler-fn (.. e -target -value)))

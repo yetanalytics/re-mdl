@@ -1,6 +1,8 @@
 (ns re-mdl.components.loading
+  #?(:cljs (:require-macros [re-mdl.macros :refer [build-class]]))
   (:require
    #?(:cljs [reagent.core :as r])
+   #?(:clj [re-mdl.macros :refer [build-class]])
    [re-mdl.util :refer [wrap-mdl
                         mdl-init!
                         mdl-get-value
@@ -17,11 +19,11 @@
      [:div
       (merge
        {:id    id
-        :class (cond-> "mdl-progress mdl-js-progress"
-                 class (str " " class)
-                 #?(:cljs indeterminate?
-                    :clj  true) ;; always indeterminate for clj
-                 (str " mdl-progress--indeterminate"))}
+        :class (build-class "mdl-progress mdl-js-progress"
+                            class (str " " class)
+                            #?(:cljs indeterminate?
+                               :clj  true) ;; always indeterminate for clj
+                            " mdl-progress--indeterminate")}
        attr)]
      children)))
 
@@ -56,10 +58,10 @@
    [el
     (merge
      {:id id
-      :class (cond-> "mdl-spinner mdl-js-spinner"
-               class         (str " " class)
-               is-active?    (str " is-active")
-               single-color? (str " mdl-spinner--single-color"))}
+      :class (build-class "mdl-spinner mdl-js-spinner"
+                          class         (str " " class)
+                          is-active?    " is-active"
+                          single-color? " mdl-spinner--single-color")}
      attr)]
    children))
 

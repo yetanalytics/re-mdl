@@ -1,4 +1,6 @@
-(ns re-mdl.components.grid)
+(ns re-mdl.components.grid
+  (#?(:clj :require
+      :cljs :require-macros) [re-mdl.macros :refer [build-class]]))
 
 (defn grid [& {:keys [no-spacing?
                       children
@@ -8,9 +10,9 @@
    [:div
     (merge
      {:id    id
-      :class (cond-> "mdl-grid"
-               class       (str " " class)
-               no-spacing? (str " mdl-grid--no-spacing"))}
+      :class (build-class "mdl-grid"
+                          class       (str " " class)
+                          no-spacing? " mdl-grid--no-spacing")}
      attr)]
    children))
 
@@ -33,13 +35,13 @@
      {:id    id
       :class
       (apply str
-             "mdl-cell"
-             (and class    (str " " class))
-             (and stretch? (str " mdl-cell--stretch"))
-             (and align    (str " " (align-mdl-class align)))
-             (and offset   (str " mdl-cell--" offset "-offset"))
-             (and order    (str " mdl-cell--" order "-order"))
-             (and col      (str " mdl-cell--" col "-col"))
+             (build-class "mdl-cell"
+                          class    (str " " class)
+                          stretch? (str " mdl-cell--stretch")
+                          align    (str " " (align-mdl-class align))
+                          offset   (str " mdl-cell--" offset "-offset")
+                          order    (str " mdl-cell--" order "-order")
+                          col      (str " mdl-cell--" col "-col"))
 
              (for [[view-type arg-map] (select-keys args [:desktop :tablet :phone])
                    [arg v] arg-map

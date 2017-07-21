@@ -1,5 +1,7 @@
 (ns re-mdl.components.table
-  (:require [re-mdl.util :refer [wrap-mdl]]))
+  (:require [re-mdl.util :refer [wrap-mdl]]
+            #?(:clj [re-mdl.macros :refer [build-class]]))
+  #?(:cljs (:require-macros [re-mdl.macros :refer [build-class]])))
 
 (def valid-shadows #{2 3 4 6 8 16})
 
@@ -22,22 +24,22 @@
      [:table
       (merge
        {:id    id
-        :class (cond-> "mdl-data-table mdl-js-data-table"
-                 class       (str " " class)
-                 selectable? (str " mdl-data-table--selectable")
-                 shadow      (str " mdl-shadow--" shadow "dp"))}
+        :class (build-class "mdl-data-table mdl-js-data-table"
+                            class       (str " " class)
+                            selectable? " mdl-data-table--selectable"
+                            shadow      (str " mdl-shadow--" shadow "dp"))}
        attr)
       [:thead
        (into [:tr]
              (map-indexed
               (fn [idx [label & {:keys [non-numeric
-                                       ascending
-                                       descending]}]]
+                                        ascending
+                                        descending]}]]
                 [:th
-                 {:class (cond-> ""
-                           non-numeric (str " mdl-data-table__cell--non-numeric")
-                           ascending   (str " mdl-data-table__header--sorted-ascending")
-                           descending  (str " mdl-data-table__header--sorted-descending"))}
+                 {:class (build-class ""
+                                      non-numeric " mdl-data-table__cell--non-numeric"
+                                      ascending   " mdl-data-table__header--sorted-ascending"
+                                      descending  " mdl-data-table__header--sorted-descending")}
                  label])
               headers))]
       (into [:tbody]
