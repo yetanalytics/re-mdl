@@ -10,11 +10,11 @@
    [el
     (merge
      (cond-> {:id id
-              :class (cond-> "mdl-badge"
-                       class          (str (str " " class))
-                       no-background? (str " mdl-badge--no-background")
-                       overlap?       (str " mdl-badge--overlap")
-                       icon?          (str " material-icons"))}
+              :class (str "mdl-badge"
+                          (and class          (str  " " class))
+                          (and no-background? " mdl-badge--no-background")
+                          (and overlap?)      " mdl-badge--overlap"
+                          (and icon?          " material-icons"))}
        badge-label (assoc :data-badge badge-label))
      attr)
     child]
