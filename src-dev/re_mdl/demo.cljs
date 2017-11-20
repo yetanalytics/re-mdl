@@ -2065,8 +2065,14 @@
 
 (defn text-field-demo-text
   []
-  [mdl/textfield
-   :label "Text..."])
+  (let [text-field-model (r/atom "hi")]
+    (fn []
+      [mdl/textfield
+       :model text-field-model
+       :handler-fn (fn [text]
+                     (println text)
+                     (reset! text-field-model "test"))
+       :label "Text..."])))
 
 (defn text-field-demo-numeric
   []
@@ -2724,6 +2730,48 @@
       [":phone"    "Hash map with phone mode options"                        "Keys are :col, :offset, :order, and :hide?"]]}]
    [demo-reference "layout" "grid"]])
 
+(defn selectfield-demo-simple
+  []
+  [mdl/selectfield
+   :label   "Choose option"
+   :options [{:value   ""}
+             {:value   "option0"
+              :content "Option 0"}
+             {:value   "option1"
+              :content "Option 1"}]])
+
+(defn selectfield-demo
+  []
+  [:div.selectfield-demo
+   [:h6 "Selectfields"]
+   [:p "Drop Down select menus from an external module"]
+   [demo-doc-component
+    [[selectfield-demo-simple]]
+    [#(source selectfield-demo-simple)]]
+   [demo-options
+    {:title       "selectfield"
+     :description [:span
+                   "This is a dropdown menu that allows you select an option from a list."
+                   "Created by using the " [:a {:href   "https://github.com/MEYVN-digital/mdl-selectfield"
+                                                :target "_blank"}
+                                            "selectfield"]
+                   " library."]
+     :rows
+     [[":label"           "Label with instructions"                      "String or hiccup"]
+      [":options"         "All of the options"                           "Vector of {:value _, :disabled? _, :content _}. DO NOT USE if using :children."]
+      [":model"           "Model or value that sets the selected option" "Optional; default value"]
+      [":on-change"       "Callback to receive the new value"            "Optional; function"]
+      [":required?"       "Makes this field required"                    "Optional"]
+      [":error-msg"       "Error message to display"                     "Optional; string or hiccup"]
+      [":floating-label?" "Makes label floating about field"             "Optional"]]}]
+   [demo-options
+    {:title "options"
+     :description "A single option field for a selectfield."
+     :rows
+     [[":value"     "Unique value within the selectfield" "Anything"]
+      [":disabled?" "Disables this option"                "Optional"]
+      [":content"   "Text to display on the dropdown"     "String"]]}]])
+
 (def demo-map
   (sorted-map
    :intro            intro-demo
@@ -2741,6 +2789,7 @@
    :table            table-demo
    :text-field       text-field-demo
    :tooltip          tooltip-demo
+   :selectfield      selectfield-demo
    :snackbar         snackbar-demo
    :dialog           dialog-demo
    :list             list-demo

@@ -15,6 +15,7 @@
    [re-mdl.components.table :as table]
    [re-mdl.components.textfield :as textfield]
    [re-mdl.components.tooltip :as tooltip]
+   [re-mdl.components.selectfield :as selectfield]
    [re-mdl.components.snackbar :as snackbar]
    [re-mdl.components.dialog :as dialog]
    [re-mdl.components.list :as list]))
@@ -157,6 +158,10 @@
 
 (def tooltip tooltip/tooltip)
 
+
+;; selectfield (from a separate module)
+(def selectfield selectfield/selectfield)
+(def selectfield-option selectfield/option)
 
 ;; snackbar
 (def snackbar-target snackbar/snackbar-target)
